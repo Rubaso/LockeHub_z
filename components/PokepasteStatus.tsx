@@ -1,0 +1,176 @@
+'use client'
+
+import { useCallback, useEffect, useState } from 'react'
+import { PLAYERS, SALA_ID } from '@/lib/constants'
+import { supabase } from '@/lib/supabase'
+import { readSession } from '@/lib/session'
+
+type Match = { player1: string | null; player2: string | null }
+type Round = { matches?: Match[] }
+type DirectoRow = { jugador_id: number; pokepaste_text: string | null }
+
+function findRival(rounds: Round[], playerName: string) {
+  let rival: string | null = null
+  for (const round of rounds) {
+    for (const match of round.matches ?? []) {
+      if (match.player1 === playerName && match.player2 && match.player2 !== 'BYE') rival = match.player2
+      if (match.player2 === playerName && match.player1 && match.player1 !== 'BYE') rival = match.player1
+    }
+  }
+  return rival
+}
+
+export default function PokepasteStatus() {
+  const [playerId, setPlayerId] = useState<number | null>(null)
+  const [pokepaste, setPokepaste] = useState('')
+  const [savedPokepaste, setSavedPokepaste] = useState('')
+  const [rivalName, setRivalName] = useState<string | null>(null)
+  const [rivalPokepaste, setRivalPokepaste] = useState('')
+  const [allDelivered, setAllDelivered] = useState(false)
+  const [teamOpen, setTeamOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [copied, setCopied] = useState(false)
+  const [error, setError] = useState('')
+
+  const loadStatus = useCallback(async () => {
+    if (!supabase) {
+      setError('No hay conexión configurada con Supabase.')
+      setLoading(false)
+      return
+    }
+
+    const session = readSession()
+    const player = session ? PLAYERS.find((item) => item.id === session.id) : null
+    if (!session || !player) {
+      setPlayerId(null)
+      setLoading(false)
+      return
+    }
+
+    setPlayerId(player.id)
+    const [ownResult, tournamentResult, deliveredResult] = await Promise.all([
+      supabase.from('directos').select('jugador_id, pokepaste_text').eq('jugador_id', player.id).maybeSingle(),
+      supabase.from('torneo').select('bracket_data').eq('sala_id', SALA_ID).maybeSingle(),
+      supabase.from('directos').select('jugador_id, pokepaste_text'),
+    ])
+
+    if (ownResult.error) setError('No se pudo cargar tu PokéPaste.')
+    else {
+      const saved = (ownResult.data as DirectoRow | null)?.pokepaste_text ?? ''
+      setPokepaste(saved)
+      setSavedPokepaste(saved)
+    }
+
+    const rounds = (tournamentResult.data?.bracket_data ?? []) as Round[]
+    const nextRivalName = findRival(rounds, player.name)
+    setRivalName(nextRivalName)
+    setRivalPokepaste('')
+
+    const participantIds = (rounds[0]?.matches ?? [])
+      .flatMap((match) => [match.player1, match.player2])
+      .filter((name): name is string => Boolean(name && name !== 'BYE'))
+      .map((name) => PLAYERS.find((item) => item.name === name)?.id)
+      .filter((id): id is number => id !== undefined)
+    const deliveredIds = new Set(
+      (deliveredResult.data ?? [])
+        .filter((row) => Boolean(row.pokepaste_text?.trim()))
+        .map((row) => row.jugador_id)
+    )
+    const everyoneDelivered = participantIds.length > 0 && participantIds.every((id) => deliveredIds.has(id))
+    setAllDelivered(everyoneDelivered)
+
+    if (nextRivalName && everyoneDelivered && ownResult.data?.pokepaste_text) {
+      const rival = PLAYERS.find((item) => item.name === nextRivalName)
+      if (rival) {
+        const { data, error: rivalError } = await supabase.rpc('get_opponent_pokepaste', {
+          p_player_id: player.id,
+          p_opponent_id: rival.id,
+        })
+        if (!rivalError && Array.isArray(data)) setRivalPokepaste(data[0]?.pokepaste_text ?? '')
+      }
+    }
+    setLoading(false)
+  }, [])
+
+  useEffect(() => {
+    void loadStatus()
+  }, [loadStatus])
+
+  const savePokepaste = async (event: React.FormEvent) => {
+    event.preventDefault()
+    if (!supabase || playerId === null) return
+    setSaving(true)
+    setError('')
+    const { error: saveError } = await supabase.from('directos').upsert(
+      { jugador_id: playerId, pokepaste_text: pokepaste.trim() },
+      { onConflict: 'jugador_id' }
+    )
+    if (saveError) {
+      console.error('Error guardando PokéPaste:', saveError)
+      setError('No se pudo guardar el PokéPaste.')
+    } else {
+      setSavedPokepaste(pokepaste.trim())
+      await loadStatus()
+    }
+    setSaving(false)
+  }
+
+  const copyRivalPokepaste = async () => {
+    if (!rivalPokepaste) return
+    await navigator.clipboard.writeText(rivalPokepaste)
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 2000)
+  }
+
+  if (loading || playerId === null) return null
+
+  return (
+    <aside className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-5">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest text-teal-400">Torneo</p>
+          <h2 className="mt-1 text-xl font-black text-zinc-100">Tu PokéPaste</h2>
+        </div>
+        <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${savedPokepaste.trim() ? 'bg-emerald-500/15 text-emerald-300' : 'bg-amber-500/15 text-amber-300'}`}>
+          {savedPokepaste.trim() ? 'Entregado' : 'Pendiente'}
+        </span>
+      </div>
+      <form onSubmit={savePokepaste} className="mt-4 space-y-3">
+        <label className="block text-sm text-zinc-400">
+          Pega aquí el texto exportado desde PokéPaste.
+          <textarea value={pokepaste} onChange={(event) => setPokepaste(event.target.value)} rows={6} className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 font-mono text-xs text-zinc-200 outline-none focus:border-teal-500" placeholder="Pega aquí tu equipo..." />
+        </label>
+        <button type="submit" disabled={saving} className="rounded-lg bg-teal-500 px-4 py-2 text-sm font-bold text-zinc-950 hover:bg-teal-400 disabled:opacity-50">
+          {saving ? 'Guardando…' : 'Guardar PokéPaste'}
+        </button>
+      </form>
+      {rivalName && (
+        <div className="mt-5 border-t border-zinc-800 pt-4">
+          <p className="text-xs font-bold uppercase tracking-widest text-zinc-500">Rival actual</p>
+          <p className="mt-1 text-lg font-bold text-zinc-100">{rivalName}</p>
+          {allDelivered && rivalPokepaste ? (
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button type="button" onClick={() => setTeamOpen(true)} className="rounded-lg bg-sky-500 px-4 py-2 text-sm font-bold text-zinc-950 hover:bg-sky-400">VER EQUIPO</button>
+              <button type="button" onClick={copyRivalPokepaste} className="rounded-lg border border-sky-500/50 px-4 py-2 text-sm font-bold text-sky-300 hover:bg-sky-500/10">{copied ? 'Copiado' : 'Copiar'}</button>
+            </div>
+          ) : (
+            <p className="mt-2 text-sm text-zinc-500">El botón aparecerá cuando todos los participantes hayan entregado el equipo.</p>
+          )}
+        </div>
+      )}
+      {error && <p className="mt-3 text-sm text-rose-400">{error}</p>}
+      {teamOpen && rivalName && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+          <div className="max-h-[85vh] w-full max-w-2xl overflow-auto rounded-2xl border border-zinc-700 bg-zinc-950 p-5">
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="text-xl font-black">Equipo de {rivalName}</h2>
+              <button type="button" onClick={() => setTeamOpen(false)} className="text-zinc-400">Cerrar</button>
+            </div>
+            <pre className="mt-4 whitespace-pre-wrap rounded-xl border border-zinc-800 bg-zinc-900 p-4 font-mono text-sm text-zinc-200">{rivalPokepaste}</pre>
+          </div>
+        </div>
+      )}
+    </aside>
+  )
+}
