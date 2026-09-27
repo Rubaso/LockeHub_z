@@ -58,14 +58,6 @@ export default function RutasPage() {
                 </td>
                 {ROUTES.map((route) => {
                   const poke = pokemonOnRoute(player.id, route)
-                  const missed = fromDatabase && rows
-                    ? rows.find(
-                        (row) =>
-                          row.jugador_id === player.id &&
-                          row.ruta === route &&
-                          row.estado === 'ESCAPADO'
-                      )
-                    : undefined
                   return (
                     <td key={route} className="px-2 py-1 text-center">
                       {poke?.pokemon_id ? (
@@ -75,21 +67,6 @@ export default function RutasPage() {
                           title={poke.pokemon_name}
                           className="mx-auto h-8 w-8"
                         />
-                      ) : missed ? (
-                        <span
-                          className="font-black text-rose-400"
-                          title={`Encuentro perdido: ${missed.pokemon_name}${
-                            missed.event_reason
-                              ? ` (${
-                                  { fled: 'huida', defeated: 'debilitado', other: 'otro motivo' }[
-                                    missed.event_reason
-                                  ] ?? missed.event_reason
-                                })`
-                              : ''
-                          }`}
-                        >
-                          ×
-                        </span>
                       ) : (
                         <span className="text-zinc-700">·</span>
                       )}

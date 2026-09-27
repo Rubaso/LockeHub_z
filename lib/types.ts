@@ -22,10 +22,6 @@ export type Pokemon = {
   status: 'alive' | 'dead'
   route: string
   tramo: number
-  level?: number | null
-  eventAt?: string | null
-  eventReason?: string | null
-  captureSource?: string | null
 }
 
 export type Evolution = {

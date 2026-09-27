@@ -122,5 +122,9 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     mensaje += `\n\nIDs de mapa desconocidos:\n` + save.unknownMapIds.map((id) => `- ${id}`).join('\n')
   }
 
+  if (!save.hasStorage) {
+    mensaje += '\n\nEste archivo solo contiene el equipo activo; no incluye datos de las cajas.'
+  }
+
   return mensaje
 }

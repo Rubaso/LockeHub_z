@@ -12,20 +12,9 @@ export default function PokemonCard({ pokemon }: { pokemon: Pokemon }) {
       <img
         src={spriteUrl(pokemon.pokemonId, pokemon.shiny)}
         alt={pokemon.name}
-        className="mx-auto h-16 w-16"
+        className="mx-auto h-24 w-24"
       />
       <h3 className="mt-1 text-sm font-semibold text-zinc-100">{pokemon.name}</h3>
-      {pokemon.level && <p className="text-[11px] text-zinc-400">Nivel {pokemon.level}</p>}
-      {pokemon.captureSource && (
-        <p className="text-[11px] text-zinc-400">
-          Origen: {{
-            wild: 'Salvaje',
-            gift: 'Regalo',
-            egg: 'Huevo',
-            static: 'Estático',
-          }[pokemon.captureSource] ?? pokemon.captureSource}
-        </p>
-      )}
       <p className="text-[11px] text-zinc-400">HAB. {abilityNameInSpanish(pokemon.ability)}</p>
     </article>
   )

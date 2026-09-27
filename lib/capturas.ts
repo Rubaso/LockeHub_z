@@ -11,10 +11,6 @@ export type CapturaRow = {
   habilidad: string | null
   is_shiny: boolean | null
   is_team: boolean | null
-  level?: number | null
-  event_at?: string | null
-  event_reason?: string | null
-  capture_source?: string | null
 }
 
 export async function fetchCapturas(): Promise<CapturaRow[] | null> {
@@ -22,7 +18,7 @@ export async function fetchCapturas(): Promise<CapturaRow[] | null> {
 
   const { data, error } = await supabase
     .from('capturas')
-    .select('id, jugador_id, ruta, pokemon_name, pokemon_id, estado, habilidad, is_shiny, is_team, level, event_at, event_reason, capture_source')
+    .select('id, jugador_id, ruta, pokemon_name, pokemon_id, estado, habilidad, is_shiny, is_team')
     .eq('sala_id', SALA_ID)
 
   if (error) {

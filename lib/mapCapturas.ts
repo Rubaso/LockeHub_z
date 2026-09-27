@@ -91,10 +91,6 @@ export function capturaToPokemon(row: CapturaRow): Pokemon {
     status: row.estado === 'MUERTO' ? 'dead' : 'alive',
     route: row.ruta,
     tramo: tramoFromRoute(row.ruta),
-    level: row.level,
-    eventAt: row.event_at,
-    eventReason: row.event_reason,
-    captureSource: row.capture_source,
   }
 }
 

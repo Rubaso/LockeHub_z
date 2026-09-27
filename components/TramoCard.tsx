@@ -1,4 +1,5 @@
 import { spriteUrl } from '@/lib/sprites'
+import { abilityNameInSpanish } from '@/lib/abilityNames'
 import DeletePokemonButton from './DeletePokemonButton'
 import type { Evolution, Pokemon, Tramo } from '@/lib/types'
 
@@ -15,22 +16,29 @@ function MiniSprite({
   faded = false,
   detail,
   pokemon,
+  ability,
 }: {
   name: string
   pokemonId: number
   faded?: boolean
   detail?: string | null
   pokemon?: Pokemon
+  ability?: string
 }) {
   return (
     <div
-      className={`group relative w-20 rounded-lg border p-2 text-center ${
+      className={`group relative w-24 rounded-lg border p-2 text-center ${
         faded ? 'border-rose-900/60 bg-rose-950/30 opacity-70' : 'border-zinc-700 bg-zinc-900'
       }`}
     >
       {pokemon && <DeletePokemonButton pokemon={pokemon} />}
-      <img src={spriteUrl(pokemonId)} alt={name} className="mx-auto h-12 w-12" />
+      <img src={spriteUrl(pokemonId)} alt={name} className="mx-auto h-20 w-20" />
       <p className="truncate text-[11px] text-zinc-200">{name}</p>
+      {ability && (
+        <p className="mt-1 text-[9px] leading-tight text-zinc-400">
+          HAB. {abilityNameInSpanish(ability)}
+        </p>
+      )}
       {detail && <p className="mt-1 text-[9px] text-rose-200/80">{detail}</p>}
     </div>
   )
@@ -44,7 +52,7 @@ export default function TramoCard({ tramo, captures, fallen, evolutions }: Props
           <img
             src={tramo.leaderSprite}
             alt={tramo.leader}
-            className="h-12 w-12 object-contain"
+            className="h-16 w-16 object-contain"
           />
           <h2 className="text-xl font-bold tracking-wide text-zinc-100">{tramo.title}</h2>
         </div>
@@ -59,7 +67,13 @@ export default function TramoCard({ tramo, captures, fallen, evolutions }: Props
           <div className="flex flex-wrap gap-2">
             {captures.length === 0 && <p className="text-sm text-zinc-500">Nada en este tramo.</p>}
             {captures.map((poke) => (
-              <MiniSprite key={poke.id} name={poke.name} pokemonId={poke.pokemonId} pokemon={poke} />
+              <MiniSprite
+                key={poke.id}
+                name={poke.name}
+                pokemonId={poke.pokemonId}
+                ability={poke.ability}
+                pokemon={poke}
+              />
             ))}
           </div>
         </div>
@@ -75,14 +89,9 @@ export default function TramoCard({ tramo, captures, fallen, evolutions }: Props
                 key={poke.id}
                 name={poke.name}
                 pokemonId={poke.pokemonId}
+                ability={poke.ability}
                 faded
                 pokemon={poke}
-                detail={[
-                  poke.level ? `Nv. ${poke.level}` : null,
-                  poke.eventAt
-                    ? new Date(poke.eventAt).toLocaleDateString()
-                    : null,
-                ].filter(Boolean).join(' · ') || null}
               />
             ))}
           </div>

@@ -25,7 +25,6 @@ export function useCapturas() {
     }
 
     load()
-    const refreshInterval = window.setInterval(() => void load(), 10_000)
     window.addEventListener(CAPTURAS_UPDATED_EVENT, load)
     const channel = supabase
       ?.channel('realtime_capturas')
@@ -37,7 +36,6 @@ export function useCapturas() {
       .subscribe()
     return () => {
       cancelled = true
-      window.clearInterval(refreshInterval)
       window.removeEventListener(CAPTURAS_UPDATED_EVENT, load)
       if (channel) void supabase?.removeChannel(channel)
     }

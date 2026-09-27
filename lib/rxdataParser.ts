@@ -1,5 +1,7 @@
-import { load } from '@hyrious/marshal'
+import { loadAll } from '@hyrious/marshal'
 import { MAP_Z } from '@/lib/mapZ'
+import { POKEMON_Z_SPECIES_BY_ID } from '@/lib/pokemonZSpecies'
+import pokemonZAbilitySlots from '@/lib/pokemon-z-abilities.json'
 
 export interface PokemonSaveData {
   species: string
@@ -33,7 +35,12 @@ interface PokemonApiInfo {
 }
 
 let cachedPokemonMap: Map<string, number> | null = null
+let cachedPokemonNameMap: Map<number, string> | null = null
 const cachedSpeciesVariants = new Map<string, PokemonApiInfo[]>()
+const pokemonZAbilities = pokemonZAbilitySlots as Record<
+  string,
+  (number | null)[]
+>
 
 async function getPokemonIdMap(): Promise<Map<string, number>> {
   if (cachedPokemonMap) {
@@ -53,6 +60,7 @@ async function getPokemonIdMap(): Promise<Map<string, number>> {
   const data = await response.json()
 
   cachedPokemonMap = new Map<string, number>()
+  cachedPokemonNameMap = new Map<number, string>()
 
   for (const pokemon of data.results ?? []) {
     const name = String(pokemon.name ?? '')
@@ -68,6 +76,7 @@ async function getPokemonIdMap(): Promise<Map<string, number>> {
 
     if (name && Number.isFinite(id)) {
       cachedPokemonMap.set(name, id)
+      cachedPokemonNameMap.set(id, name)
     }
   }
 
@@ -136,6 +145,10 @@ async function resolvePokemonApiInfo(
   form: number,
   pokemonMap: Map<string, number>
 ): Promise<PokemonApiInfo | null> {
+  if (!pokemonMap.has(species)) {
+    return null
+  }
+
   const variants = await getSpeciesVariants(species)
 
   if (variants.length > 0) {
@@ -324,6 +337,15 @@ function numberValue(value: any): number | null {
 }
 
 function normalizeSpecies(value: any): string {
+  if (typeof value === 'number') {
+    const pokemonZSpecies = POKEMON_Z_SPECIES_BY_ID[value]
+    if (pokemonZSpecies) {
+      return pokemonZSpecies
+    }
+
+    return cachedPokemonNameMap?.get(value) ?? String(value)
+  }
+
   return (
     symbolName(value) ??
     String(value ?? '')
@@ -347,22 +369,123 @@ function normalizeAbility(value: any): string | null {
     : String(value).toLowerCase()
 }
 
-function normalizeNickname(value: any): string | null {
-  if (typeof value !== 'string') {
+function getPokemonAbility(
+  pokemon: any,
+  speciesRaw: unknown,
+  globalMetadata: any
+): string | null {
+  if (typeof speciesRaw !== 'number') {
+    return normalizeAbility(
+      getIvarFromNames(pokemon, ['@ability', '@abilityID', '@abilityId'])
+    )
+  }
+
+  const slots = pokemonZAbilities[String(speciesRaw)]
+  if (!slots) {
+    return normalizeAbility(
+      getIvarFromNames(pokemon, ['@ability', '@abilityID', '@abilityId'])
+    )
+  }
+
+  const abilityFlag = numberValue(getIvar(pokemon, '@abilityflag'))
+  const personalId = numberValue(getIvar(pokemon, '@personalID'))
+  const abilityIndex = abilityFlag ?? (personalId === null ? null : personalId & 1)
+  if (abilityIndex === null) {
     return null
   }
 
-  const nickname = value.trim()
+  const form = numberValue(getIvar(pokemon, '@form')) ?? 0
+  const abilityMode = symbolName(
+    getIvar(globalMetadata, '@random_ability_mode')
+  )
+
+  if (abilityMode === 'FULL_RANDOM_ABS') {
+    const randomizedAbilities = getHashValue(
+      getHashValue(
+        getIvar(globalMetadata, '@random_abs_pokemon'),
+        String(speciesRaw)
+      ),
+      String(form)
+    ) ?? getHashValue(
+      getHashValue(
+        getIvar(globalMetadata, '@random_abs_pokemon'),
+        String(speciesRaw)
+      ),
+      '0'
+    )
+
+    if (Array.isArray(randomizedAbilities)) {
+      const ability = randomizedAbilities.find(
+        (entry) =>
+          Array.isArray(entry) &&
+          numberValue(entry[1]) === abilityIndex
+      )
+      const randomizedAbilityId = Array.isArray(ability)
+        ? numberValue(ability[0])
+        : null
+
+      if (randomizedAbilityId !== null) {
+        return String(randomizedAbilityId)
+      }
+    }
+  }
+
+  const fallbackIndex = abilityIndex >= 2 && personalId !== null
+    ? personalId & 1
+    : abilityIndex
+  const baseAbilityId = slots[abilityIndex] ??
+    slots[fallbackIndex] ??
+    slots[0] ??
+    null
+
+  if (baseAbilityId === null) {
+    return null
+  }
+
+  if (abilityMode === 'MAP_RANDOM_ABS') {
+    const randomizedAbilityId = numberValue(
+      getHashValue(
+        getIvar(globalMetadata, '@ability_hash'),
+        String(baseAbilityId)
+      )
+    )
+
+    if (randomizedAbilityId !== null) {
+      return String(randomizedAbilityId)
+    }
+  }
+
+  return String(baseAbilityId)
+}
+
+function normalizeNickname(value: any): string | null {
+  const nickname = value instanceof Uint8Array
+    ? new TextDecoder().decode(value).trim()
+    : typeof value === 'string'
+      ? value.trim()
+      : ''
 
   return nickname.length > 0
     ? nickname
     : null
 }
 
+function getIvarFromNames(obj: unknown, names: readonly string[]): unknown {
+  for (const name of names) {
+    const value = getIvar(obj, name)
+    if (value !== undefined) {
+      return value
+    }
+  }
+
+  return undefined
+}
+
 async function extractPokemon(
   pokemon: any,
   isTeam: boolean,
-  pokemonMap: Map<string, number>
+  pokemonMap: Map<string, number>,
+  globalMetadata: any
 ): Promise<PokemonSaveData | null> {
   if (!pokemon) {
     return null
@@ -394,10 +517,17 @@ async function extractPokemon(
     pokemonMap
   )
 
-  const obtainMapRaw = getIvar(pokemon, '@obtain_map')
+  const obtainMapRaw = getIvarFromNames(pokemon, [
+    '@obtain_map',
+    '@obtainMap'
+  ])
   const obtainMap = numberValue(obtainMapRaw) ?? 0
 
-  const obtainMethodRaw = getIvar(pokemon, '@obtain_method')
+  const obtainMethodRaw = getIvarFromNames(pokemon, [
+    '@obtain_method',
+    '@obtainMethod',
+    '@obtainMode'
+  ])
   const obtainMethod = numberValue(obtainMethodRaw) ?? 0
 
   const obtainLevel = numberValue(
@@ -406,10 +536,10 @@ async function extractPokemon(
 
   const owner = getIvar(pokemon, '@owner')
   const originalTrainerName = normalizeNickname(
-    getIvar(owner, '@name')
+    getIvar(owner, '@name') ?? getIvar(pokemon, '@ot')
   )
   const originalTrainerId = numberValue(
-    getIvar(owner, '@id')
+    getIvar(owner, '@id') ?? getIvar(pokemon, '@trainerID')
   )
 
   // El randomizer de Pokémon Añil guarda @randomized en el propio Pokémon.
@@ -441,7 +571,7 @@ async function extractPokemon(
     randomized,
     ruta,
     shiny: getIvar(pokemon, '@shiny') === true,
-    ability: normalizeAbility(getIvar(pokemon, '@ability')),
+    ability: getPokemonAbility(pokemon, speciesRaw, globalMetadata),
     level: numberValue(getIvar(pokemon, '@level')),
     obtainLevel,
     nickname: normalizeNickname(getIvar(pokemon, '@name')),
@@ -459,12 +589,19 @@ export async function parseRxDataSave(
   pokemon: PokemonSaveData[]
   unknownMapIds: number[]
   unknownMapPokemon: UnknownMapPokemon[]
+  hasStorage: boolean
 }> {
   const pokemonMap = await getPokemonIdMap()
   const buffer = await file.arrayBuffer()
-  const save: any = load(buffer)
+  const saveObjects = loadAll(buffer)
+  const save: any = saveObjects[0]
+  const globalMetadata = saveObjects[11]
 
-  const player = getHashValue(save, 'player')
+  const player = getHashValue(save, 'player') ??
+    (getIvar(save, '@id') !== undefined &&
+      Array.isArray(getIvar(save, '@party'))
+      ? save
+      : undefined)
 
   if (!player) {
     throw new Error(
@@ -475,7 +612,7 @@ export async function parseRxDataSave(
   const trainerIdValue = getIvar(player, '@id')
   const trainerNameValue = getIvar(player, '@name')
   const trainerId = String(trainerIdValue ?? '')
-  const trainerName = String(trainerNameValue ?? '')
+  const trainerName = normalizeNickname(trainerNameValue) ?? ''
 
   if (!trainerId) {
     throw new Error(
@@ -492,7 +629,8 @@ export async function parseRxDataSave(
       const extracted = await extractPokemon(
         pokemon,
         true,
-        pokemonMap
+        pokemonMap,
+        globalMetadata
       )
 
       if (extracted) {
@@ -501,12 +639,14 @@ export async function parseRxDataSave(
     }
   }
 
-  const storageSystem = getHashValue(save, 'storage_system')
+  const storageSystem = saveObjects[14] ?? getHashValue(save, 'storage_system')
+  let hasStorage = false
 
   if (storageSystem) {
     const boxes = getIvar(storageSystem, '@boxes')
 
     if (Array.isArray(boxes)) {
+      hasStorage = true
       for (const box of boxes) {
         if (!box) {
           continue
@@ -522,7 +662,8 @@ export async function parseRxDataSave(
           const extracted = await extractPokemon(
             pokemon,
             false,
-            pokemonMap
+            pokemonMap,
+            globalMetadata
           )
 
           if (extracted) {
@@ -572,6 +713,7 @@ export async function parseRxDataSave(
     trainerName,
     pokemon: pokemonUnicos,
     unknownMapIds,
-    unknownMapPokemon
+    unknownMapPokemon,
+    hasStorage
   }
 }

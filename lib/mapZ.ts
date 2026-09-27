@@ -1,4 +1,5 @@
 export const MAP_Z: Record<string, string> = {
+  "2": "INICIAL",
   "3": "Pueblo Lienzo",
   "7": "Ruta 1",
   "9": "Pueblo Vinilo",

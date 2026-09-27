@@ -55,6 +55,7 @@ export const TRAMOS: Tramo[] = [
 
 export const ROUTES = [
   // Tramo 1 — Inicio → Canola
+  'INICIAL',
   'Ruta 1',
   'Ruta 2',
   'Bosque Ladera',
