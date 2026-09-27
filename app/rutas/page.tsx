@@ -65,7 +65,7 @@ export default function RutasPage() {
                           src={spriteUrl(poke.pokemon_id, !!poke.is_shiny)}
                           alt={poke.pokemon_name}
                           title={poke.pokemon_name}
-                          className="mx-auto h-8 w-8"
+                          className="mx-auto h-20 w-20"
                         />
                       ) : (
                         <span className="text-zinc-700">·</span>
