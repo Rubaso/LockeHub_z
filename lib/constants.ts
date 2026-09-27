@@ -14,7 +14,7 @@ export function notifyCapturasUpdated() {
 
 export const PLAYERS: Player[] = [
   { id: 1, name: "Rubaso", twitchUser: "", color: "#5ec4a0" },
-  { id: 2, name: "Eva", twitchUser: "", color: "#5ec4a0" },
+  { id: 2, name: "Ciaran", twitchUser: "", color: "#5ec4a0" },
   { id: 3, name: "Senapi", twitchUser: "", color: "#5ec4a0" },
   { id: 4, name: "Ferrox", twitchUser: "", color: "#5ec4a0" },
   { id: 5, name: "Malza", twitchUser: "", color: "#5ec4a0" },
