@@ -1,4 +1,5 @@
 import { spriteUrl } from '@/lib/sprites'
+import DeletePokemonButton from './DeletePokemonButton'
 import type { Evolution, Pokemon, Tramo } from '@/lib/types'
 
 type Props = {
@@ -12,19 +13,25 @@ function MiniSprite({
   name,
   pokemonId,
   faded = false,
+  detail,
+  pokemon,
 }: {
   name: string
   pokemonId: number
   faded?: boolean
+  detail?: string | null
+  pokemon?: Pokemon
 }) {
   return (
     <div
-      className={`w-20 rounded-lg border p-2 text-center ${
+      className={`group relative w-20 rounded-lg border p-2 text-center ${
         faded ? 'border-rose-900/60 bg-rose-950/30 opacity-70' : 'border-zinc-700 bg-zinc-900'
       }`}
     >
+      {pokemon && <DeletePokemonButton pokemon={pokemon} />}
       <img src={spriteUrl(pokemonId)} alt={name} className="mx-auto h-12 w-12" />
       <p className="truncate text-[11px] text-zinc-200">{name}</p>
+      {detail && <p className="mt-1 text-[9px] text-rose-200/80">{detail}</p>}
     </div>
   )
 }
@@ -52,7 +59,7 @@ export default function TramoCard({ tramo, captures, fallen, evolutions }: Props
           <div className="flex flex-wrap gap-2">
             {captures.length === 0 && <p className="text-sm text-zinc-500">Nada en este tramo.</p>}
             {captures.map((poke) => (
-              <MiniSprite key={poke.id} name={poke.name} pokemonId={poke.pokemonId} />
+              <MiniSprite key={poke.id} name={poke.name} pokemonId={poke.pokemonId} pokemon={poke} />
             ))}
           </div>
         </div>
@@ -64,7 +71,19 @@ export default function TramoCard({ tramo, captures, fallen, evolutions }: Props
           <div className="flex flex-wrap gap-2">
             {fallen.length === 0 && <p className="text-sm text-zinc-500">Sin bajas.</p>}
             {fallen.map((poke) => (
-              <MiniSprite key={poke.id} name={poke.name} pokemonId={poke.pokemonId} faded />
+              <MiniSprite
+                key={poke.id}
+                name={poke.name}
+                pokemonId={poke.pokemonId}
+                faded
+                pokemon={poke}
+                detail={[
+                  poke.level ? `Nv. ${poke.level}` : null,
+                  poke.eventAt
+                    ? new Date(poke.eventAt).toLocaleDateString()
+                    : null,
+                ].filter(Boolean).join(' · ') || null}
+              />
             ))}
           </div>
         </div>

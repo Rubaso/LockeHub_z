@@ -3,23 +3,30 @@ import { NextResponse } from 'next/server'
 import { PLAYERS, SALA_ID } from '@/lib/constants'
 
 type GameEvent = {
-  eventType: 'capture' | 'death'
+  eventType: 'capture' | 'death' | 'encounter_missed'
   playerId: number
   trainerId: string
   personalId: string
   pokemonId: number
   pokemonName: string
   speciesName: string
+  ability?: string | null
   route: string
   isShiny: boolean
   isTeam: boolean
+  level?: number
+  occurredAt?: number
+  captureSource?: 'wild' | 'gift' | 'egg' | 'static' | null
+  reason?: 'fainted' | 'fled' | 'defeated' | 'other' | null
 }
 
 function isValidGameEvent(value: unknown): value is GameEvent {
   if (!value || typeof value !== 'object') return false
   const event = value as Partial<GameEvent>
   return (
-    (event.eventType === 'capture' || event.eventType === 'death') &&
+    (event.eventType === 'capture' ||
+      event.eventType === 'death' ||
+      event.eventType === 'encounter_missed') &&
     Number.isInteger(event.playerId) &&
     PLAYERS.some((player) => player.id === event.playerId) &&
     typeof event.trainerId === 'string' &&
@@ -36,10 +43,31 @@ function isValidGameEvent(value: unknown): value is GameEvent {
     typeof event.speciesName === 'string' &&
     event.speciesName.length > 0 &&
     event.speciesName.length <= 100 &&
+    (event.ability === undefined ||
+      event.ability === null ||
+      (typeof event.ability === 'string' && event.ability.length <= 80)) &&
     typeof event.route === 'string' &&
     event.route.length <= 160 &&
     typeof event.isShiny === 'boolean' &&
-    typeof event.isTeam === 'boolean'
+    typeof event.isTeam === 'boolean' &&
+    (event.level === undefined ||
+      (Number.isInteger(event.level) && Number(event.level) >= 1 && Number(event.level) <= 100)) &&
+    (event.occurredAt === undefined ||
+      (Number.isInteger(event.occurredAt) &&
+        Number(event.occurredAt) > 0 &&
+        Number(event.occurredAt) <= 4_102_444_800)) &&
+    (event.captureSource === undefined ||
+      event.captureSource === null ||
+      event.captureSource === 'wild' ||
+      event.captureSource === 'gift' ||
+      event.captureSource === 'egg' ||
+      event.captureSource === 'static') &&
+    (event.reason === undefined ||
+      event.reason === null ||
+      event.reason === 'fainted' ||
+      event.reason === 'fled' ||
+      event.reason === 'defeated' ||
+      event.reason === 'other')
   )
 }
 
@@ -84,21 +112,37 @@ export async function POST(request: Request) {
   }
 
   const existing = matches?.[0] as { id: number; estado: string } | undefined
+  const occurredAt = new Date((body.occurredAt ?? Math.floor(Date.now() / 1000)) * 1000).toISOString()
+  const eventLevel = body.level ?? null
   const nextStatus =
-    body.eventType === 'death' || existing?.estado === 'MUERTO' ? 'MUERTO' : 'VIVO'
+    body.eventType === 'death'
+      ? 'MUERTO'
+      : body.eventType === 'encounter_missed'
+        ? 'ESCAPADO'
+        : existing?.estado === 'MUERTO'
+          ? 'MUERTO'
+          : 'VIVO'
+
+  if (body.eventType === 'encounter_missed' && existing && existing.estado !== 'ESCAPADO') {
+    return NextResponse.json({ success: true, ignored: true })
+  }
 
   if (existing) {
-    const values =
-      body.eventType === 'death'
-        ? { estado: 'MUERTO', is_team: false }
-        : {
-            ruta: body.route || 'Zona desconocida',
-            pokemon_name: body.pokemonName || body.speciesName,
-            pokemon_id: body.pokemonId,
-            estado: nextStatus,
-            is_shiny: body.isShiny,
-            is_team: body.isTeam,
-          }
+    const values = {
+      ruta: body.route || 'Zona desconocida',
+      pokemon_name: body.pokemonName || body.speciesName,
+      pokemon_id: body.pokemonId,
+      ...(body.ability && { habilidad: body.ability }),
+      estado: nextStatus,
+      is_shiny: body.isShiny,
+      is_team: body.eventType === 'capture' && nextStatus === 'VIVO' && body.isTeam,
+      level: eventLevel,
+      event_at: occurredAt,
+      event_reason: body.reason ?? null,
+      ...(body.eventType !== 'death' && {
+        capture_source: body.captureSource ?? null,
+      }),
+    }
     const { error } = await database.from('capturas').update(values).eq('id', existing.id)
     if (error) {
       console.error('Error actualizando evento del juego:', error)
@@ -111,12 +155,16 @@ export async function POST(request: Request) {
       ruta: body.route || 'Zona desconocida',
       pokemon_name: body.pokemonName || body.speciesName,
       pokemon_id: body.pokemonId,
+      habilidad: body.ability || null,
       estado: nextStatus,
-      habilidad: null,
       is_shiny: body.isShiny,
       is_team: body.eventType === 'death' ? false : body.isTeam,
       save_pokemon_id: savePokemonId,
-      origen: 'game',
+      origen: body.eventType === 'encounter_missed' ? 'encounter' : 'game',
+      level: eventLevel,
+      event_at: occurredAt,
+      event_reason: body.reason ?? null,
+      capture_source: body.captureSource ?? null,
     })
     if (error) {
       console.error('Error insertando evento del juego:', error)

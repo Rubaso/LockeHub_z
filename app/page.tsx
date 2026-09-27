@@ -72,7 +72,6 @@ export default function GatePage() {
         >
           Entrar como espectador
         </Link>
-        <p className="text-center text-[11px] text-zinc-500">Solo lectura. Sin editar cajas.</p>
 
         <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-zinc-600">
           <span className="h-px flex-1 bg-zinc-800" />
@@ -89,7 +88,7 @@ export default function GatePage() {
                 href="/inicio"
                 className="flex-1 rounded-xl bg-teal-500 py-2 text-center text-xs font-black uppercase text-zinc-950"
               >
-                Ir al centro
+                Continuar
               </Link>
               <button
                 type="button"
