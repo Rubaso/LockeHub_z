@@ -89,14 +89,7 @@ export default function Header() {
       )
     }
 
-    const refreshLivePlayers = async () => {
-      await fetch('/api/check-live', { cache: 'no-store' })
-      await loadLivePlayers()
-    }
-
     loadLivePlayers()
-    refreshLivePlayers()
-    const interval = window.setInterval(refreshLivePlayers, 5 * 60 * 1000)
 
     const channel = supabase
       ? supabase.channel('realtime_directos_header')
@@ -116,7 +109,6 @@ export default function Header() {
 
     return () => {
       cancelled = true
-      window.clearInterval(interval)
       if (channel) supabase?.removeChannel(channel)
     }
   }, [])
