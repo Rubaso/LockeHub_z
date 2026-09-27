@@ -95,6 +95,8 @@ export default function TorneoPage() {
   const [sessionId, setSessionId] = useState<number | null>(null)
   const [teamModal, setTeamModal] = useState<TeamModal | null>(null)
   const [colors, setColors] = useState<Record<number, string>>({})
+  const [teamCopied, setTeamCopied] = useState(false)
+  const [clipboardError, setClipboardError] = useState('')
 
   const loadTournament = useCallback(async () => {
     if (!supabase) return
@@ -221,6 +223,8 @@ export default function TorneoPage() {
 
   const openTeam = async (name: string) => {
     if (!supabase || !canSeeTeam(name)) return
+    setTeamCopied(false)
+    setClipboardError('')
     const player = PLAYERS.find((item) => item.name === name)
     if (!player || sessionId === null) return
 
@@ -242,6 +246,18 @@ export default function TorneoPage() {
     if (!error && text) setTeamModal({ playerName: name, text })
   }
 
+  const copyTeam = async () => {
+    if (!teamModal) return
+    try {
+      await navigator.clipboard.writeText(teamModal.text)
+      setClipboardError('')
+      setTeamCopied(true)
+      window.setTimeout(() => setTeamCopied(false), 2500)
+    } catch {
+      setClipboardError('No se pudo copiar el equipo. Comprueba los permisos del navegador.')
+    }
+  }
+
   const participantIds = participants(rounds)
     .map((name) => PLAYERS.find((player) => player.name === name)?.id)
     .filter((id): id is number => id !== undefined)
@@ -257,7 +273,7 @@ export default function TorneoPage() {
           <div className="max-h-[85vh] w-full max-w-2xl overflow-auto rounded-2xl border border-zinc-700 bg-zinc-950 p-5">
             <div className="flex items-center justify-between gap-3">
               <h2 className="text-xl font-black">Equipo de {teamModal.playerName}</h2>
-              <button type="button" onClick={() => setTeamModal(null)} className="text-zinc-400">
+              <button type="button" onClick={() => { setTeamModal(null); setTeamCopied(false); setClipboardError('') }} className="text-zinc-400">
                 Cerrar
               </button>
             </div>
@@ -266,11 +282,16 @@ export default function TorneoPage() {
             </pre>
             <button
               type="button"
-              onClick={() => void navigator.clipboard.writeText(teamModal.text)}
-              className="mt-4 rounded-lg bg-teal-500 px-4 py-2 text-sm font-bold text-zinc-950"
+              onClick={() => void copyTeam()}
+              className={`mt-4 rounded-lg px-4 py-2 text-sm font-bold transition ${
+                teamCopied
+                  ? 'border border-emerald-400/50 bg-emerald-500/15 text-emerald-300'
+                  : 'bg-teal-500 text-zinc-950 hover:bg-teal-400'
+              }`}
             >
-              Copiar equipo
+              {teamCopied ? '✓ Equipo copiado' : 'Copiar equipo'}
             </button>
+            {clipboardError && <p role="alert" className="mt-2 text-sm text-rose-300">{clipboardError}</p>}
           </div>
         </div>
       )}
