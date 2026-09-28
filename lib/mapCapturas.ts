@@ -5,16 +5,21 @@ import type { Pokemon } from './types'
 const ZONAS_POR_TRAMO: Record<number, string[]> = {
 
   1: [
+    'Pueblo Lienzo',
     'INICIAL',
     'Ruta 1',
+    'Pueblo Vinilo',
     'Ruta 2',
+    'Ciudad Grisalla',
     'Bosque Ladera',
     'Ruta 3',
     'Santuario de los Reyes'
   ],
 
   2: [
+    'Pueblo Acrílico',
     'Ruta 4',
+    'Pueblo Collage',
     'Bosque Ladera Parte 2',
     'Ruta 5',
     'Ruta 6',
@@ -22,6 +27,8 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
   ],
 
   3: [
+    'Pueblo Profano',
+    'Ciudad Óleo',
     'Ruta 7 Norte',
     'Ruta 7 Sur',
     'Pantano Profano',
@@ -31,6 +38,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
   ],
 
   4: [
+    'Ciudad Novarte',
     'Ruta 9',
     'Ruta 10',
     'Ruta 11',
@@ -39,6 +47,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
   ],
 
   5: [
+    'Pueblo Petroglifo',
     'Ruta 13',
     'Ruta 14',
     'Ruta 15',
@@ -50,23 +59,43 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
   6: [
     'Ruta 17',
     'Ruta 18',
-    'Ruta 19'
+    'Ruta 19',
+    'Ciudad Relieve',
+    'Pueblo Vánitas',
+    'Bastión Vánitas',
+    'Ciudad Luminalia'
   ],
 
   7: [
+    'Ciudad Romantis',
+    'Ciudad Batik',
     'Ruta 20',
     'Ruta 21',
     'Ruta 22'
   ],
 
   8: [
+    'Pueblo Fresco',
+    'Pueblo Mosaico',
     'Ruta 23',
     'Ruta 24',
     'Ruta 25'
   ],
 
   9: [
+    'Ciudad Fluxus',
+    'Ciudad Fractal',
     'Ruta 26'
+  ],
+
+  10: [
+    'Villa Pokémon',
+    'Pueblo Sanguino',
+    'Ciudad Yantra'
+  ],
+
+  12: [
+    'Viejo Vánitas'
   ],
 
 };

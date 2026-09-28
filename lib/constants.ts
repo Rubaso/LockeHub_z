@@ -55,26 +55,34 @@ export const TRAMOS: Tramo[] = [
 
 export const ROUTES = [
   // Tramo 1 — Inicio → Canola
+  'Pueblo Lienzo',
   'INICIAL',
   'Ruta 1',
+  'Pueblo Vinilo',
   'Ruta 2',
+  'Ciudad Grisalla',
   'Bosque Ladera',
   'Cueva Grisalla',
 
   // Tramo 2 — Canola → Hisopo
+  'Pueblo Acrílico',
   'Ruta 3',
+  'Pueblo Collage',
   'Ruta 4',
   'Cueva Lóbrega',
   'Bosque Errante',
 
   // Tramo 3 — Hisopo → F3
+  'Pueblo Profano',
   'Ruta 5',
+  'Ciudad Óleo',
   'Ruta 6',
   'Cueva Psique',
   'Cueva Refulgente',
 
   // Tramo 4 — F3 → Zafra
   'Ruta 7 Norte',
+  'Ciudad Novarte',
   'Ruta 7 Sur',
   'Ruta 8 Este',
   'Ruta 8 Oeste',
@@ -84,6 +92,7 @@ export const ROUTES = [
   // Tramo 5 — Zafra → Clavelina
   'Ruta 9',
   'Ruta 10',
+  'Pueblo Petroglifo',
   'Cueva de los Reflejos',
   'Cueva Desenlace',
   'Gruta Helada',
@@ -91,14 +100,20 @@ export const ROUTES = [
   // Tramo 6 — Clavelina → Belladona
   'Ruta 11',
   'Ruta 12',
+  'Ciudad Relieve',
+  'Pueblo Vánitas',
+  'Bastión Vánitas',
   'Ruta 13',
+  'Ciudad Luminalia',
   'Catacumbas Meridionales',
   'Catacumbas Occidentales',
   'Pantano Profano',
 
   // Tramo 7 — Belladona → Fortunia
   'Ruta 14',
+  'Ciudad Romantis',
   'Ruta 15',
+  'Ciudad Batik',
   'Ruta 16',
   'Catacumbas Orientales',
   'Catacumbas Septentrionales',
@@ -106,7 +121,9 @@ export const ROUTES = [
 
   // Tramo 8 — Fortunia → Anturia
   'Ruta 17',
+  'Pueblo Fresco',
   'Ruta 18',
+  'Pueblo Mosaico',
   'Ruta 19',
   'Costa Sanguina',
   'Bahía Azul',
@@ -114,6 +131,8 @@ export const ROUTES = [
 
   // Tramo 9 — Anturia → Rúpico
   'Ruta 20',
+  'Ciudad Fluxus',
+  'Ciudad Fractal',
   'Ruta 21',
   'Isla Certijo',
   'Isla Montesanto',
@@ -122,7 +141,10 @@ export const ROUTES = [
 
   // Tramo 10 — Rúpico → Cendera
   'Ruta 22',
+  'Villa Pokémon',
+  'Pueblo Sanguino',
   'Ruta 23',
+  'Ciudad Yantra',
   'Colina de Tormenta',
   'Pirineos de Kalos',
   'Huerto Vánitas',
