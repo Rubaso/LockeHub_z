@@ -20,12 +20,25 @@ type CapturaSaveRow = {
 type ExistingRow = {
   id: number
   save_pokemon_id: string
+  estado: string
   ruta: string
   pokemon_name: string
   pokemon_id: number | null
   habilidad: string | null
   is_shiny: boolean
   is_team: boolean
+}
+
+type ActivityRow = {
+  sala_id: string
+  jugador_id: number
+  tipo: 'captura' | 'muerte'
+  save_pokemon_id: string
+  pokemon_name: string
+  pokemon_id: number | null
+  ruta: string
+  is_shiny: boolean
+  ocurrido_en: string
 }
 
 export async function importSaveFile(file: File, player: SessionPlayer) {
@@ -43,7 +56,7 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     ruta: pokemon.ruta ?? `Zona desconocida (ID ${pokemon.obtainMap})`,
     pokemon_name: pokemon.pokemonName,
     pokemon_id: pokemon.pokemonId ?? null,
-    estado: 'VIVO',
+    estado: pokemon.diedAt ? 'MUERTO' : 'VIVO',
     habilidad: pokemon.ability ?? null,
     is_shiny: !!pokemon.shiny,
     is_team: !!pokemon.isTeam,
@@ -53,7 +66,7 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
 
   const { data: existentes, error: errorExistentes } = await supabase
     .from('capturas')
-    .select('id, save_pokemon_id, ruta, pokemon_name, pokemon_id, habilidad, is_shiny, is_team')
+    .select('id, save_pokemon_id, estado, ruta, pokemon_name, pokemon_id, habilidad, is_shiny, is_team')
     .eq('sala_id', SALA_ID)
     .eq('jugador_id', player.id)
     .not('save_pokemon_id', 'is', null)
@@ -78,6 +91,9 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     }
 
     const payload: Partial<ExistingRow> = {}
+    if (pokemon.estado === 'MUERTO' && existente.estado !== 'MUERTO') {
+      payload.estado = 'MUERTO'
+    }
     if (existente.ruta !== pokemon.ruta) payload.ruta = pokemon.ruta
     if (existente.pokemon_name !== pokemon.pokemon_name) payload.pokemon_name = pokemon.pokemon_name
     if (existente.pokemon_id !== pokemon.pokemon_id) payload.pokemon_id = pokemon.pokemon_id
@@ -102,9 +118,60 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
   let actualizados = 0
   for (const cambio of actualizaciones) {
     const { error } = await supabase.from('capturas').update(cambio.payload).eq('id', cambio.id)
-    if (!error) actualizados++
+    if (error) {
+      throw new Error('La partida se leyó, pero hubo un error actualizando un Pokémon existente.')
+    }
+    actualizados++
   }
 
+  const actividad: ActivityRow[] = []
+  for (const pokemon of save.pokemon) {
+    const savePokemonId = `${save.trainerId}:${pokemon.personalID}`
+    const ruta = pokemon.ruta ?? `Zona desconocida (ID ${pokemon.obtainMap})`
+
+    if (pokemon.capturedAt) {
+      actividad.push({
+        sala_id: SALA_ID,
+        jugador_id: player.id,
+        tipo: 'captura',
+        save_pokemon_id: savePokemonId,
+        pokemon_name: pokemon.pokemonName,
+        pokemon_id: pokemon.pokemonId,
+        ruta,
+        is_shiny: pokemon.shiny,
+        ocurrido_en: pokemon.capturedAt,
+      })
+    }
+
+    if (pokemon.diedAt) {
+      actividad.push({
+        sala_id: SALA_ID,
+        jugador_id: player.id,
+        tipo: 'muerte',
+        save_pokemon_id: savePokemonId,
+        pokemon_name: pokemon.pokemonName,
+        pokemon_id: pokemon.pokemonId,
+        ruta: pokemon.deathArea ?? ruta,
+        is_shiny: pokemon.shiny,
+        ocurrido_en: pokemon.diedAt,
+      })
+    }
+  }
+
+  if (actividad.length > 0) {
+    const { error } = await supabase
+      .from('feed_eventos')
+      .upsert(actividad, {
+        onConflict: 'sala_id,jugador_id,save_pokemon_id,tipo',
+        ignoreDuplicates: true,
+      })
+
+    if (error) {
+      throw new Error('Los Pokémon se guardaron, pero no se pudo actualizar la actividad. Comprueba que la migración de la feed esté aplicada en Supabase.')
+    }
+  }
+
+  const eventosDetectados = actividad.length
   const zonasReconocidas = save.pokemon.filter((pokemon) => pokemon.ruta !== null).length
   const yaExistentes = pokemonDelSave.length - nuevos.length
 
@@ -116,7 +183,8 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     `Zonas desconocidas: ${save.unknownMapPokemon.length}\n` +
     `Nuevos añadidos: ${insertados}\n` +
     `Ya existentes: ${yaExistentes}\n` +
-    `Actualizados: ${actualizados}`
+    `Actualizados: ${actualizados}\n` +
+    `Eventos de actividad detectados: ${eventosDetectados}`
 
   if (save.unknownMapIds.length > 0) {
     mensaje += `\n\nIDs de mapa desconocidos:\n` + save.unknownMapIds.map((id) => `- ${id}`).join('\n')

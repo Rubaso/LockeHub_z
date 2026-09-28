@@ -9,6 +9,9 @@ export interface PokemonSaveData {
   pokemonId: number | null
   pokemonName: string
   personalID: string
+  capturedAt: string | null
+  diedAt: string | null
+  deathArea: string | null
   obtainMap: number
   obtainMethod: number
   randomized: boolean
@@ -470,6 +473,16 @@ function normalizeNickname(value: any): string | null {
     : null
 }
 
+function timestampFromSave(value: unknown): string | null {
+  const timestamp = numberValue(value)
+  if (timestamp === null || timestamp <= 0) {
+    return null
+  }
+
+  const date = new Date(timestamp < 1e12 ? timestamp * 1000 : timestamp)
+  return Number.isNaN(date.getTime()) ? null : date.toISOString()
+}
+
 function getIvarFromNames(obj: unknown, names: readonly string[]): unknown {
   for (const name of names) {
     const value = getIvar(obj, name)
@@ -566,6 +579,11 @@ async function extractPokemon(
     // Ej.: toxtricity-amped / toxtricity-low-key.
     pokemonName: apiInfo?.name ?? species,
     personalID: String(personalIDRaw),
+    capturedAt: timestampFromSave(getIvar(pokemon, '@timeReceived')),
+    diedAt: getIvar(pokemon, '@nuzlocke_dead') === true
+      ? timestampFromSave(getIvar(pokemon, '@nuzlocke_death_time'))
+      : null,
+    deathArea: normalizeNickname(getIvar(pokemon, '@nuzlocke_death_area')),
     obtainMap,
     obtainMethod,
     randomized,

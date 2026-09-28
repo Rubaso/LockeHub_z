@@ -2,14 +2,50 @@
 
 import Link from 'next/link'
 import PokepasteStatus from '@/components/PokepasteStatus'
-import { EVENT_NAME } from '@/lib/constants'
+import { CAPTURAS_UPDATED_EVENT, EVENT_NAME, PLAYERS, SALA_ID } from '@/lib/constants'
+import { fetchRecentActivity, type ActivityEvent } from '@/lib/activity'
+import { spriteUrl } from '@/lib/sprites'
 import { supabase } from '@/lib/supabase'
 import { useEffect, useState } from 'react'
 
 export default function InicioPage() {
   const [tournament, setTournament] = useState<{ name: string; locked: boolean } | null>(null)
+  const [activity, setActivity] = useState<ActivityEvent[]>([])
+  const [activityLoading, setActivityLoading] = useState(true)
+  const [activityError, setActivityError] = useState(false)
 
   useEffect(() => {
+    let cancelled = false
+    const loadActivity = async () => {
+      try {
+        const events = await fetchRecentActivity()
+        if (cancelled) return
+        setActivity(events ?? [])
+        setActivityError(false)
+      } catch {
+        if (cancelled) return
+        setActivityError(true)
+      } finally {
+        if (!cancelled) setActivityLoading(false)
+      }
+    }
+
+    void loadActivity()
+    window.addEventListener(CAPTURAS_UPDATED_EVENT, loadActivity)
+    const activityChannel = supabase
+      ?.channel('realtime_feed_eventos')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'feed_eventos',
+          filter: `sala_id=eq.${SALA_ID}`,
+        },
+        () => void loadActivity()
+      )
+      .subscribe()
+
     const loadTournament = async () => {
       if (!supabase) return
       const { data } = await supabase
@@ -24,7 +60,15 @@ export default function InicioPage() {
       }
     }
     void loadTournament()
+
+    return () => {
+      cancelled = true
+      window.removeEventListener(CAPTURAS_UPDATED_EVENT, loadActivity)
+      if (activityChannel) void supabase?.removeChannel(activityChannel)
+    }
   }, [])
+
+  const playerNames = new Map(PLAYERS.map((player) => [player.id, player.name]))
 
   return (
     <div className="space-y-8">
@@ -55,11 +99,70 @@ export default function InicioPage() {
         <div className="space-y-6">
           <section className="space-y-3">
             <h2 className="text-sm font-bold uppercase tracking-wide text-zinc-400">Actividad</h2>
-            <div className="rounded-xl border border-zinc-800 p-4">
-              <p className="text-sm text-zinc-500">
-                La actividad aparecerá aquí cuando se registren capturas y eventos de la partida.
-              </p>
-            </div>
+            <ol className="divide-y divide-zinc-800 rounded-xl border border-zinc-800">
+              {activityLoading ? (
+                <li className="p-4 text-sm text-zinc-500">Cargando actividad…</li>
+              ) : activityError ? (
+                <li className="p-4 text-sm text-rose-300">
+                  No se pudo cargar la actividad. Comprueba que la migración de la feed esté aplicada en Supabase.
+                </li>
+              ) : activity.length === 0 ? (
+                <li className="p-4 text-sm text-zinc-500">
+                  Aún no hay eventos en la actividad. Para importar el historial con sus fechas reales, vuelve a cargar tu save desde la cabecera.
+                </li>
+              ) : (
+                activity.map((event) => {
+                  const death = event.tipo === 'muerte'
+                  const initial = !death && event.ruta === 'INICIAL'
+                  const playerName = playerNames.get(event.jugador_id) ?? `Jugador ${event.jugador_id}`
+                  const happenedAt = new Date(event.ocurrido_en)
+                  const dateLabel = new Intl.DateTimeFormat('es-ES', {
+                    dateStyle: 'medium',
+                    timeStyle: 'short',
+                  }).format(happenedAt)
+
+                  return (
+                    <li key={event.id} className="flex items-center gap-3 p-3">
+                      {event.pokemon_id ? (
+                        <img
+                          src={spriteUrl(event.pokemon_id, event.is_shiny)}
+                          alt=""
+                          className="h-12 w-12 shrink-0"
+                        />
+                      ) : (
+                        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-lg">
+                          {death ? '†' : '+'}
+                        </span>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm text-zinc-200">
+                          {initial ? (
+                            <>
+                              El inicial de{' '}
+                              <span className="font-semibold text-teal-300">{playerName}</span>
+                              {' '}ha sido{' '}
+                              <span className="font-bold text-zinc-100">{event.pokemon_name}</span>
+                            </>
+                          ) : (
+                            <>
+                              <span className="font-semibold text-teal-300">{playerName}</span>
+                              {death ? ' perdió a ' : ' capturó a '}
+                              <span className={`font-bold ${death ? 'text-rose-300' : 'text-zinc-100'}`}>
+                                {event.pokemon_name}
+                              </span>
+                            </>
+                          )}
+                          {event.is_shiny && <span className="ml-1 text-amber-300">✦</span>}
+                        </p>
+                        <p className="truncate text-xs text-zinc-500">
+                          {event.ruta} · {dateLabel}
+                        </p>
+                      </div>
+                    </li>
+                  )
+                })
+              )}
+            </ol>
           </section>
 
           <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
