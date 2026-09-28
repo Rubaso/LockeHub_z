@@ -11,6 +11,37 @@ type TwitchStreamsResponse = {
   data?: TwitchStream[]
 }
 
+async function logTwitchFailure(stage: string, response: Response) {
+  let details: { error?: unknown; message?: unknown } = {}
+
+  try {
+    const body: unknown = await response.clone().json()
+    if (body && typeof body === 'object') {
+      const record = body as Record<string, unknown>
+      details = {
+        error: record.error,
+        message: record.message,
+      }
+    }
+  } catch (error) {
+    console.error(`Twitch ${stage} returned a non-JSON error body`, {
+      status: response.status,
+      statusText: response.statusText,
+      requestId: response.headers.get('Twitch-Trace-Id'),
+      parseError: error instanceof Error ? error.message : 'Unknown parse error',
+    })
+    return
+  }
+
+  console.error(`Twitch ${stage} request failed`, {
+    status: response.status,
+    statusText: response.statusText,
+    requestId: response.headers.get('Twitch-Trace-Id'),
+    error: typeof details.error === 'string' ? details.error.slice(0, 200) : undefined,
+    message: typeof details.message === 'string' ? details.message.slice(0, 500) : undefined,
+  })
+}
+
 export async function GET(request: Request) {
   const cronSecret = process.env.CRON_SECRET
   if (cronSecret && request.headers.get('authorization') !== `Bearer ${cronSecret}`) {
@@ -40,6 +71,7 @@ export async function GET(request: Request) {
     )
 
     if (!tokenResponse.ok) {
+      await logTwitchFailure('token', tokenResponse)
       return NextResponse.json({ error: 'No se pudo autenticar con Twitch.' }, { status: 502 })
     }
 
@@ -81,6 +113,7 @@ export async function GET(request: Request) {
     )
 
     if (!streamsResponse.ok) {
+      await logTwitchFailure('streams', streamsResponse)
       return NextResponse.json({ error: 'No se pudo consultar el estado de Twitch.' }, { status: 502 })
     }
 
