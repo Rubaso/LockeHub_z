@@ -35,7 +35,7 @@ export default function PlayerRow({ player, team, isYou }: Props) {
             src={spriteUrl(poke.pokemonId, poke.shiny)}
             alt={poke.name}
             title={poke.name}
-            className="h-20 w-20 shrink-0 rounded-lg border border-zinc-800 bg-zinc-950 object-contain"
+            className="h-20 w-20 shrink-0 object-contain"
           />
         ))}
       </div>
