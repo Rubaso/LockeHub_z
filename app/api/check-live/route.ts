@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { PLAYERS } from '@/lib/constants'
 import { supabase } from '@/lib/supabase'
+import { twitchLogin } from '@/lib/twitch'
 
 type TwitchStream = {
   user_login: string
@@ -86,19 +87,25 @@ export async function GET(request: Request) {
     const { data: savedSettings } = database
       ? await database.from('directos').select('jugador_id, twitch_user')
       : { data: null }
-    const twitchUsers = new Map(
+    const savedTwitchUsers = new Map(
       (savedSettings ?? []).map((row: { jugador_id: number; twitch_user: string | null }) => [
         row.jugador_id,
-        row.twitch_user?.trim() ?? '',
+        row.twitch_user,
       ])
     )
-    const playersWithTwitch = PLAYERS.filter((player) =>
-      (twitchUsers.get(player.id) ?? player.twitchUser).trim()
+    const twitchLogins = new Map(
+      PLAYERS.flatMap((player) => {
+        const login = twitchLogin(
+          savedTwitchUsers.get(player.id) ?? player.twitchUser
+        )
+        return login ? [[player.id, login] as const] : []
+      })
     )
+    const playersWithTwitch = PLAYERS.filter((player) => twitchLogins.has(player.id))
     const query = new URLSearchParams(
       playersWithTwitch.map((player) => [
         'user_login',
-        (twitchUsers.get(player.id) ?? player.twitchUser).trim().toLowerCase(),
+        twitchLogins.get(player.id) ?? '',
       ])
     )
     const streamsResponse = await fetch(
@@ -125,8 +132,8 @@ export async function GET(request: Request) {
     const rows = PLAYERS.map((player) => ({
       jugador_id: player.id,
       is_live: Boolean(
-        (twitchUsers.get(player.id) ?? player.twitchUser) &&
-          liveUsers.has((twitchUsers.get(player.id) ?? player.twitchUser).toLowerCase())
+        twitchLogins.has(player.id) &&
+          liveUsers.has(twitchLogins.get(player.id) ?? '')
       ),
       updated_at: now,
     }))
@@ -149,8 +156,8 @@ export async function GET(request: Request) {
       liveCount: liveUsers.size,
       livePlayers: PLAYERS.filter(
         (player) =>
-          (twitchUsers.get(player.id) ?? player.twitchUser) &&
-          liveUsers.has((twitchUsers.get(player.id) ?? player.twitchUser).toLowerCase())
+          twitchLogins.has(player.id) &&
+          liveUsers.has(twitchLogins.get(player.id) ?? '')
       ).map((player) => player.id),
     })
   } catch (error) {

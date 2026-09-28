@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { APP_NAME, NAV_LINKS, PLAYERS } from '@/lib/constants'
 import { supabase } from '@/lib/supabase'
+import { twitchChannelUrl, twitchLogin } from '@/lib/twitch'
 import {
   clearSession,
   readAllSettings,
@@ -123,7 +124,7 @@ export default function Header() {
 
   const livePlayers = PLAYERS
     .map((player) => ({ ...player, ...(playerSettings[player.id] ?? {}) }))
-    .filter((player) => liveIds.has(player.id) && player.twitchUser)
+    .filter((player) => liveIds.has(player.id) && twitchLogin(player.twitchUser))
 
   return (
     <header className="sticky top-0 z-40 border-b border-zinc-800 bg-zinc-950/95">
@@ -139,7 +140,7 @@ export default function Header() {
               {livePlayers.map((player) => (
                 <a
                   key={player.id}
-                  href={`https://www.twitch.tv/${player.twitchUser}`}
+                  href={twitchChannelUrl(player.twitchUser) ?? undefined}
                   target="_blank"
                   rel="noreferrer"
                   className="rounded-lg border border-rose-500/40 bg-rose-500/10 px-2 py-1 font-bold text-rose-300 hover:bg-rose-500/20"
