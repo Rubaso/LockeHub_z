@@ -78,11 +78,9 @@ export default function RutasPage() {
                   const savedStatus = encounter?.estado === 'encountered'
                     ? 'missed'
                     : encounter?.estado
-                  const status = poke?.estado === 'MUERTO'
-                    ? 'dead'
-                    : savedStatus === 'available'
-                      ? null
-                      : savedStatus ?? (poke ? 'caught' : null)
+                  const status = poke
+                    ? poke.estado === 'MUERTO' ? 'dead' : 'caught'
+                    : savedStatus === 'available' ? null : savedStatus
                   const spriteId = poke?.pokemon_id ?? encounter?.pokemon_id
                   const spriteName = poke?.pokemon_name ?? encounter?.pokemon_name
                   return (
@@ -98,12 +96,12 @@ export default function RutasPage() {
                       {status && (
                         <div
                           className={`max-w-24 text-[10px] leading-tight ${ESTADOS_ENCUENTRO[status].className}`}
-                          title={encounter?.pokemon_name ?? ESTADOS_ENCUENTRO[status].label}
+                          title={spriteName ?? ESTADOS_ENCUENTRO[status].label}
                         >
                           <div>{ESTADOS_ENCUENTRO[status].label}</div>
-                          {encounter?.pokemon_name && (
+                          {spriteName && (
                             <div className="truncate capitalize text-zinc-400">
-                              {encounter.pokemon_name}
+                              {spriteName}
                             </div>
                           )}
                         </div>
