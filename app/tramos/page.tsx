@@ -38,7 +38,6 @@ export default function TramosPage() {
           tramo={tramo}
           captures={pokemon.filter((p) => p.tramo === tramo.id && p.status === 'alive')}
           fallen={pokemon.filter((p) => p.tramo === tramo.id && p.status === 'dead')}
-          evolutions={[]}
         />
       ))}
     </div>

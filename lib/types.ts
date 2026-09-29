@@ -24,18 +24,9 @@ export type Pokemon = {
   tramo: number
 }
 
-export type Evolution = {
-  fromName: string
-  fromId: number
-  toName: string
-  toId: number
-  tramo: number
-  playerId: number
-}
-
 export type FeedItem = {
   id: string
-  type: 'capture' | 'death' | 'evolution'
+  type: 'capture' | 'death'
   playerName: string
   pokemonName: string
   pokemonId: number

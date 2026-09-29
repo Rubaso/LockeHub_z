@@ -1,13 +1,12 @@
 import { spriteUrl } from '@/lib/sprites'
 import { abilityNameInSpanish } from '@/lib/abilityNames'
 import DeletePokemonButton from './DeletePokemonButton'
-import type { Evolution, Pokemon, Tramo } from '@/lib/types'
+import type { Pokemon, Tramo } from '@/lib/types'
 
 type Props = {
   tramo: Tramo
   captures: Pokemon[]
   fallen: Pokemon[]
-  evolutions: Evolution[]
 }
 
 function MiniSprite({
@@ -44,7 +43,7 @@ function MiniSprite({
   )
 }
 
-export default function TramoCard({ tramo, captures, fallen, evolutions }: Props) {
+export default function TramoCard({ tramo, captures, fallen }: Props) {
   return (
     <section className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5">
       <header className="mb-4 border-b border-zinc-800 pb-3">
@@ -97,26 +96,6 @@ export default function TramoCard({ tramo, captures, fallen, evolutions }: Props
           </div>
         </div>
 
-        <div>
-          <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-amber-300/90">
-            Evoluciones {evolutions.length}
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            {evolutions.length === 0 && (
-              <p className="text-sm text-zinc-500">Sin evoluciones en este tramo.</p>
-            )}
-            {evolutions.map((evo) => (
-              <div
-                key={`${evo.fromId}-${evo.toId}`}
-                className="flex items-center gap-2 rounded-lg border border-zinc-700 px-3 py-2"
-              >
-                <MiniSprite name={evo.fromName} pokemonId={evo.fromId} />
-                <span className="text-zinc-500">→</span>
-                <MiniSprite name={evo.toName} pokemonId={evo.toId} />
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   )
