@@ -13,6 +13,13 @@ export type CapturaRow = {
   is_team: boolean | null
 }
 
+export type EncounterRouteRow = {
+  jugador_id: number
+  ruta: string
+  estado: 'available' | 'encountered' | 'caught' | 'missed'
+  pokemon_name: string | null
+}
+
 export async function fetchCapturas(): Promise<CapturaRow[] | null> {
   if (!supabase) return null
 
@@ -27,4 +34,20 @@ export async function fetchCapturas(): Promise<CapturaRow[] | null> {
   }
 
   return (data ?? []) as CapturaRow[]
+}
+
+export async function fetchEncuentrosRuta(): Promise<EncounterRouteRow[] | null> {
+  if (!supabase) return null
+
+  const { data, error } = await supabase
+    .from('encuentros_ruta')
+    .select('jugador_id, ruta, estado, pokemon_name')
+    .eq('sala_id', SALA_ID)
+
+  if (error) {
+    console.error(error)
+    return null
+  }
+
+  return (data ?? []) as EncounterRouteRow[]
 }

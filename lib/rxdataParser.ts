@@ -1,4 +1,5 @@
 import { loadAll } from '@hyrious/marshal'
+import { ROUTES } from '@/lib/constants'
 import { MAP_Z } from '@/lib/mapZ'
 import { POKEMON_Z_SPECIES_BY_ID } from '@/lib/pokemonZSpecies'
 import pokemonZAbilitySlots from '@/lib/pokemon-z-abilities.json'
@@ -30,6 +31,12 @@ export interface UnknownMapPokemon {
   mapId: number
   pokemonName: string
   personalID: string
+}
+
+export interface EncounterSaveData {
+  route: string
+  status: 'available' | 'caught' | 'missed'
+  pokemonName: string | null
 }
 
 interface PokemonApiInfo {
@@ -322,6 +329,19 @@ function getHashValue(obj: any, key: string): any {
   return undefined
 }
 
+function rubyHashValues(value: unknown): unknown[] {
+  if (value instanceof Map) {
+    return Array.from(value.values())
+  }
+
+  if (!value || typeof value !== 'object') {
+    return []
+  }
+
+  const hash = value as Record<PropertyKey, unknown>
+  return Reflect.ownKeys(hash).map((key) => hash[key])
+}
+
 function symbolName(value: any): string | null {
   if (typeof value === 'symbol') {
     return value.description ?? null
@@ -355,6 +375,80 @@ function normalizeSpecies(value: any): string {
   )
     .trim()
     .toLowerCase()
+}
+
+function normalizeRouteName(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
+}
+
+const ROUTE_BY_NORMALIZED_NAME = new Map(
+  ROUTES.map((route) => [normalizeRouteName(route), route])
+)
+
+const ROUTE_NAME_ALIASES: Record<string, string> = {
+  'colina tormenta': 'Colina de Tormenta',
+  'gruta tierrunida': 'Gruta Tierraunida',
+}
+
+function routeForEncounter(mapId: number, areaName: string): string | null {
+  const mappedRoute = MAP_Z[String(mapId)]
+  if (mappedRoute && ROUTES.includes(mappedRoute)) {
+    return mappedRoute
+  }
+
+  const normalizedName = normalizeRouteName(areaName)
+  const alias = ROUTE_NAME_ALIASES[normalizedName]
+  return alias ?? ROUTE_BY_NORMALIZED_NAME.get(normalizedName) ?? null
+}
+
+function extractEncounterRecords(globalMetadata: any): EncounterSaveData[] {
+  const state = getIvar(globalMetadata, '@pzn_hardcore_state')
+  const zones = getHashValue(state, 'zones')
+  const records = new Map<string, EncounterSaveData>()
+  const statusRank: Record<EncounterSaveData['status'], number> = {
+    available: 0,
+    missed: 2,
+    caught: 3,
+  }
+
+  for (const record of rubyHashValues(zones)) {
+    const savedStatus = symbolName(getHashValue(record, 'status'))
+    const statusValue = savedStatus === 'encountered' ? 'missed' : savedStatus
+    if (
+      statusValue !== 'available' &&
+      statusValue !== 'caught' &&
+      statusValue !== 'missed'
+    ) {
+      continue
+    }
+
+    const areaName = normalizeNickname(getHashValue(record, 'name'))
+    const mapId = numberValue(getHashValue(record, 'map_id')) ?? 0
+    const route = routeForEncounter(mapId, areaName ?? '')
+    if (!route) {
+      continue
+    }
+
+    const species = getHashValue(record, 'species')
+    const encounter: EncounterSaveData = {
+      route,
+      status: statusValue,
+      pokemonName: species === undefined || species === null
+        ? null
+        : normalizeSpecies(species) || null,
+    }
+    const existing = records.get(route)
+    if (!existing || statusRank[encounter.status] > statusRank[existing.status]) {
+      records.set(route, encounter)
+    }
+  }
+
+  return Array.from(records.values())
 }
 
 function normalizeAbility(value: any): string | null {
@@ -605,6 +699,7 @@ export async function parseRxDataSave(
   trainerId: string
   trainerName: string
   pokemon: PokemonSaveData[]
+  encounters: EncounterSaveData[]
   unknownMapIds: number[]
   unknownMapPokemon: UnknownMapPokemon[]
   hasStorage: boolean
@@ -730,6 +825,7 @@ export async function parseRxDataSave(
     trainerId,
     trainerName,
     pokemon: pokemonUnicos,
+    encounters: extractEncounterRecords(globalMetadata),
     unknownMapIds,
     unknownMapPokemon,
     hasStorage

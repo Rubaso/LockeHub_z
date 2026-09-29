@@ -41,6 +41,14 @@ type ActivityRow = {
   ocurrido_en: string
 }
 
+type EncounterRouteSaveRow = {
+  sala_id: string
+  jugador_id: number
+  ruta: string
+  estado: 'available' | 'caught' | 'missed'
+  pokemon_name: string | null
+}
+
 export async function importSaveFile(file: File, player: SessionPlayer) {
   if (!supabase) {
     throw new Error(
@@ -124,6 +132,26 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     actualizados++
   }
 
+  const encuentrosRuta: EncounterRouteSaveRow[] = save.encounters.map((encounter) => ({
+    sala_id: SALA_ID,
+    jugador_id: player.id,
+    ruta: encounter.route,
+    estado: encounter.status,
+    pokemon_name: encounter.pokemonName,
+  }))
+
+  if (encuentrosRuta.length > 0) {
+    const { error } = await supabase
+      .from('encuentros_ruta')
+      .upsert(encuentrosRuta, {
+        onConflict: 'sala_id,jugador_id,ruta',
+      })
+
+    if (error) {
+      throw new Error('Los Pokémon se guardaron, pero no se pudieron guardar los estados de encuentros. Comprueba que la migración 20260929_encuentros_ruta.sql esté aplicada en Supabase.')
+    }
+  }
+
   const actividad: ActivityRow[] = []
   for (const pokemon of save.pokemon) {
     const savePokemonId = `${save.trainerId}:${pokemon.personalID}`
@@ -184,7 +212,8 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     `Nuevos añadidos: ${insertados}\n` +
     `Ya existentes: ${yaExistentes}\n` +
     `Actualizados: ${actualizados}\n` +
-    `Eventos de actividad detectados: ${eventosDetectados}`
+    `Eventos de actividad detectados: ${eventosDetectados}\n` +
+    `Estados de zonas importados: ${encuentrosRuta.length}`
 
   if (save.unknownMapIds.length > 0) {
     mensaje += `\n\nIDs de mapa desconocidos:\n` + save.unknownMapIds.map((id) => `- ${id}`).join('\n')
