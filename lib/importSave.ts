@@ -47,6 +47,7 @@ type EncounterRouteSaveRow = {
   ruta: string
   estado: 'available' | 'caught' | 'missed'
   pokemon_name: string | null
+  pokemon_id: number | null
 }
 
 export async function importSaveFile(file: File, player: SessionPlayer) {
@@ -138,6 +139,7 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     ruta: encounter.route,
     estado: encounter.status,
     pokemon_name: encounter.pokemonName,
+    pokemon_id: encounter.pokemonId,
   }))
 
   if (encuentrosRuta.length > 0) {

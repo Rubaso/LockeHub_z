@@ -18,6 +18,7 @@ export type EncounterRouteRow = {
   ruta: string
   estado: 'available' | 'encountered' | 'caught' | 'missed'
   pokemon_name: string | null
+  pokemon_id: number | null
 }
 
 export async function fetchCapturas(): Promise<CapturaRow[] | null> {
@@ -41,7 +42,7 @@ export async function fetchEncuentrosRuta(): Promise<EncounterRouteRow[] | null>
 
   const { data, error } = await supabase
     .from('encuentros_ruta')
-    .select('jugador_id, ruta, estado, pokemon_name')
+    .select('jugador_id, ruta, estado, pokemon_name, pokemon_id')
     .eq('sala_id', SALA_ID)
 
   if (error) {

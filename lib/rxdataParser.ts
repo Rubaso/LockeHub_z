@@ -37,6 +37,7 @@ export interface EncounterSaveData {
   route: string
   status: 'available' | 'caught' | 'missed'
   pokemonName: string | null
+  pokemonId: number | null
 }
 
 interface PokemonApiInfo {
@@ -406,7 +407,10 @@ function routeForEncounter(mapId: number, areaName: string): string | null {
   return alias ?? ROUTE_BY_NORMALIZED_NAME.get(normalizedName) ?? null
 }
 
-function extractEncounterRecords(globalMetadata: any): EncounterSaveData[] {
+async function extractEncounterRecords(
+  globalMetadata: any,
+  pokemonMap: Map<string, number>
+): Promise<EncounterSaveData[]> {
   const state = getIvar(globalMetadata, '@pzn_hardcore_state')
   const zones = getHashValue(state, 'zones')
   const records = new Map<string, EncounterSaveData>()
@@ -435,12 +439,17 @@ function extractEncounterRecords(globalMetadata: any): EncounterSaveData[] {
     }
 
     const species = getHashValue(record, 'species')
+    const pokemonName = species === undefined || species === null
+      ? null
+      : normalizeSpecies(species) || null
+    const pokemonInfo = pokemonName
+      ? await resolvePokemonApiInfo(pokemonName, 0, pokemonMap)
+      : null
     const encounter: EncounterSaveData = {
       route,
       status: statusValue,
-      pokemonName: species === undefined || species === null
-        ? null
-        : normalizeSpecies(species) || null,
+      pokemonName,
+      pokemonId: pokemonInfo?.id ?? null,
     }
     const existing = records.get(route)
     if (!existing || statusRank[encounter.status] > statusRank[existing.status]) {
@@ -825,7 +834,7 @@ export async function parseRxDataSave(
     trainerId,
     trainerName,
     pokemon: pokemonUnicos,
-    encounters: extractEncounterRecords(globalMetadata),
+    encounters: await extractEncounterRecords(globalMetadata, pokemonMap),
     unknownMapIds,
     unknownMapPokemon,
     hasStorage
