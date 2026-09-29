@@ -10,6 +10,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Ruta 1',
     'Pueblo Vinilo',
     'Ruta 2',
+    'Catacumbas Meridionales',
     'Ciudad Grisalla',
     'Bosque Ladera',
     'Ruta 3',

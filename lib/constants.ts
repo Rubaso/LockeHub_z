@@ -60,6 +60,7 @@ export const ROUTES = [
   'Ruta 1',
   'Pueblo Vinilo',
   'Ruta 2',
+  'Catacumbas Meridionales',
   'Ciudad Grisalla',
   'Bosque Ladera',
   'Cueva Grisalla',
@@ -105,7 +106,6 @@ export const ROUTES = [
   'Bastión Vánitas',
   'Ruta 13',
   'Ciudad Luminalia',
-  'Catacumbas Meridionales',
   'Catacumbas Occidentales',
   'Pantano Profano',
 
