@@ -76,6 +76,7 @@ export const ROUTES = [
   // Tramo 3 — Hisopo → F3
   'Pueblo Profano',
   'Ruta 5',
+  'Santuario de los Reyes',
   'Ciudad Óleo',
   'Ruta 6',
   'Cueva Psique',
@@ -156,7 +157,6 @@ export const ROUTES = [
   'Petrocueva',
   'Madriguera Profunda',
   'Sima Ardiente',
-  'Santuario de los Reyes',
 
   // Tramo 12 — Gimnasio 11 → Final
   'Ruta 26',

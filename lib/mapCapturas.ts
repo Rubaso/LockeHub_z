@@ -14,7 +14,6 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Ciudad Grisalla',
     'Bosque Ladera',
     'Ruta 3',
-    'Santuario de los Reyes'
   ],
 
   2: [
@@ -23,6 +22,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Pueblo Collage',
     'Bosque Ladera Parte 2',
     'Ruta 5',
+    'Santuario de los Reyes',
     'Ruta 6',
     'Pueblo Profano'
   ],
