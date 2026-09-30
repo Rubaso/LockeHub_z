@@ -1,6 +1,6 @@
 import { spriteUrl } from '@/lib/sprites'
 import { abilityNameInSpanish } from '@/lib/abilityNames'
-import DeletePokemonButton from './DeletePokemonButton'
+import MarkShinyButton from './MarkShinyButton'
 import type { Pokemon, Tramo } from '@/lib/types'
 
 type Props = {
@@ -16,6 +16,7 @@ function MiniSprite({
   detail,
   pokemon,
   ability,
+  markingShiny = false,
 }: {
   name: string
   pokemonId: number
@@ -23,6 +24,7 @@ function MiniSprite({
   detail?: string | null
   pokemon?: Pokemon
   ability?: string
+  markingShiny?: boolean
 }) {
   return (
     <div
@@ -30,7 +32,7 @@ function MiniSprite({
         faded ? 'border-rose-900/60 bg-rose-950/30 opacity-70' : 'border-zinc-700 bg-zinc-900'
       }`}
     >
-      {pokemon && <DeletePokemonButton pokemon={pokemon} />}
+      {markingShiny && pokemon && <MarkShinyButton pokemon={pokemon} />}
       <img src={spriteUrl(pokemonId)} alt={name} className="mx-auto h-20 w-20" />
       <p className="truncate text-[11px] text-zinc-200">{name}</p>
       {ability && (
@@ -43,7 +45,7 @@ function MiniSprite({
   )
 }
 
-export default function TramoCard({ tramo, captures, fallen }: Props) {
+export default function TramoCard({ tramo, captures, fallen, markingShiny = false }: Props & { markingShiny?: boolean }) {
   return (
     <section className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5">
       <header className="mb-4 border-b border-zinc-800 pb-3">
@@ -72,6 +74,7 @@ export default function TramoCard({ tramo, captures, fallen }: Props) {
                 pokemonId={poke.pokemonId}
                 ability={poke.ability}
                 pokemon={poke}
+                markingShiny={markingShiny}
               />
             ))}
           </div>

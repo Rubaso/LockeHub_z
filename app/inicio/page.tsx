@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import PokepasteStatus from '@/components/PokepasteStatus'
 import { CAPTURAS_UPDATED_EVENT, EVENT_NAME, PLAYERS, SALA_ID } from '@/lib/constants'
-import { fetchRecentActivity, type ActivityEvent } from '@/lib/activity'
+import { fetchLatestShiny, fetchRecentActivity, type ActivityEvent } from '@/lib/activity'
 import { spriteUrl } from '@/lib/sprites'
 import { supabase } from '@/lib/supabase'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -18,14 +18,19 @@ export default function InicioPage() {
   const [activityLoadingMore, setActivityLoadingMore] = useState(false)
   const [hasMore, setHasMore] = useState(true)
   const [activityError, setActivityError] = useState(false)
+  const [latestShiny, setLatestShiny] = useState<ActivityEvent | null>(null)
   const activityOffset = useRef(0)
   const hasMoreActivity = useRef(true)
   const loadingMoreActivity = useRef(false)
 
   const loadActivity = useCallback(async () => {
     try {
-      const events = await fetchRecentActivity(0, INITIAL_ACTIVITY_COUNT)
+      const [events, shiny] = await Promise.all([
+        fetchRecentActivity(0, INITIAL_ACTIVITY_COUNT),
+        fetchLatestShiny(),
+      ])
       setActivity(events ?? [])
+      setLatestShiny(shiny)
       activityOffset.current = events?.length ?? 0
       hasMoreActivity.current = (events?.length ?? 0) === INITIAL_ACTIVITY_COUNT
       setHasMore(hasMoreActivity.current)
@@ -58,10 +63,14 @@ export default function InicioPage() {
 
   useEffect(() => {
     let cancelled = false
-    void fetchRecentActivity(0, INITIAL_ACTIVITY_COUNT)
-      .then((events) => {
+    void Promise.all([
+      fetchRecentActivity(0, INITIAL_ACTIVITY_COUNT),
+      fetchLatestShiny(),
+    ])
+      .then(([events, shiny]) => {
         if (cancelled) return
         setActivity(events ?? [])
+        setLatestShiny(shiny)
         activityOffset.current = events?.length ?? 0
         hasMoreActivity.current = (events?.length ?? 0) === INITIAL_ACTIVITY_COUNT
         setHasMore(hasMoreActivity.current)
@@ -112,9 +121,31 @@ export default function InicioPage() {
   }, [loadActivity])
 
   const playerNames = new Map(PLAYERS.map((player) => [player.id, player.name]))
+  const shinyDate = latestShiny ? new Date(latestShiny.ocurrido_en) : null
+  const shinyIsRecent =
+    shinyDate !== null &&
+    !Number.isNaN(shinyDate.getTime()) &&
+    Date.now() - shinyDate.getTime() < 48 * 60 * 60 * 1000 &&
+    Date.now() >= shinyDate.getTime()
+  const latestShinyPlayer = latestShiny
+    ? playerNames.get(latestShiny.jugador_id) ?? `Jugador ${latestShiny.jugador_id}`
+    : null
 
   return (
     <div className="space-y-8">
+      {shinyIsRecent && latestShiny && latestShinyPlayer && (
+        <section className="rounded-2xl border border-purple-400/60 bg-purple-950/50 px-6 py-5 text-center shadow-[0_0_35px_rgba(168,85,247,0.2)]">
+          <p className="text-xs font-black uppercase tracking-[0.25em] text-purple-300">
+            ¡Shiny encontrado!
+          </p>
+          <h2 className="mt-1 text-2xl font-black text-purple-100">
+            {latestShinyPlayer} ha capturado a {latestShiny.pokemon_nickname || latestShiny.pokemon_name}
+            {latestShiny.pokemon_nickname && (
+              <span className="text-lg font-semibold text-purple-200/80"> ({latestShiny.pokemon_name})</span>
+            )}
+          </h2>
+        </section>
+      )}
       <section>
         <p className="text-xs uppercase tracking-widest text-zinc-500">Evento</p>
         <h1 className="text-3xl font-black text-zinc-100">{EVENT_NAME}</h1>
@@ -178,7 +209,7 @@ export default function InicioPage() {
                     <li
                       key={event.id}
                       className={`flex items-center gap-3 p-3 ${
-                        death ? 'bg-rose-950/25' : medal ? 'bg-amber-950/25' : 'bg-teal-950/25'
+                        death ? 'bg-rose-950/25' : medal ? 'bg-amber-950/25' : event.is_shiny ? 'bg-purple-950/40' : 'bg-teal-950/25'
                       }`}
                     >
                       {medal ? (
@@ -213,14 +244,22 @@ export default function InicioPage() {
                               El inicial de{' '}
                               <span className="font-semibold text-teal-300">{playerName}</span>
                               {' '}ha sido{' '}
-                              <span className="font-bold text-zinc-100">{event.pokemon_name}</span>
+                              <span className="font-bold text-zinc-100">
+                                {event.pokemon_nickname || event.pokemon_name}
+                                {event.pokemon_nickname && (
+                                  <span className="font-normal text-zinc-400"> ({event.pokemon_name})</span>
+                                )}
+                              </span>
                             </>
                           ) : (
                             <>
                               <span className="font-semibold text-teal-300">{playerName}</span>
                               {death ? ' perdió a ' : ' capturó a '}
                               <span className={`font-bold ${death ? 'text-rose-300' : 'text-zinc-100'}`}>
-                                {event.pokemon_name}
+                                {event.pokemon_nickname || event.pokemon_name}
+                                {event.pokemon_nickname && (
+                                  <span className="font-normal text-zinc-400"> ({event.pokemon_name})</span>
+                                )}
                               </span>
                             </>
                           )}
@@ -262,7 +301,23 @@ export default function InicioPage() {
           </section>
         </div>
 
-        <PokepasteStatus />
+        <div className="space-y-3">
+          <section className="rounded-xl border border-purple-500/40 bg-purple-950/30 px-5 py-4 text-center">
+            <p className="text-sm text-purple-200">¿Has encontrado un shiny?</p>
+            <Link
+              href="/marcar-shiny"
+              onClick={(event) => {
+                if (!window.confirm('¿Seguro? Podrás elegir qué Pokémon es shiny y avisaremos a todos los jugadores.')) {
+                  event.preventDefault()
+                }
+              }}
+              className="mt-2 inline-block rounded-lg bg-purple-600 px-5 py-2 text-sm font-black text-white hover:bg-purple-500"
+            >
+              ✦ ¡TENGO UN SHINY!
+            </Link>
+          </section>
+          <PokepasteStatus />
+        </div>
       </div>
     </div>
   )

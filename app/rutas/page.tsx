@@ -116,25 +116,26 @@ export default function RutasPage() {
                     : savedStatus === 'available' ? null : savedStatus
                   const spriteId = poke?.pokemon_id ?? encounter?.pokemon_id
                   const spriteName = poke?.pokemon_name ?? encounter?.pokemon_name
+                  const displayName = poke?.pokemon_nickname || spriteName
                   return (
                     <td key={route} className="border-r border-zinc-800 px-2 py-1 text-center">
                       {spriteId ? (
                         <img
                           src={spriteUrl(spriteId, !!poke?.is_shiny)}
-                          alt={spriteName ?? 'Pokémon del encuentro'}
-                          title={spriteName ?? 'Pokémon del encuentro'}
+                          alt={displayName ?? 'Pokémon del encuentro'}
+                          title={displayName ?? 'Pokémon del encuentro'}
                           className={`mx-auto h-20 w-20 ${poke?.estado === 'MUERTO' ? 'grayscale opacity-60' : ''}`}
                         />
                       ) : null}
                       {status && (
                         <div
                           className={`max-w-24 text-[10px] leading-tight ${ESTADOS_ENCUENTRO[status].className}`}
-                          title={spriteName ?? ESTADOS_ENCUENTRO[status].label}
+                          title={displayName ?? ESTADOS_ENCUENTRO[status].label}
                         >
                           <div>{ESTADOS_ENCUENTRO[status].label}</div>
                           {spriteName && (
                             <div className="truncate capitalize text-zinc-400">
-                              {spriteName}
+                              {displayName}
                             </div>
                           )}
                         </div>

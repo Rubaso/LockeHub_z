@@ -21,15 +21,18 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Ruta 4',
     'Pueblo Collage',
     'Bosque Ladera Parte 2',
-    'Ruta 5',
-    'Santuario de los Reyes',
-    'Ruta 6',
-    'Pueblo Profano'
   ],
 
   3: [
-    'Pueblo Profano',
+    'Ruta 5',
+    'Santuario de los Reyes',
     'Ciudad Óleo',
+    'Chateau Rosillon',
+    'Vieja Biblioteca',
+    'Ruta 6',
+    'Cueva Lóbrega',
+    'Bosque Errante',
+    'Pueblo Profano',
     'Ruta 7 Norte',
     'Ruta 7 Sur',
     'Pantano Profano',
@@ -111,8 +114,10 @@ export function tramoFromRoute(ruta: string) {
 export function capturaToPokemon(row: CapturaRow): Pokemon {
   return {
     id: row.id,
+    savePokemonId: row.save_pokemon_id,
     playerId: row.jugador_id,
     name: row.pokemon_name,
+    nickname: row.pokemon_nickname,
     pokemonId: row.pokemon_id ?? 0,
     nature: '—',
     ability: row.habilidad ?? '—',

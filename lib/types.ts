@@ -12,8 +12,10 @@ export type Player = {
 
 export type Pokemon = {
   id: number
+  savePokemonId: string | null
   playerId: number
   name: string
+  nickname: string | null
   pokemonId: number
   nature: string
   ability: string

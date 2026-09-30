@@ -8,6 +8,7 @@ type CapturaSaveRow = {
   jugador_id: number
   ruta: string
   pokemon_name: string
+  pokemon_nickname: string | null
   pokemon_id: number | null
   estado: string
   habilidad: string | null
@@ -23,6 +24,7 @@ type ExistingRow = {
   estado: string
   ruta: string
   pokemon_name: string
+  pokemon_nickname: string | null
   pokemon_id: number | null
   habilidad: string | null
   is_shiny: boolean
@@ -36,6 +38,7 @@ type ActivityRow = {
   medalla_id?: number | null
   save_pokemon_id: string
   pokemon_name: string
+  pokemon_nickname?: string | null
   pokemon_id: number | null
   ruta: string
   is_shiny: boolean
@@ -65,6 +68,7 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     jugador_id: player.id,
     ruta: pokemon.ruta ?? `Zona desconocida (ID ${pokemon.obtainMap})`,
     pokemon_name: pokemon.pokemonName,
+    pokemon_nickname: pokemon.nickname,
     pokemon_id: pokemon.pokemonId ?? null,
     estado: pokemon.diedAt ? 'MUERTO' : 'VIVO',
     habilidad: pokemon.ability ?? null,
@@ -76,7 +80,7 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
 
   const { data: existentes, error: errorExistentes } = await supabase
     .from('capturas')
-    .select('id, save_pokemon_id, estado, ruta, pokemon_name, pokemon_id, habilidad, is_shiny, is_team')
+    .select('id, save_pokemon_id, estado, ruta, pokemon_name, pokemon_nickname, pokemon_id, habilidad, is_shiny, is_team')
     .eq('sala_id', SALA_ID)
     .eq('jugador_id', player.id)
     .not('save_pokemon_id', 'is', null)
@@ -106,6 +110,7 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     }
     if (existente.ruta !== pokemon.ruta) payload.ruta = pokemon.ruta
     if (existente.pokemon_name !== pokemon.pokemon_name) payload.pokemon_name = pokemon.pokemon_name
+    if ((existente.pokemon_nickname ?? null) !== pokemon.pokemon_nickname) payload.pokemon_nickname = pokemon.pokemon_nickname
     if (existente.pokemon_id !== pokemon.pokemon_id) payload.pokemon_id = pokemon.pokemon_id
     if ((existente.habilidad ?? null) !== pokemon.habilidad) payload.habilidad = pokemon.habilidad
     if (!!existente.is_shiny !== pokemon.is_shiny) payload.is_shiny = pokemon.is_shiny
@@ -196,6 +201,7 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
       medalla_id: medalla.medalla_id,
       save_pokemon_id: `medalla:${medalla.medalla_id}`,
       pokemon_name: `Medalla ${medalla.medalla_id + 1}`,
+      pokemon_nickname: null,
       pokemon_id: null,
       ruta: 'Medallas',
       is_shiny: false,
@@ -207,17 +213,18 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     const savePokemonId = `${save.trainerId}:${pokemon.personalID}`
     const ruta = pokemon.ruta ?? `Zona desconocida (ID ${pokemon.obtainMap})`
 
-    if (pokemon.capturedAt) {
+    if (pokemon.capturedAt || pokemon.shiny) {
       actividad.push({
         sala_id: SALA_ID,
         jugador_id: player.id,
         tipo: 'captura',
         save_pokemon_id: savePokemonId,
         pokemon_name: pokemon.pokemonName,
+        pokemon_nickname: pokemon.nickname,
         pokemon_id: pokemon.pokemonId,
         ruta,
         is_shiny: pokemon.shiny,
-        ocurrido_en: pokemon.capturedAt,
+        ocurrido_en: pokemon.capturedAt ?? new Date().toISOString(),
       })
     }
 
@@ -228,6 +235,7 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
         tipo: 'muerte',
         save_pokemon_id: savePokemonId,
         pokemon_name: pokemon.pokemonName,
+        pokemon_nickname: pokemon.nickname,
         pokemon_id: pokemon.pokemonId,
         ruta: pokemon.deathArea ?? ruta,
         is_shiny: pokemon.shiny,
@@ -241,11 +249,13 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
       .from('feed_eventos')
       .upsert(actividad, {
         onConflict: 'sala_id,jugador_id,save_pokemon_id,tipo',
-        ignoreDuplicates: true,
       })
 
     if (error) {
-      throw new Error('Los Pokémon se guardaron, pero no se pudo actualizar la actividad. Comprueba que la migración de la feed esté aplicada en Supabase.')
+      console.error('No se pudo actualizar la actividad:', error)
+      throw new Error(
+        `Los Pokémon se guardaron, pero no se pudo actualizar la actividad: ${error.message}`
+      )
     }
   }
 

@@ -7,10 +7,33 @@ export type ActivityEvent = {
   tipo: 'captura' | 'muerte' | 'medalla'
   medalla_id: number | null
   pokemon_name: string
+  pokemon_nickname: string | null
   pokemon_id: number | null
   ruta: string
   is_shiny: boolean
   ocurrido_en: string
+}
+
+export async function fetchLatestShiny(): Promise<ActivityEvent | null> {
+  if (!supabase) return null
+
+  const { data, error } = await supabase
+    .from('feed_eventos')
+    .select('id, jugador_id, tipo, medalla_id, pokemon_name, pokemon_nickname, pokemon_id, ruta, is_shiny, ocurrido_en')
+    .eq('sala_id', SALA_ID)
+    .eq('tipo', 'captura')
+    .eq('is_shiny', true)
+    .order('ocurrido_en', { ascending: false })
+    .order('id', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+
+  if (error) {
+    console.error('No se pudo cargar el último shiny:', error)
+    return null
+  }
+
+  return data as ActivityEvent | null
 }
 
 export async function fetchRecentActivity(
@@ -21,7 +44,7 @@ export async function fetchRecentActivity(
 
   const { data, error } = await supabase
     .from('feed_eventos')
-    .select('id, jugador_id, tipo, medalla_id, pokemon_name, pokemon_id, ruta, is_shiny, ocurrido_en')
+    .select('id, jugador_id, tipo, medalla_id, pokemon_name, pokemon_nickname, pokemon_id, ruta, is_shiny, ocurrido_en')
     .eq('sala_id', SALA_ID)
     .order('ocurrido_en', { ascending: false })
     .order('id', { ascending: false })

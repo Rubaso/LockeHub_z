@@ -70,15 +70,17 @@ export const ROUTES = [
   'Ruta 3',
   'Pueblo Collage',
   'Ruta 4',
-  'Cueva Lóbrega',
-  'Bosque Errante',
 
   // Tramo 3 — Hisopo → F3
-  'Pueblo Profano',
   'Ruta 5',
   'Santuario de los Reyes',
   'Ciudad Óleo',
+  'Chateau Rosillon',
+  'Vieja Biblioteca',
   'Ruta 6',
+  'Cueva Lóbrega',
+  'Bosque Errante',
+  'Pueblo Profano',
   'Cueva Psique',
   'Cueva Refulgente',
 
