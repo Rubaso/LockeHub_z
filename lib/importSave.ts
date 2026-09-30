@@ -154,6 +154,25 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     }
   }
 
+  const medallasObtenidas = save.medals.flatMap((obtenida, medallaId) =>
+    obtenida
+      ? [{ sala_id: SALA_ID, jugador_id: player.id, medalla_id: medallaId }]
+      : []
+  )
+
+  if (medallasObtenidas.length > 0) {
+    const { error } = await supabase
+      .from('medallas_jugadores')
+      .upsert(medallasObtenidas, {
+        onConflict: 'sala_id,jugador_id,medalla_id',
+        ignoreDuplicates: true,
+      })
+
+    if (error) {
+      throw new Error('Los Pokémon se guardaron, pero no se pudieron actualizar las medallas. Comprueba que la migración 20260930_medallas_jugadores.sql esté aplicada en Supabase.')
+    }
+  }
+
   const actividad: ActivityRow[] = []
   for (const pokemon of save.pokemon) {
     const savePokemonId = `${save.trainerId}:${pokemon.personalID}`
@@ -215,7 +234,8 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     `Ya existentes: ${yaExistentes}\n` +
     `Actualizados: ${actualizados}\n` +
     `Eventos de actividad detectados: ${eventosDetectados}\n` +
-    `Estados de zonas importados: ${encuentrosRuta.length}`
+    `Estados de zonas importados: ${encuentrosRuta.length}\n` +
+    `Medallas detectadas: ${medallasObtenidas.length}/12`
 
   if (save.unknownMapIds.length > 0) {
     mensaje += `\n\nIDs de mapa desconocidos:\n` + save.unknownMapIds.map((id) => `- ${id}`).join('\n')

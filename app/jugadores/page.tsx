@@ -7,11 +7,13 @@ import { capturaToPokemon, isInBox } from '@/lib/mapCapturas'
 import { readAllSettings, readSession } from '@/lib/session'
 import { useCapturas } from '@/lib/useCapturas'
 import { supabase } from '@/lib/supabase'
+import { fetchPlayerMedals } from '@/lib/playerMedals'
 import type { Pokemon } from '@/lib/types'
 
 export default function JugadoresPage() {
   const [loggedId, setLoggedId] = useState<number | null>(null)
   const [colors, setColors] = useState<Record<number, string>>({})
+  const [medals, setMedals] = useState<Record<number, boolean[]>>({})
   const { rows, fromDatabase } = useCapturas()
 
   useEffect(() => {
@@ -22,6 +24,9 @@ export default function JugadoresPage() {
       map[player.id] = saved[player.id]?.color ?? player.color
     }
     setColors(map)
+    void fetchPlayerMedals().then((loaded) => {
+      if (loaded) setMedals(loaded)
+    })
     const loadRemoteColors = async () => {
       if (!supabase) return
       const { data } = await supabase.from('directos').select('jugador_id, color')
@@ -63,6 +68,7 @@ export default function JugadoresPage() {
             key={player.id}
             player={{ ...player, color: colors[player.id] ?? player.color }}
             team={teamOf(player.id)}
+            medals={medals[player.id]}
             isYou={loggedId === player.id}
           />
         ))}

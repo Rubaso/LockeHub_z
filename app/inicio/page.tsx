@@ -6,31 +6,74 @@ import { CAPTURAS_UPDATED_EVENT, EVENT_NAME, PLAYERS, SALA_ID } from '@/lib/cons
 import { fetchRecentActivity, type ActivityEvent } from '@/lib/activity'
 import { spriteUrl } from '@/lib/sprites'
 import { supabase } from '@/lib/supabase'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+
+const INITIAL_ACTIVITY_COUNT = 20
+const ACTIVITY_PAGE_SIZE = 10
 
 export default function InicioPage() {
   const [tournament, setTournament] = useState<{ name: string; locked: boolean } | null>(null)
   const [activity, setActivity] = useState<ActivityEvent[]>([])
   const [activityLoading, setActivityLoading] = useState(true)
+  const [activityLoadingMore, setActivityLoadingMore] = useState(false)
+  const [hasMore, setHasMore] = useState(true)
   const [activityError, setActivityError] = useState(false)
+  const activityOffset = useRef(0)
+  const hasMoreActivity = useRef(true)
+  const loadingMoreActivity = useRef(false)
+
+  const loadActivity = useCallback(async () => {
+    try {
+      const events = await fetchRecentActivity(0, INITIAL_ACTIVITY_COUNT)
+      setActivity(events ?? [])
+      activityOffset.current = events?.length ?? 0
+      hasMoreActivity.current = (events?.length ?? 0) === INITIAL_ACTIVITY_COUNT
+      setHasMore(hasMoreActivity.current)
+      setActivityError(false)
+    } catch {
+      setActivityError(true)
+    } finally {
+      setActivityLoading(false)
+    }
+  }, [])
+
+  const loadMoreActivity = useCallback(async () => {
+    if (!hasMoreActivity.current || loadingMoreActivity.current) return
+    loadingMoreActivity.current = true
+    setActivityLoadingMore(true)
+    try {
+      const events = await fetchRecentActivity(activityOffset.current, ACTIVITY_PAGE_SIZE)
+      const nextEvents = events ?? []
+      setActivity((current) => [...current, ...nextEvents])
+      activityOffset.current += nextEvents.length
+      hasMoreActivity.current = nextEvents.length === ACTIVITY_PAGE_SIZE
+      setHasMore(hasMoreActivity.current)
+    } catch {
+      setActivityError(true)
+    } finally {
+      loadingMoreActivity.current = false
+      setActivityLoadingMore(false)
+    }
+  }, [])
 
   useEffect(() => {
     let cancelled = false
-    const loadActivity = async () => {
-      try {
-        const events = await fetchRecentActivity()
+    void fetchRecentActivity(0, INITIAL_ACTIVITY_COUNT)
+      .then((events) => {
         if (cancelled) return
         setActivity(events ?? [])
+        activityOffset.current = events?.length ?? 0
+        hasMoreActivity.current = (events?.length ?? 0) === INITIAL_ACTIVITY_COUNT
+        setHasMore(hasMoreActivity.current)
         setActivityError(false)
-      } catch {
-        if (cancelled) return
-        setActivityError(true)
-      } finally {
+      })
+      .catch(() => {
+        if (!cancelled) setActivityError(true)
+      })
+      .finally(() => {
         if (!cancelled) setActivityLoading(false)
-      }
-    }
+      })
 
-    void loadActivity()
     window.addEventListener(CAPTURAS_UPDATED_EVENT, loadActivity)
     const activityChannel = supabase
       ?.channel('realtime_feed_eventos')
@@ -66,7 +109,7 @@ export default function InicioPage() {
       window.removeEventListener(CAPTURAS_UPDATED_EVENT, loadActivity)
       if (activityChannel) void supabase?.removeChannel(activityChannel)
     }
-  }, [])
+  }, [loadActivity])
 
   const playerNames = new Map(PLAYERS.map((player) => [player.id, player.name]))
 
@@ -99,7 +142,16 @@ export default function InicioPage() {
         <div className="space-y-6">
           <section className="space-y-3">
             <h2 className="text-sm font-bold uppercase tracking-wide text-zinc-400">Actividad</h2>
-            <ol className="divide-y divide-zinc-800 rounded-xl border border-zinc-800">
+            <div
+              onScroll={(event) => {
+                const element = event.currentTarget
+                if (element.scrollHeight - element.scrollTop - element.clientHeight < 100) {
+                  void loadMoreActivity()
+                }
+              }}
+              className="max-h-[48rem] overflow-y-auto rounded-xl border border-zinc-800"
+            >
+            <ol className="divide-y divide-zinc-800">
               {activityLoading ? (
                 <li className="p-4 text-sm text-zinc-500">Cargando actividad…</li>
               ) : activityError ? (
@@ -122,7 +174,12 @@ export default function InicioPage() {
                   }).format(happenedAt)
 
                   return (
-                    <li key={event.id} className="flex items-center gap-3 p-3">
+                    <li
+                      key={event.id}
+                      className={`flex items-center gap-3 p-3 ${
+                        death ? 'bg-rose-950/25' : 'bg-teal-950/25'
+                      }`}
+                    >
                       {event.pokemon_id ? (
                         <img
                           src={spriteUrl(event.pokemon_id, event.is_shiny)}
@@ -162,7 +219,14 @@ export default function InicioPage() {
                   )
                 })
               )}
+              {activityLoadingMore && (
+                <li className="p-4 text-center text-sm text-zinc-500">Cargando más actividad…</li>
+              )}
+              {!activityLoading && !activityLoadingMore && activity.length > 0 && !hasMore && (
+                <li className="p-3 text-center text-xs text-zinc-600">No hay más actividad.</li>
+              )}
             </ol>
+            </div>
           </section>
 
           <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

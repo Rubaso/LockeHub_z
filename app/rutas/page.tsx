@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { PLAYERS, ROUTES, sortPlayers } from '@/lib/constants'
 import { readSession } from '@/lib/session'
 import { spriteUrl } from '@/lib/sprites'
@@ -15,11 +15,32 @@ const ESTADOS_ENCUENTRO = {
 
 export default function RutasPage() {
   const [loggedId, setLoggedId] = useState<number | null>(null)
+  const [tableScrollWidth, setTableScrollWidth] = useState(0)
+  const topScrollRef = useRef<HTMLDivElement>(null)
+  const bottomScrollRef = useRef<HTMLDivElement>(null)
+  const tableRef = useRef<HTMLTableElement>(null)
   const { rows, encounters, fromDatabase } = useCapturas()
 
   useEffect(() => {
     setLoggedId(readSession()?.id ?? null)
   }, [])
+
+  useEffect(() => {
+    const table = tableRef.current
+    if (!table) return
+
+    const updateWidth = () => setTableScrollWidth(table.scrollWidth)
+    updateWidth()
+    const observer = new ResizeObserver(updateWidth)
+    observer.observe(table)
+    return () => observer.disconnect()
+  }, [])
+
+  const syncScroll = (source: HTMLDivElement, target: { current: HTMLDivElement | null }) => {
+    if (target.current && target.current.scrollLeft !== source.scrollLeft) {
+      target.current.scrollLeft = source.scrollLeft
+    }
+  }
 
   const ordered = sortPlayers(PLAYERS, loggedId)
 
@@ -48,8 +69,20 @@ export default function RutasPage() {
           de encuentros esté aplicada en Supabase.
         </p>
       )}
-      <div className="overflow-auto rounded-xl border border-zinc-800">
-        <table className="min-w-max border-collapse text-left text-xs">
+      <div
+        ref={topScrollRef}
+        onScroll={(event) => syncScroll(event.currentTarget, bottomScrollRef)}
+        className="overflow-x-auto overflow-y-hidden rounded-t-xl border border-zinc-800 border-b-0"
+        aria-label="Desplazamiento horizontal de rutas"
+      >
+        <div style={{ width: tableScrollWidth, height: 1 }} />
+      </div>
+      <div
+        ref={bottomScrollRef}
+        onScroll={(event) => syncScroll(event.currentTarget, topScrollRef)}
+        className="overflow-auto rounded-b-xl border border-zinc-800"
+      >
+        <table ref={tableRef} className="min-w-max border-collapse text-left text-xs">
           <thead className="bg-zinc-900">
             <tr>
               <th className="sticky left-0 z-10 border-r border-zinc-800 bg-zinc-900 px-3 py-2 font-semibold">Jugador</th>

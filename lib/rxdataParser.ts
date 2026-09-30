@@ -40,6 +40,8 @@ export interface EncounterSaveData {
   pokemonId: number | null
 }
 
+export type MedalSaveData = boolean[]
+
 interface PokemonApiInfo {
   name: string
   id: number
@@ -707,6 +709,7 @@ export async function parseRxDataSave(
 ): Promise<{
   trainerId: string
   trainerName: string
+  medals: MedalSaveData
   pokemon: PokemonSaveData[]
   encounters: EncounterSaveData[]
   unknownMapIds: number[]
@@ -741,6 +744,11 @@ export async function parseRxDataSave(
       'No se pudo encontrar el ID del entrenador.'
     )
   }
+
+  const savedBadges = getIvar(player, '@badges')
+  const medals = Array.from({ length: 12 }, (_, index) =>
+    Array.isArray(savedBadges) && savedBadges[index] === true
+  )
 
   const result: PokemonSaveData[] = []
 
@@ -833,6 +841,7 @@ export async function parseRxDataSave(
   return {
     trainerId,
     trainerName,
+    medals,
     pokemon: pokemonUnicos,
     encounters: await extractEncounterRecords(globalMetadata, pokemonMap),
     unknownMapIds,

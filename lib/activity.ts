@@ -12,7 +12,10 @@ export type ActivityEvent = {
   ocurrido_en: string
 }
 
-export async function fetchRecentActivity(): Promise<ActivityEvent[] | null> {
+export async function fetchRecentActivity(
+  offset = 0,
+  limit = 10
+): Promise<ActivityEvent[] | null> {
   if (!supabase) return null
 
   const { data, error } = await supabase
@@ -21,7 +24,7 @@ export async function fetchRecentActivity(): Promise<ActivityEvent[] | null> {
     .eq('sala_id', SALA_ID)
     .order('ocurrido_en', { ascending: false })
     .order('id', { ascending: false })
-    .limit(10)
+    .range(offset, offset + limit - 1)
 
   if (error) {
     console.error('No se pudo cargar la actividad:', error)
