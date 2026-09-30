@@ -165,6 +165,7 @@ export default function InicioPage() {
               ) : (
                 activity.map((event) => {
                   const death = event.tipo === 'muerte'
+                  const medal = event.tipo === 'medalla'
                   const initial = !death && event.ruta === 'INICIAL'
                   const playerName = playerNames.get(event.jugador_id) ?? `Jugador ${event.jugador_id}`
                   const happenedAt = new Date(event.ocurrido_en)
@@ -177,10 +178,18 @@ export default function InicioPage() {
                     <li
                       key={event.id}
                       className={`flex items-center gap-3 p-3 ${
-                        death ? 'bg-rose-950/25' : 'bg-teal-950/25'
+                        death ? 'bg-rose-950/25' : medal ? 'bg-amber-950/25' : 'bg-teal-950/25'
                       }`}
                     >
-                      {event.pokemon_id ? (
+                      {medal ? (
+                        <span
+                          className="h-12 w-12 shrink-0 bg-[length:192px_48px] bg-no-repeat"
+                          style={{
+                            backgroundImage: "url('/medals/badges.png')",
+                            backgroundPosition: `${(event.medalla_id ?? 0) % 8 * -24}px ${Math.floor((event.medalla_id ?? 0) / 8) * -24}px`,
+                          }}
+                        />
+                      ) : event.pokemon_id ? (
                         <img
                           src={spriteUrl(event.pokemon_id, event.is_shiny)}
                           alt=""
@@ -193,7 +202,13 @@ export default function InicioPage() {
                       )}
                       <div className="min-w-0 flex-1">
                         <p className="text-sm text-zinc-200">
-                          {initial ? (
+                          {medal ? (
+                            <>
+                              <span className="font-semibold text-amber-300">{playerName}</span>
+                              {' ha conseguido la '}
+                              <span className="font-bold text-amber-200">medalla {event.medalla_id! + 1}</span>
+                            </>
+                          ) : initial ? (
                             <>
                               El inicial de{' '}
                               <span className="font-semibold text-teal-300">{playerName}</span>

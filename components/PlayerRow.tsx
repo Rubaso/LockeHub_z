@@ -17,27 +17,37 @@ export default function PlayerRow({ player, team, medals = [], isYou }: Props) {
       style={{ borderLeftWidth: 4, borderLeftColor: player.color }}
     >
       <div
-        className="flex w-full justify-between gap-1"
+        className="flex w-full items-center gap-1"
         aria-label={`${medals.filter(Boolean).length} de 12 medallas conseguidas`}
       >
-        {Array.from({ length: 12 }, (_, index) => {
-          const obtained = medals[index] === true
-          const column = index % 8
-          const row = Math.floor(index / 8)
-          return (
-            <span
-              key={index}
-              title={`Medalla ${index + 1}${obtained ? ' conseguida' : ' pendiente'}`}
-              aria-label={`Medalla ${index + 1}: ${obtained ? 'conseguida' : 'pendiente'}`}
-              className={`h-6 w-6 shrink-0 bg-[length:192px_48px] bg-no-repeat ${
-                obtained ? '' : 'grayscale opacity-30'
-              }`}
-              style={{
-                backgroundImage: "url('/medals/badges.png')",
-                backgroundPosition: `${column * -24}px ${row * -24}px`,
-              }}
-            />
+        {[0, 1, 2].flatMap((tournament) => {
+          const group = (
+            <div key={`group-${tournament}`} className="flex min-w-0 flex-1 items-center justify-between gap-1">
+              {Array.from({ length: 4 }, (_, offset) => {
+                const index = tournament * 4 + offset
+                const obtained = medals[index] === true
+                const column = index % 8
+                const row = Math.floor(index / 8)
+                return (
+                  <span
+                    key={index}
+                    title={`Medalla ${index + 1}${obtained ? ' conseguida' : ' pendiente'}`}
+                    aria-label={`Medalla ${index + 1}: ${obtained ? 'conseguida' : 'pendiente'}`}
+                    className={`h-6 w-6 shrink-0 bg-[length:192px_48px] bg-no-repeat ${
+                      obtained ? '' : 'grayscale opacity-30'
+                    }`}
+                    style={{
+                      backgroundImage: "url('/medals/badges.png')",
+                      backgroundPosition: `${column * -24}px ${row * -24}px`,
+                    }}
+                  />
+                )
+              })}
+            </div>
           )
+          return tournament < 2
+            ? [group, <span key={`tournament-${tournament}`} className="shrink-0 px-1 text-[10px] font-black text-amber-300/80">T{tournament + 1}</span>]
+            : [group]
         })}
       </div>
       <div className="flex min-w-0 items-center gap-5">

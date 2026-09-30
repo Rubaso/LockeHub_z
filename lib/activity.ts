@@ -4,7 +4,8 @@ import { supabase } from './supabase'
 export type ActivityEvent = {
   id: number
   jugador_id: number
-  tipo: 'captura' | 'muerte'
+  tipo: 'captura' | 'muerte' | 'medalla'
+  medalla_id: number | null
   pokemon_name: string
   pokemon_id: number | null
   ruta: string
@@ -20,7 +21,7 @@ export async function fetchRecentActivity(
 
   const { data, error } = await supabase
     .from('feed_eventos')
-    .select('id, jugador_id, tipo, pokemon_name, pokemon_id, ruta, is_shiny, ocurrido_en')
+    .select('id, jugador_id, tipo, medalla_id, pokemon_name, pokemon_id, ruta, is_shiny, ocurrido_en')
     .eq('sala_id', SALA_ID)
     .order('ocurrido_en', { ascending: false })
     .order('id', { ascending: false })

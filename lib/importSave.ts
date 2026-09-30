@@ -32,7 +32,8 @@ type ExistingRow = {
 type ActivityRow = {
   sala_id: string
   jugador_id: number
-  tipo: 'captura' | 'muerte'
+  tipo: 'captura' | 'muerte' | 'medalla'
+  medalla_id?: number | null
   save_pokemon_id: string
   pokemon_name: string
   pokemon_id: number | null
@@ -160,6 +161,19 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
       : []
   )
 
+  const { data: medallasAnteriores, error: errorMedallasAnteriores } = await supabase
+    .from('medallas_jugadores')
+    .select('medalla_id')
+    .eq('sala_id', SALA_ID)
+    .eq('jugador_id', player.id)
+
+  if (errorMedallasAnteriores) {
+    throw new Error('Los Pokémon se guardaron, pero no se pudieron comprobar las medallas anteriores.')
+  }
+
+  const medallasPrevias = new Set((medallasAnteriores ?? []).map((row) => row.medalla_id))
+  const medallasNuevas = medallasObtenidas.filter((medalla) => !medallasPrevias.has(medalla.medalla_id))
+
   if (medallasObtenidas.length > 0) {
     const { error } = await supabase
       .from('medallas_jugadores')
@@ -174,6 +188,21 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
   }
 
   const actividad: ActivityRow[] = []
+  for (const medalla of medallasNuevas) {
+    actividad.push({
+      sala_id: SALA_ID,
+      jugador_id: player.id,
+      tipo: 'medalla',
+      medalla_id: medalla.medalla_id,
+      save_pokemon_id: `medalla:${medalla.medalla_id}`,
+      pokemon_name: `Medalla ${medalla.medalla_id + 1}`,
+      pokemon_id: null,
+      ruta: 'Medallas',
+      is_shiny: false,
+      ocurrido_en: new Date().toISOString(),
+    })
+  }
+
   for (const pokemon of save.pokemon) {
     const savePokemonId = `${save.trainerId}:${pokemon.personalID}`
     const ruta = pokemon.ruta ?? `Zona desconocida (ID ${pokemon.obtainMap})`
