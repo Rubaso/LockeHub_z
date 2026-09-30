@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import PokepasteStatus from '@/components/PokepasteStatus'
 import { CAPTURAS_UPDATED_EVENT, EVENT_NAME, PLAYERS, SALA_ID } from '@/lib/constants'
-import { fetchLatestShiny, fetchRecentActivity, type ActivityEvent } from '@/lib/activity'
+import { fetchRecentShinies, fetchRecentActivity, type ActivityEvent } from '@/lib/activity'
 import { spriteUrl } from '@/lib/sprites'
 import { supabase } from '@/lib/supabase'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -18,19 +18,19 @@ export default function InicioPage() {
   const [activityLoadingMore, setActivityLoadingMore] = useState(false)
   const [hasMore, setHasMore] = useState(true)
   const [activityError, setActivityError] = useState(false)
-  const [latestShiny, setLatestShiny] = useState<ActivityEvent | null>(null)
+  const [recentShinies, setRecentShinies] = useState<ActivityEvent[]>([])
   const activityOffset = useRef(0)
   const hasMoreActivity = useRef(true)
   const loadingMoreActivity = useRef(false)
 
   const loadActivity = useCallback(async () => {
     try {
-      const [events, shiny] = await Promise.all([
+      const [events, shinies] = await Promise.all([
         fetchRecentActivity(0, INITIAL_ACTIVITY_COUNT),
-        fetchLatestShiny(),
+        fetchRecentShinies(),
       ])
       setActivity(events ?? [])
-      setLatestShiny(shiny)
+      setRecentShinies(shinies)
       activityOffset.current = events?.length ?? 0
       hasMoreActivity.current = (events?.length ?? 0) === INITIAL_ACTIVITY_COUNT
       setHasMore(hasMoreActivity.current)
@@ -65,12 +65,12 @@ export default function InicioPage() {
     let cancelled = false
     void Promise.all([
       fetchRecentActivity(0, INITIAL_ACTIVITY_COUNT),
-      fetchLatestShiny(),
+      fetchRecentShinies(),
     ])
-      .then(([events, shiny]) => {
+      .then(([events, shinies]) => {
         if (cancelled) return
         setActivity(events ?? [])
-        setLatestShiny(shiny)
+        setRecentShinies(shinies)
         activityOffset.current = events?.length ?? 0
         hasMoreActivity.current = (events?.length ?? 0) === INITIAL_ACTIVITY_COUNT
         setHasMore(hasMoreActivity.current)
@@ -121,29 +121,33 @@ export default function InicioPage() {
   }, [loadActivity])
 
   const playerNames = new Map(PLAYERS.map((player) => [player.id, player.name]))
-  const shinyDate = latestShiny ? new Date(latestShiny.ocurrido_en) : null
-  const shinyIsRecent =
-    shinyDate !== null &&
-    !Number.isNaN(shinyDate.getTime()) &&
-    Date.now() - shinyDate.getTime() < 48 * 60 * 60 * 1000 &&
-    Date.now() >= shinyDate.getTime()
-  const latestShinyPlayer = latestShiny
-    ? playerNames.get(latestShiny.jugador_id) ?? `Jugador ${latestShiny.jugador_id}`
-    : null
 
   return (
     <div className="space-y-8">
-      {shinyIsRecent && latestShiny && latestShinyPlayer && (
+      {recentShinies.length > 0 && (
         <section className="rounded-2xl border border-purple-400/60 bg-purple-950/50 px-6 py-5 text-center shadow-[0_0_35px_rgba(168,85,247,0.2)]">
-          <p className="text-xs font-black uppercase tracking-[0.25em] text-purple-300">
-            ¡Shiny encontrado!
+          <p className="text-2xl font-black uppercase tracking-[0.2em] text-purple-200">
+            ¡SHINYS ENCONTRADOS!
           </p>
-          <h2 className="mt-1 text-2xl font-black text-purple-100">
-            {latestShinyPlayer} ha capturado a {latestShiny.pokemon_nickname || latestShiny.pokemon_name}
-            {latestShiny.pokemon_nickname && (
-              <span className="text-lg font-semibold text-purple-200/80"> ({latestShiny.pokemon_name})</span>
-            )}
-          </h2>
+          <div className="mt-4 flex flex-wrap justify-center gap-3">
+            {recentShinies.map((shiny) => {
+              const playerName = playerNames.get(shiny.jugador_id) ?? `Jugador ${shiny.jugador_id}`
+              return (
+                <div key={shiny.id} className="flex min-w-52 flex-1 items-center justify-center gap-2 rounded-xl border border-purple-400/30 bg-purple-900/40 px-4 py-3">
+                  {shiny.pokemon_id ? (
+                    <img src={spriteUrl(shiny.pokemon_id, true)} alt="" className="h-14 w-14 shrink-0" />
+                  ) : null}
+                  <div className="text-left">
+                    <p className="font-bold text-purple-100">{playerName}</p>
+                    <p className="text-sm text-purple-200">
+                      {shiny.pokemon_nickname || shiny.pokemon_name}
+                      {shiny.pokemon_nickname && ` (${shiny.pokemon_name})`}
+                    </p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </section>
       )}
       <section>

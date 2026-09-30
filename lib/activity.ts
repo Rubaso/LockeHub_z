@@ -36,6 +36,28 @@ export async function fetchLatestShiny(): Promise<ActivityEvent | null> {
   return data as ActivityEvent | null
 }
 
+export async function fetchRecentShinies(): Promise<ActivityEvent[]> {
+  if (!supabase) return []
+
+  const since = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString()
+  const { data, error } = await supabase
+    .from('feed_eventos')
+    .select('id, jugador_id, tipo, medalla_id, pokemon_name, pokemon_nickname, pokemon_id, ruta, is_shiny, ocurrido_en')
+    .eq('sala_id', SALA_ID)
+    .eq('tipo', 'captura')
+    .eq('is_shiny', true)
+    .gte('ocurrido_en', since)
+    .order('ocurrido_en', { ascending: false })
+    .order('id', { ascending: false })
+
+  if (error) {
+    console.error('No se pudieron cargar los shinys recientes:', error)
+    return []
+  }
+
+  return (data ?? []) as ActivityEvent[]
+}
+
 export async function fetchRecentActivity(
   offset = 0,
   limit = 10
