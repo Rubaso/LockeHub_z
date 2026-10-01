@@ -12,21 +12,17 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Ruta 2',
     'Catacumbas Meridionales',
     'Ciudad Grisalla',
-    'Bosque Ladera',
-    'Ruta 3',
+    'Cueva Grisalla',
   ],
 
   2: [
-    'Pueblo Acrílico',
-    'Ruta 4',
-    'Pueblo Collage',
-    'Bosque Ladera Parte 2',
+    'Ciudad Óleo',
+    'Bosque Ladera',
+    'Ruta 5',
   ],
 
   3: [
-    'Ruta 5',
     'Santuario de los Reyes',
-    'Ciudad Óleo',
     'Chateau Rosillon',
     'Vieja Biblioteca',
     'Ruta 6',

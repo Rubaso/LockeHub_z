@@ -62,7 +62,6 @@ export const ROUTES = [
   'Ruta 2',
   'Catacumbas Meridionales',
   'Ciudad Grisalla',
-  'Bosque Ladera',
   'Cueva Grisalla',
 
   // Tramo 2 — Canola → Hisopo
@@ -70,11 +69,12 @@ export const ROUTES = [
   'Ruta 3',
   'Pueblo Collage',
   'Ruta 4',
+  'Ciudad Óleo',
+  'Bosque Ladera',
+  'Ruta 5',
 
   // Tramo 3 — Hisopo → F3
-  'Ruta 5',
   'Santuario de los Reyes',
-  'Ciudad Óleo',
   'Chateau Rosillon',
   'Vieja Biblioteca',
   'Ruta 6',
