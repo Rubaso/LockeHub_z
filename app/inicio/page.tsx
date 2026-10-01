@@ -6,6 +6,7 @@ import { CAPTURAS_UPDATED_EVENT, EVENT_NAME, PLAYERS, SALA_ID } from '@/lib/cons
 import { fetchRecentShinies, fetchRecentActivity, type ActivityEvent } from '@/lib/activity'
 import { spriteUrl } from '@/lib/sprites'
 import { supabase } from '@/lib/supabase'
+import ShinyIcon from '@/components/ShinyIcon'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 const INITIAL_ACTIVITY_COUNT = 20
@@ -135,7 +136,10 @@ export default function InicioPage() {
               return (
                 <div key={shiny.id} className="flex min-w-52 flex-1 items-center justify-center gap-2 rounded-xl border border-purple-400/30 bg-purple-900/40 px-4 py-3">
                   {shiny.pokemon_id ? (
-                    <img src={spriteUrl(shiny.pokemon_id, true)} alt="" className="h-14 w-14 shrink-0" />
+                    <span className="relative block h-14 w-14 shrink-0">
+                      <img src={spriteUrl(shiny.pokemon_id, true)} alt="" className="h-14 w-14" />
+                      <ShinyIcon className="absolute right-0 top-0 h-6 w-6 text-amber-300" />
+                    </span>
                   ) : null}
                   <div className="text-left">
                     <p className="font-bold text-purple-100">{playerName}</p>
@@ -225,11 +229,14 @@ export default function InicioPage() {
                           }}
                         />
                       ) : event.pokemon_id ? (
-                        <img
-                          src={spriteUrl(event.pokemon_id, event.is_shiny)}
-                          alt=""
-                          className="h-12 w-12 shrink-0"
-                        />
+                        <span className="relative block h-12 w-12 shrink-0">
+                          <img
+                            src={spriteUrl(event.pokemon_id, event.is_shiny)}
+                            alt=""
+                            className="h-12 w-12"
+                          />
+                          {event.is_shiny && <ShinyIcon className="absolute right-0 top-0 h-5 w-5 text-amber-300" />}
+                        </span>
                       ) : (
                         <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-lg">
                           {death ? '†' : '+'}
@@ -267,7 +274,6 @@ export default function InicioPage() {
                               </span>
                             </>
                           )}
-                          {event.is_shiny && <span className="ml-1 text-amber-300">✦</span>}
                         </p>
                         <p className="truncate text-xs text-zinc-500">
                           {event.ruta} · {dateLabel}

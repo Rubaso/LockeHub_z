@@ -1,6 +1,7 @@
 import { spriteUrl } from '@/lib/sprites'
 import { abilityNameInSpanish } from '@/lib/abilityNames'
 import MarkShinyButton from './MarkShinyButton'
+import ShinyIcon from './ShinyIcon'
 import type { Pokemon, Tramo } from '@/lib/types'
 
 type Props = {
@@ -33,7 +34,10 @@ function MiniSprite({
       }`}
     >
       {markingShiny && pokemon && <MarkShinyButton pokemon={pokemon} />}
-      <img src={spriteUrl(pokemonId)} alt={name} className="mx-auto h-20 w-20" />
+      <div className="relative mx-auto w-fit">
+        <img src={spriteUrl(pokemonId, !!pokemon?.shiny)} alt={name} className="h-20 w-20" />
+        {pokemon?.shiny && <ShinyIcon className="absolute right-0 top-0 h-5 w-5 text-amber-300" />}
+      </div>
       <p className="truncate text-[11px] text-zinc-200">{name}</p>
       {ability && (
         <p className="mt-1 text-[9px] leading-tight text-zinc-400">

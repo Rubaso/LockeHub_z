@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { spriteUrl } from '@/lib/sprites'
 import type { Player, Pokemon } from '@/lib/types'
+import ShinyIcon from './ShinyIcon'
 
 type Props = {
   player: Player
@@ -66,13 +67,15 @@ export default function PlayerRow({ player, team, medals = [], isYou }: Props) {
             <span className="text-xs text-zinc-500">Sin equipo aún</span>
           )}
           {team.map((poke) => (
-            <img
-              key={poke.id}
-              src={spriteUrl(poke.pokemonId, poke.shiny)}
-              alt={poke.name}
-              title={poke.name}
-              className="h-20 w-20 shrink-0 object-contain"
-            />
+            <span key={poke.id} className="relative block h-20 w-20 shrink-0">
+              <img
+                src={spriteUrl(poke.pokemonId, poke.shiny)}
+                alt={poke.name}
+                title={poke.name}
+                className="h-20 w-20 object-contain"
+              />
+              {poke.shiny && <ShinyIcon className="absolute right-0 top-0 h-5 w-5 text-amber-300" />}
+            </span>
           ))}
         </div>
       </div>

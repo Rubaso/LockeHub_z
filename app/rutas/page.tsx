@@ -5,6 +5,7 @@ import { PLAYERS, ROUTES, sortPlayers } from '@/lib/constants'
 import { readSession } from '@/lib/session'
 import { spriteUrl } from '@/lib/sprites'
 import { useCapturas } from '@/lib/useCapturas'
+import ShinyIcon from '@/components/ShinyIcon'
 
 const ESTADOS_ENCUENTRO = {
   available: { label: 'Disponible', className: 'text-zinc-500' },
@@ -120,12 +121,15 @@ export default function RutasPage() {
                   return (
                     <td key={route} className="border-r border-zinc-800 px-2 py-1 text-center">
                       {spriteId ? (
-                        <img
-                          src={spriteUrl(spriteId, !!poke?.is_shiny)}
-                          alt={displayName ?? 'Pokémon del encuentro'}
-                          title={displayName ?? 'Pokémon del encuentro'}
-                          className={`mx-auto h-20 w-20 ${poke?.estado === 'MUERTO' ? 'grayscale opacity-60' : ''}`}
-                        />
+                        <span className="relative mx-auto block h-20 w-20">
+                          <img
+                            src={spriteUrl(spriteId, !!poke?.is_shiny)}
+                            alt={displayName ?? 'Pokémon del encuentro'}
+                            title={displayName ?? 'Pokémon del encuentro'}
+                            className={`h-20 w-20 ${poke?.estado === 'MUERTO' ? 'grayscale opacity-60' : ''}`}
+                          />
+                          {poke?.is_shiny && <ShinyIcon className="absolute right-0 top-0 h-5 w-5 text-amber-300" />}
+                        </span>
                       ) : null}
                       {status && (
                         <div
