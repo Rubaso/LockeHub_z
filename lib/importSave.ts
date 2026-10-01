@@ -113,7 +113,7 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     if ((existente.pokemon_nickname ?? null) !== pokemon.pokemon_nickname) payload.pokemon_nickname = pokemon.pokemon_nickname
     if (existente.pokemon_id !== pokemon.pokemon_id) payload.pokemon_id = pokemon.pokemon_id
     if ((existente.habilidad ?? null) !== pokemon.habilidad) payload.habilidad = pokemon.habilidad
-    if (!!existente.is_shiny !== pokemon.is_shiny) payload.is_shiny = pokemon.is_shiny
+    if (pokemon.is_shiny && !existente.is_shiny) payload.is_shiny = true
     if (!!existente.is_team !== pokemon.is_team) payload.is_team = pokemon.is_team
 
     if (Object.keys(payload).length > 0) {
@@ -245,6 +245,29 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
   }
 
   if (actividad.length > 0) {
+    const { data: actividadesAnteriores, error: errorActividadesAnteriores } = await supabase
+      .from('feed_eventos')
+      .select('save_pokemon_id, tipo, is_shiny')
+      .eq('sala_id', SALA_ID)
+      .eq('jugador_id', player.id)
+      .in('tipo', ['captura', 'muerte'])
+
+    if (errorActividadesAnteriores) {
+      throw new Error('Los Pokémon se guardaron, pero no se pudieron comprobar los eventos anteriores.')
+    }
+
+    const shiniesAnteriores = new Set(
+      (actividadesAnteriores ?? [])
+        .filter((evento) => evento.is_shiny)
+        .map((evento) => `${evento.save_pokemon_id}:${evento.tipo}`)
+    )
+
+    for (const evento of actividad) {
+      if (shiniesAnteriores.has(`${evento.save_pokemon_id}:${evento.tipo}`)) {
+        evento.is_shiny = true
+      }
+    }
+
     const { error } = await supabase
       .from('feed_eventos')
       .upsert(actividad, {
