@@ -16,6 +16,10 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
   ],
 
   2: [
+    'Pueblo Acrílico',
+    'Ruta 3',
+    'Pueblo Collage',
+    'Ruta 4',
     'Ciudad Óleo',
     'Bosque Ladera',
     'Ruta 5',
