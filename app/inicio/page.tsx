@@ -205,6 +205,7 @@ export default function InicioPage() {
                 activity.map((event) => {
                   const death = event.tipo === 'muerte'
                   const medal = event.tipo === 'medalla'
+                  const trade = event.tipo === 'captura' && event.ruta.startsWith('Don Prodigio ')
                   const initial = !death && event.ruta === 'INICIAL'
                   const playerName = playerNames.get(event.jugador_id) ?? `Jugador ${event.jugador_id}`
                   const happenedAt = new Date(event.ocurrido_en)
@@ -217,7 +218,7 @@ export default function InicioPage() {
                     <li
                       key={event.id}
                       className={`flex items-center gap-3 p-3 ${
-                        death ? 'bg-rose-950/25' : medal ? 'bg-amber-950/25' : event.is_shiny ? 'bg-purple-950/40' : 'bg-teal-950/25'
+                        death ? 'bg-rose-950/25' : medal ? 'bg-amber-950/25' : trade ? 'bg-orange-950/35' : event.is_shiny ? 'bg-purple-950/40' : 'bg-teal-950/25'
                       }`}
                     >
                       {medal ? (
@@ -265,7 +266,7 @@ export default function InicioPage() {
                           ) : (
                             <>
                               <span className="font-semibold text-teal-300">{playerName}</span>
-                              {death ? ' perdió a ' : ' capturó a '}
+                              {death ? ' perdió a ' : trade ? ' recibió a ' : ' capturó a '}
                               <span className={`font-bold ${death ? 'text-rose-300' : 'text-zinc-100'}`}>
                                 {event.pokemon_nickname || event.pokemon_name}
                                 {event.pokemon_nickname && (
@@ -273,6 +274,11 @@ export default function InicioPage() {
                                 )}
                               </span>
                             </>
+                          )}
+                          {trade && (
+                            <span className="ml-2 rounded bg-orange-400/20 px-1.5 py-0.5 text-[10px] font-bold uppercase text-orange-300">
+                              Intercambio
+                            </span>
                           )}
                         </p>
                         <p className="truncate text-xs text-zinc-500">

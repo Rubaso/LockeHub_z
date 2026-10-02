@@ -69,6 +69,7 @@ export const ROUTES = [
   'Ruta 3',
   'Pueblo Collage',
   'Ruta 4',
+  'Don Prodigio Ruta 4',
   'Ciudad Óleo',
   'Bosque Ladera',
   'Ruta 5',
@@ -79,22 +80,27 @@ export const ROUTES = [
   'Vieja Biblioteca',
   'Ruta 6',
   'Cueva Lóbrega',
-  'Bosque Errante',
   'Pueblo Profano',
-  'Cueva Psique',
+  'Don Prodigio Pueblo Profano',
+  'Ciudad Novarte',
   'Cueva Refulgente',
 
   // Tramo 4 — F3 → Zafra
   'Ruta 7 Norte',
-  'Ciudad Novarte',
   'Ruta 7 Sur',
+  'Ruta 9',
+  'Pantano Profano',
+  'Colina de Tormenta',
+  'Santuario Prosperidad',
+  'Catacumbas Septentrionales',
+  'Bosque Errante',
+  'Cueva Psique',
   'Ruta 8 Este',
   'Ruta 8 Oeste',
   'Cueva Talasia',
   'Cueva de la Cascada',
 
   // Tramo 5 — Zafra → Clavelina
-  'Ruta 9',
   'Ruta 10',
   'Pueblo Petroglifo',
   'Cueva de los Reflejos',
@@ -110,7 +116,6 @@ export const ROUTES = [
   'Ruta 13',
   'Ciudad Luminalia',
   'Catacumbas Occidentales',
-  'Pantano Profano',
 
   // Tramo 7 — Belladona → Fortunia
   'Ruta 14',
@@ -119,7 +124,6 @@ export const ROUTES = [
   'Ciudad Batik',
   'Ruta 16',
   'Catacumbas Orientales',
-  'Catacumbas Septentrionales',
   'Gruta Tierraunida',
 
   // Tramo 8 — Fortunia → Anturia
@@ -148,7 +152,6 @@ export const ROUTES = [
   'Pueblo Sanguino',
   'Ruta 23',
   'Ciudad Yantra',
-  'Colina de Tormenta',
   'Pirineos de Kalos',
   'Huerto Vánitas',
   'Manantial Profundo',
@@ -163,7 +166,6 @@ export const ROUTES = [
   // Tramo 12 — Gimnasio 11 → Final
   'Ruta 26',
   'Cámara Druídica',
-  'Santuario Prosperidad',
   'Viejo Vánitas',
   'Torre Oscura',
   'Torre Oscura P0',

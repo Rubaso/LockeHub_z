@@ -213,7 +213,9 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     const savePokemonId = `${save.trainerId}:${pokemon.personalID}`
     const ruta = pokemon.ruta ?? `Zona desconocida (ID ${pokemon.obtainMap})`
 
-    if (pokemon.capturedAt || pokemon.shiny) {
+    const isDonProdigio = pokemon.ruta?.startsWith('Don Prodigio ') ?? false
+
+    if (pokemon.capturedAt || pokemon.shiny || isDonProdigio) {
       actividad.push({
         sala_id: SALA_ID,
         jugador_id: player.id,

@@ -205,6 +205,8 @@ function getIvar(obj: any, name: string): any {
 }
 
 const DON_PRODIGIO_MAP_ROUTES: Record<number, string> = {
+  27: 'Don Prodigio Ruta 4',
+  68: 'Don Prodigio Pueblo Profano',
   11: 'Don Prodigio Monte Moon',
   59: 'Don Prodigio SS ANNE',
   78: 'Don Prodigio Centro Comercial',
@@ -216,7 +218,7 @@ const DON_PRODIGIO_MAP_ROUTES: Record<number, string> = {
 }
 
 function normalizeTrainerName(value: any): string {
-  return String(value ?? '')
+  return String(symbolName(value) ?? value ?? '')
     .trim()
     .toLowerCase()
     .normalize('NFD')
@@ -254,15 +256,13 @@ function resolveSpecialRoute(
    * En la Partida 1.rxdata comprobamos:
    *   @owner.@name = "Don Prodigio"
    *   @owner.@id   = 1204
-   *   @obtain_method = 2
    *
-   * El mapa determina qué Don Prodigio concreto fue utilizado.
+   * El mapa determina qué Don Prodigio concreto fue utilizado. Algunos
+   * regalos se entregan dentro de un Centro Pokémon y usan otro método.
    */
-  if (
-    obtainMethod === 2 &&
-    isDonProdigio(originalTrainerName, originalTrainerId)
-  ) {
-    return DON_PRODIGIO_MAP_ROUTES[obtainMap] ?? 'Don Prodigio'
+  const donProdigioRoute = DON_PRODIGIO_MAP_ROUTES[obtainMap]
+  if (donProdigioRoute && isDonProdigio(originalTrainerName, originalTrainerId)) {
+    return donProdigioRoute
   }
 
   // Magikarp especial de Map070.
@@ -271,12 +271,6 @@ function resolveSpecialRoute(
   // Por eso NO comprobamos species === 'magikarp'.
   if (obtainMap === 70 && obtainMethod !== 2) {
     return 'Magikarp'
-  }
-
-  // Eevee regalo: Map080.
-  // El Pokémon puede estar randomizado, así que no comprobamos su especie.
-  if (obtainMap === 80) {
-    return 'Eevee'
   }
 
   // Lapras regalo: Map102.
@@ -356,10 +350,16 @@ function symbolName(value: any): string | null {
 }
 
 function numberValue(value: any): number | null {
-  return typeof value === 'number' &&
-    Number.isFinite(value)
-    ? value
-    : null
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value
+  }
+
+  if (typeof value === 'string' && value.trim() !== '') {
+    const parsed = Number(value)
+    return Number.isFinite(parsed) ? parsed : null
+  }
+
+  return null
 }
 
 function normalizeSpecies(value: any): string {

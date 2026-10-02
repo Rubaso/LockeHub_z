@@ -20,6 +20,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Ruta 3',
     'Pueblo Collage',
     'Ruta 4',
+    'Don Prodigio Ruta 4',
     'Ciudad Óleo',
     'Bosque Ladera',
     'Ruta 5',
@@ -33,16 +34,19 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Cueva Lóbrega',
     'Bosque Errante',
     'Pueblo Profano',
+    'Don Prodigio Pueblo Profano',
+    'Ciudad Novarte',
     'Ruta 7 Norte',
     'Ruta 7 Sur',
     'Pantano Profano',
+    'Colina de Tormenta',
+    'Santuario Prosperidad',
     'Ruta 8',
     'Ruta 8 Este',
     'Ruta 8 Oeste'
   ],
 
   4: [
-    'Ciudad Novarte',
     'Ruta 9',
     'Ruta 10',
     'Ruta 11',
