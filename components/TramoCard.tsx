@@ -35,8 +35,12 @@ function MiniSprite({
     >
       {markingShiny && pokemon && <MarkShinyButton pokemon={pokemon} />}
       <div className="relative mx-auto w-fit">
-        <img src={spriteUrl(pokemonId, !!pokemon?.shiny)} alt={name} className="h-20 w-20" />
-        {pokemon?.shiny && <ShinyIcon className="absolute right-0 top-0 h-5 w-5 text-amber-300" />}
+        {pokemonId ? (
+          <>
+            <img src={spriteUrl(pokemonId, !!pokemon?.shiny)} alt={name} className="h-20 w-20" />
+            {pokemon?.shiny && <ShinyIcon className="absolute right-0 top-0 h-5 w-5 text-amber-300" />}
+          </>
+        ) : null}
       </div>
       <p className="truncate text-[11px] text-zinc-200">{name}</p>
       {ability && (

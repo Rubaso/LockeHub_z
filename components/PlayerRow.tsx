@@ -68,13 +68,17 @@ export default function PlayerRow({ player, team, medals = [], isYou }: Props) {
           )}
           {team.map((poke) => (
             <span key={poke.id} className="relative block h-20 w-20 shrink-0">
-              <img
-                src={spriteUrl(poke.pokemonId, poke.shiny)}
-                alt={poke.name}
-                title={poke.name}
-                className="h-20 w-20 object-contain"
-              />
-              {poke.shiny && <ShinyIcon className="absolute right-0 top-0 h-5 w-5 text-amber-300" />}
+              {poke.pokemonId ? (
+                <>
+                  <img
+                    src={spriteUrl(poke.pokemonId, poke.shiny)}
+                    alt={poke.name}
+                    title={poke.name}
+                    className="h-20 w-20 object-contain"
+                  />
+                  {poke.shiny && <ShinyIcon className="absolute right-0 top-0 h-5 w-5 text-amber-300" />}
+                </>
+              ) : null}
             </span>
           ))}
         </div>
