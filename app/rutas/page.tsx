@@ -121,14 +121,16 @@ export default function RutasPage() {
                   return (
                     <td key={route} className="border-r border-zinc-800 px-2 py-1 text-center">
                       {spriteId ? (
-                        <span className="relative mx-auto block h-20 w-20">
+                        <span className="group/sprite relative mx-auto block h-20 w-20">
                           <img
                             src={spriteUrl(spriteId, !!poke?.is_shiny)}
-                            alt={displayName ?? 'Pokémon del encuentro'}
-                            title={displayName ?? 'Pokémon del encuentro'}
+                            alt={spriteName ?? 'Pokémon del encuentro'}
                             className={`h-20 w-20 ${poke?.estado === 'MUERTO' ? 'grayscale opacity-60' : ''}`}
                           />
                           {poke?.is_shiny && <ShinyIcon className="absolute right-0 top-0 h-5 w-5 text-amber-300" />}
+                          <span className="pointer-events-none absolute left-1/2 top-0 z-20 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded bg-zinc-950 px-2 py-1 text-[10px] font-semibold capitalize text-zinc-100 opacity-0 shadow-lg transition-opacity group-hover/sprite:opacity-100">
+                            {spriteName ?? 'Pokémon del encuentro'}
+                          </span>
                         </span>
                       ) : null}
                       {status && (

@@ -27,6 +27,9 @@ function MiniSprite({
   ability?: string
   markingShiny?: boolean
 }) {
+  const speciesName = pokemon?.name || name
+  const nickname = pokemon?.nickname
+
   return (
     <div
       className={`group relative w-24 rounded-lg border p-2 text-center ${
@@ -37,12 +40,21 @@ function MiniSprite({
       <div className="relative mx-auto w-fit">
         {pokemonId ? (
           <>
-            <img src={spriteUrl(pokemonId, !!pokemon?.shiny)} alt={name} className="h-20 w-20" />
+            <img
+              src={spriteUrl(pokemonId, !!pokemon?.shiny)}
+              alt={speciesName}
+              className="h-20 w-20"
+            />
             {pokemon?.shiny && <ShinyIcon className="absolute right-0 top-0 h-5 w-5 text-amber-300" />}
           </>
         ) : null}
       </div>
-      <p className="truncate text-[11px] text-zinc-200">{name}</p>
+      <p className="truncate text-[11px] text-zinc-200">{speciesName}</p>
+      {nickname && nickname !== speciesName && (
+        <p className="truncate text-[10px] text-zinc-400" title={`Mote: ${nickname}`}>
+          {nickname}
+        </p>
+      )}
       {ability && (
         <p className="mt-1 text-[9px] leading-tight text-zinc-400">
           HAB. {abilityNameInSpanish(ability)}
