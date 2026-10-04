@@ -39,7 +39,7 @@ export async function fetchLatestShiny(): Promise<ActivityEvent | null> {
 export async function fetchRecentShinies(): Promise<ActivityEvent[]> {
   if (!supabase) return []
 
-  const since = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString()
+  const since = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
   const { data, error } = await supabase
     .from('feed_eventos')
     .select('id, jugador_id, tipo, medalla_id, pokemon_name, pokemon_nickname, pokemon_id, ruta, is_shiny, ocurrido_en')
