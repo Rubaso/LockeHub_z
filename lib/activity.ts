@@ -14,6 +14,10 @@ export type ActivityEvent = {
   ocurrido_en: string
 }
 
+export function isDonProdigioRoute(route: string | null | undefined): boolean {
+  return route?.trim().toLocaleLowerCase().startsWith('don prodigio') ?? false
+}
+
 export async function fetchLatestShiny(): Promise<ActivityEvent | null> {
   if (!supabase) return null
 

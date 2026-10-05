@@ -1,4 +1,5 @@
 import { SALA_ID } from './constants'
+import { isDonProdigioRoute } from './activity'
 import { parseRxDataSave } from './rxdataParser'
 import { supabase } from './supabase'
 import type { SessionPlayer } from './types'
@@ -213,7 +214,7 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     const savePokemonId = `${save.trainerId}:${pokemon.personalID}`
     const ruta = pokemon.ruta ?? `Zona desconocida (ID ${pokemon.obtainMap})`
 
-    const isDonProdigio = pokemon.ruta?.startsWith('Don Prodigio ') ?? false
+    const isDonProdigio = isDonProdigioRoute(pokemon.ruta)
 
     if (pokemon.capturedAt || pokemon.shiny || isDonProdigio) {
       actividad.push({

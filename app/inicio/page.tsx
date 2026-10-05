@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import PokepasteStatus from '@/components/PokepasteStatus'
 import { CAPTURAS_UPDATED_EVENT, EVENT_NAME, PLAYERS, SALA_ID } from '@/lib/constants'
-import { fetchRecentShinies, fetchRecentActivity, type ActivityEvent } from '@/lib/activity'
+import { fetchRecentShinies, fetchRecentActivity, isDonProdigioRoute, type ActivityEvent } from '@/lib/activity'
 import { spriteUrl } from '@/lib/sprites'
 import { supabase } from '@/lib/supabase'
 import ShinyIcon from '@/components/ShinyIcon'
@@ -207,7 +207,7 @@ export default function InicioPage() {
                 activity.map((event) => {
                   const death = event.tipo === 'muerte'
                   const medal = event.tipo === 'medalla'
-                  const trade = event.tipo === 'captura' && event.ruta.startsWith('Don Prodigio ')
+                  const trade = event.tipo === 'captura' && isDonProdigioRoute(event.ruta)
                   const initial = !death && event.ruta === 'INICIAL'
                   const playerName = playerNames.get(event.jugador_id) ?? `Jugador ${event.jugador_id}`
                   const happenedAt = new Date(event.ocurrido_en)
