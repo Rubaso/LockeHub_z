@@ -207,6 +207,9 @@ function getIvar(obj: any, name: string): any {
 const DON_PRODIGIO_MAP_ROUTES: Record<number, string> = {
   27: 'Don Prodigio Ruta 4',
   68: 'Don Prodigio Pueblo Profano',
+  91: 'Don Prodigio Ruta 8',
+  100: 'Don Prodigio Ruta 8',
+  165: 'Don Prodigio Ruta 8',
   11: 'Don Prodigio Monte Moon',
   59: 'Don Prodigio SS ANNE',
   78: 'Don Prodigio Centro Comercial',

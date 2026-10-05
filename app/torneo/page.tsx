@@ -371,15 +371,20 @@ export default function TorneoPage() {
               El cuadro está vacío.
             </p>
           ) : (
-            <div className="flex min-w-max gap-10">
+            <div className="flex min-w-max items-start gap-3">
             {rounds.map((round, roundIndex) => (
-              <section key={round.name} className="w-72 space-y-5">
-              <h2 className="text-center text-base font-bold uppercase tracking-widest text-zinc-400">
-                {round.name}
-              </h2>
-              <div className="space-y-5">
+              <section key={round.name} className="w-72 rounded-xl bg-zinc-950/45 p-2">
+              <div className="mb-2 rounded-lg border border-amber-400/15 bg-amber-500/10 px-2 py-2 text-center">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-300/70">
+                  Fase {roundIndex + 1}
+                </p>
+                <h2 className="mt-1 text-base font-black uppercase tracking-widest text-amber-100">
+                  {round.name}
+                </h2>
+              </div>
+              <div className="space-y-2">
                 {round.matches.map((match, matchIndex) => (
-                  <div key={match.id} className="space-y-2 rounded-xl border border-zinc-800 bg-zinc-900 p-3">
+                  <div key={match.id} className="relative space-y-1.5 rounded-lg border border-zinc-800/80 bg-zinc-900/90 p-2">
                     {([1, 2] as const).map((slot) => {
                       const name = slot === 1 ? match.player1 : match.player2
                       const player = PLAYERS.find((item) => item.name === name)

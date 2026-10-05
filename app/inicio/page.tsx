@@ -161,20 +161,22 @@ export default function InicioPage() {
       </section>
 
       {tournament?.locked && (
-        <section className="group relative isolate overflow-hidden rounded-2xl border border-amber-400/50 bg-amber-500/10 shadow-[0_0_30px_rgba(245,158,11,0.12)]">
-          <div
-            className="absolute inset-0 scale-100 bg-cover bg-center opacity-35 transition-transform duration-500 ease-out group-hover:scale-110"
-            style={{ backgroundImage: "url('/sprites/lideres/1poster.png')" }}
-          />
-          <div className="absolute inset-0 bg-zinc-950/65" />
-          <div className="relative p-5">
-            <p className="text-xs font-bold uppercase tracking-widest text-amber-300">Torneo iniciado</p>
-            <h2 className="mt-1 text-2xl font-black text-amber-100">{tournament.name}</h2>
-            <p className="mt-1 text-sm text-amber-200/70">
-              El cuadro está bloqueado y la competición ha comenzado.
-            </p>
-          </div>
-        </section>
+        <Link href="/torneo" className="block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300">
+          <section className="group relative isolate overflow-hidden rounded-2xl border border-amber-400/50 bg-amber-500/10 shadow-[0_0_30px_rgba(245,158,11,0.12)]">
+            <div
+              className="absolute inset-0 scale-100 bg-cover bg-center opacity-35 transition-transform duration-500 ease-out group-hover:scale-110"
+              style={{ backgroundImage: "url('/sprites/lideres/1poster.png')" }}
+            />
+            <div className="absolute inset-0 bg-zinc-950/65" />
+            <div className="relative p-5">
+              <p className="text-xs font-bold uppercase tracking-widest text-amber-300">Torneo iniciado</p>
+              <h2 className="mt-1 text-2xl font-black text-amber-100">{tournament.name}</h2>
+              <p className="mt-1 text-sm text-amber-200/70">
+                Sube tu pokepaste (o pasaselo a él si todavia falta gente por subirlo) y habla con tu rival para jugar.
+              </p>
+            </div>
+          </section>
+        </Link>
       )}
 
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">

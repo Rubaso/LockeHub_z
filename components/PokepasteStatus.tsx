@@ -127,6 +127,20 @@ export default function PokepasteStatus() {
 
   return (
     <aside className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-5">
+      {rivalName && (
+        <div className="mb-5 rounded-xl border border-sky-500/30 bg-sky-950/25 p-4 shadow-[0_0_20px_rgba(14,165,233,0.08)]">
+          <p className="text-xs font-bold uppercase tracking-widest text-sky-300">Rival actual</p>
+          <p className="mt-1 text-xl font-black text-sky-100">{rivalName}</p>
+          {allDelivered && rivalPokepaste ? (
+            <div className="mt-4 flex flex-wrap gap-2 border-t border-sky-500/20 pt-3">
+              <button type="button" onClick={() => setTeamOpen(true)} className="rounded-lg bg-sky-500 px-4 py-2 text-sm font-bold text-zinc-950 hover:bg-sky-400">VER EQUIPO</button>
+              <button type="button" onClick={copyRivalPokepaste} className="rounded-lg border border-sky-500/50 px-4 py-2 text-sm font-bold text-sky-300 hover:bg-sky-500/10">{copied ? 'Copiado' : 'Copiar'}</button>
+            </div>
+          ) : (
+            <p className="mt-3 border-t border-sky-500/20 pt-3 text-sm text-sky-200/70">Podrás ver su equipo cuando todos suban el PokéPaste.</p>
+          )}
+        </div>
+      )}
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-xs font-bold uppercase tracking-widest text-teal-400">Torneo</p>
@@ -145,20 +159,6 @@ export default function PokepasteStatus() {
           {saving ? 'Guardando…' : 'Guardar PokéPaste'}
         </button>
       </form>
-      {rivalName && (
-        <div className="mt-5 border-t border-zinc-800 pt-4">
-          <p className="text-xs font-bold uppercase tracking-widest text-zinc-500">Rival actual</p>
-          <p className="mt-1 text-lg font-bold text-zinc-100">{rivalName}</p>
-          {allDelivered && rivalPokepaste ? (
-            <div className="mt-3 flex flex-wrap gap-2">
-              <button type="button" onClick={() => setTeamOpen(true)} className="rounded-lg bg-sky-500 px-4 py-2 text-sm font-bold text-zinc-950 hover:bg-sky-400">VER EQUIPO</button>
-              <button type="button" onClick={copyRivalPokepaste} className="rounded-lg border border-sky-500/50 px-4 py-2 text-sm font-bold text-sky-300 hover:bg-sky-500/10">{copied ? 'Copiado' : 'Copiar'}</button>
-            </div>
-          ) : (
-            <p className="mt-2 text-sm text-zinc-500">El botón aparecerá cuando todos los participantes hayan entregado el equipo.</p>
-          )}
-        </div>
-      )}
       {error && <p className="mt-3 text-sm text-rose-400">{error}</p>}
       {teamOpen && rivalName && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
