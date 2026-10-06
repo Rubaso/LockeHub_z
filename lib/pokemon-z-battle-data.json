@@ -2428,6 +2428,10 @@
       "key": "EXPANDINGFORCE",
       "showdown": "Expanding Force"
     },
+    "630": {
+      "key": "AQUACUTTER",
+      "showdown": "Aqua Cutter"
+    },
     "637": {
       "key": "STICKYWEB",
       "showdown": "Sticky Web"
