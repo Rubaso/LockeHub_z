@@ -1,7 +1,9 @@
 export async function POST(request: Request) {
   try {
     const body = await request.json() as { paste?: unknown }
-    const paste = typeof body.paste === 'string' ? body.paste.trim() : ''
+    const paste = typeof body.paste === 'string'
+      ? body.paste.trim().replace(/\r?\n/g, '\r\n')
+      : ''
     if (!paste) return Response.json({ error: 'El equipo está vacío.' }, { status: 400 })
 
     const form = new URLSearchParams({ paste })
