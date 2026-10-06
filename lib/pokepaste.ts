@@ -1,4 +1,5 @@
 import type { Pokemon } from './types'
+import { natureFromId, natureFromPersonalId } from './natures'
 import pokemonZBattleData from './pokemon-z-battle-data.json'
 import pokemonZBattleOverrides from './pokemon-z-battle-overrides.json'
 
@@ -64,7 +65,13 @@ export function pokemonToShowdown(pokemon: Pokemon): string {
 
   if (data?.ability) lines.push(`Ability: ${showdownBattleName(data.ability, battleDataMaps.abilities)}`)
   lines.push('Level: 50')
-  if (data?.nature) lines.push(`${showdownName(data.nature)} Nature`)
+  const storedNature = data?.nature && Number.isNaN(Number(data.nature))
+    ? data.nature
+    : null
+  const nature = natureFromId(data?.nature) ??
+    storedNature ??
+    natureFromPersonalId(pokemon.savePokemonId?.split(':').pop())
+  if (nature) lines.push(`${showdownName(nature)} Nature`)
 
   const ivs = STAT_NAMES
     .map(([key, label]) => {

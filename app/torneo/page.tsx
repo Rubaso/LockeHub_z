@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ORGANIZER_PLAYER_ID, PLAYERS, SALA_ID } from '@/lib/constants'
 import { readAllSettings, readSession } from '@/lib/session'
 import { supabase } from '@/lib/supabase'
@@ -106,8 +106,12 @@ export default function TorneoPage() {
       .eq('sala_id', SALA_ID)
       .maybeSingle()
 
-    if (data?.bracket_data) setRounds(data.bracket_data as Round[])
-    else setRounds([])
+    if (data?.bracket_data) {
+      const loadedRounds = data.bracket_data as Round[]
+      setRounds(loadedRounds)
+    } else {
+      setRounds([])
+    }
     setLocked(Boolean(data?.is_locked))
     setTournamentName(data?.tournament_name ?? '')
     setLoading(false)
@@ -201,15 +205,29 @@ export default function TorneoPage() {
     void saveTournament(next)
   }
 
-  const selectWinner = (roundIndex: number, matchIndex: number, winner: string) => {
+  const toggleWinner = (roundIndex: number, matchIndex: number, playerName: string) => {
     if (sessionId !== ORGANIZER_PLAYER_ID) return
     const next = structuredClone(rounds)
     const match = next[roundIndex].matches[matchIndex]
+    const winner = match.winner === playerName ? null : playerName
     match.winner = winner
-    if (roundIndex + 1 < next.length) {
-      const nextMatch = next[roundIndex + 1].matches[Math.floor(matchIndex / 2)]
-      if (matchIndex % 2 === 0) nextMatch.player1 = winner
-      else nextMatch.player2 = winner
+
+    let sourceMatchIndex = matchIndex
+    let advancedPlayer = winner
+    for (let nextRoundIndex = roundIndex + 1; nextRoundIndex < next.length; nextRoundIndex++) {
+      const nextMatchIndex = Math.floor(sourceMatchIndex / 2)
+      const nextMatch = next[nextRoundIndex].matches[nextMatchIndex]
+      if (!nextMatch) break
+
+      const slot = sourceMatchIndex % 2 === 0 ? 'player1' : 'player2'
+      if (nextMatch[slot] === advancedPlayer) break
+
+      nextMatch[slot] = advancedPlayer
+      if (!nextMatch.winner) break
+
+      nextMatch.winner = null
+      advancedPlayer = null
+      sourceMatchIndex = nextMatchIndex
     }
     void saveTournament(next)
   }
@@ -407,21 +425,19 @@ export default function TorneoPage() {
                               : 'border-dashed border-zinc-800 bg-zinc-900/40'
                           }`}
                         >
-                          <span
-                            className={name === 'BYE' ? 'text-zinc-600' : isWinner ? 'text-zinc-100' : 'text-zinc-400'}
+                          <button
+                            type="button"
+                            disabled={!hasPlayer || sessionId !== ORGANIZER_PLAYER_ID || saving}
+                            aria-pressed={isWinner}
+                            title={isWinner ? 'Quitar como ganador' : 'Marcar como ganador'}
+                            onClick={() => {
+                              if (name && name !== 'BYE') toggleWinner(roundIndex, matchIndex, name)
+                            }}
+                            className={`text-left ${name === 'BYE' ? 'text-zinc-600' : isWinner ? 'font-black text-zinc-100' : 'text-zinc-400'} disabled:cursor-default`}
                             style={player && hasPlayer ? { color: colors[player.id] || player.color } : undefined}
                           >
                             {name ?? 'Vacío'}
-                          </span>
-                          {hasPlayer && sessionId === ORGANIZER_PLAYER_ID && (
-                            <button
-                              type="button"
-                              onClick={() => selectWinner(roundIndex, matchIndex, name!)}
-                              className="text-[10px] font-black text-amber-300 hover:text-amber-200"
-                            >
-                              GANADOR
-                            </button>
-                          )}
+                          </button>
                           {name && name !== 'BYE' && player && canSeeTeam(name) && (
                             <button
                               type="button"

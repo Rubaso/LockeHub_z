@@ -1,4 +1,5 @@
 import { loadAll } from '@hyrious/marshal'
+import { natureFromId, natureFromPersonalId } from './natures'
 import { ROUTES } from '@/lib/constants'
 import { MAP_Z } from '@/lib/mapZ'
 import { POKEMON_Z_SPECIES_BY_ID } from '@/lib/pokemonZSpecies'
@@ -82,7 +83,6 @@ const pokemonZAbilities = pokemonZAbilitySlots as Record<
   string,
   (number | null)[]
 >
-
 async function getPokemonIdMap(): Promise<Map<string, number>> {
   if (cachedPokemonMap) {
     return cachedPokemonMap
@@ -618,6 +618,16 @@ function normalizeBattleName(value: any): string | null {
   return null
 }
 
+function resolveNatureName(value: unknown, personalId: unknown): string | null {
+  const nature = natureFromId(value)
+  if (nature) return nature
+
+  const name = normalizeBattleName(value)
+  if (name) return name
+
+  return natureFromPersonalId(personalId)
+}
+
 function resolveMoveName(value: unknown): string | null {
   const direct = normalizeBattleName(value)
   if (direct) return direct
@@ -672,7 +682,10 @@ async function extractBattleData(pokemon: any, ability: string | null): Promise<
   return {
     ability: resolveBattleDataName(ability, battleDataMaps.abilities),
     item: resolveBattleDataName(getIvarFromNames(pokemon, ['@item', '@held_item', '@heldItem']), battleDataMaps.items),
-    nature: normalizeBattleName(getIvarFromNames(pokemon, ['@nature'])),
+    nature: resolveNatureName(
+      getIvarFromNames(pokemon, ['@nature']),
+      getIvarFromNames(pokemon, ['@personalID'])
+    ),
     gender: normalizeBattleName(getIvarFromNames(pokemon, ['@gender'])),
     level: numberValue(getIvar(pokemon, '@level')),
     ivs: Object.keys(ivs).length > 0 ? ivs : null,

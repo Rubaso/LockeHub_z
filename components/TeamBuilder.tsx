@@ -1,19 +1,45 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { Pokemon } from '@/lib/types'
 import { teamToShowdown } from '@/lib/pokepaste'
 import { readSession } from '@/lib/session'
 import { supabase } from '@/lib/supabase'
 
 export default function TeamBuilder({ pokemon }: { pokemon: Pokemon[] }) {
-  const [selectedIds, setSelectedIds] = useState<number[]>([])
+  const storageKey = `lockehub_team_builder_${pokemon[0]?.playerId ?? 'unknown'}`
+  const [selectedIds, setSelectedIds] = useState<number[]>(() => {
+    if (typeof window === 'undefined') return []
+
+    try {
+      const stored = window.localStorage.getItem(storageKey)
+      if (!stored) return []
+      const parsed: unknown = JSON.parse(stored)
+      if (!Array.isArray(parsed)) return []
+
+      const availableIds = new Set(pokemon.map((item) => item.id))
+      return [...new Set(parsed.filter(
+        (id): id is number => Number.isInteger(id) && availableIds.has(id)
+      ))].slice(0, 6)
+    } catch (error) {
+      console.error('No se pudo recuperar el equipo seleccionado:', error)
+      return []
+    }
+  })
   const [open, setOpen] = useState(false)
   const [pasteUrl, setPasteUrl] = useState('')
   const [copied, setCopied] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(storageKey, JSON.stringify(selectedIds))
+    } catch (error) {
+      console.error('No se pudo guardar el equipo seleccionado:', error)
+    }
+  }, [selectedIds, storageKey])
 
   const selected = useMemo(
     () => selectedIds.map((id) => pokemon.find((item) => item.id === id)).filter((item): item is Pokemon => Boolean(item)),
