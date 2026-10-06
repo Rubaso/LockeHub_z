@@ -3,8 +3,10 @@
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import PokemonCard from '@/components/PokemonCard'
+import TeamBuilder from '@/components/TeamBuilder'
 import { PLAYERS } from '@/lib/constants'
 import { capturaToPokemon, isInBox } from '@/lib/mapCapturas'
+import { readSession } from '@/lib/session'
 import { useCapturas } from '@/lib/useCapturas'
 
 export default function CajaPage() {
@@ -28,6 +30,7 @@ export default function CajaPage() {
     fromDatabase && rows
       ? rows.filter((row) => row.jugador_id === id && isInBox(row)).map(capturaToPokemon)
       : []
+  const canBuildTeam = readSession()?.id === id
 
   return (
     <div className="space-y-4">
@@ -35,6 +38,7 @@ export default function CajaPage() {
         ← Jugadores
       </Link>
       <h1 className="text-2xl font-black">Caja de {player.name}</h1>
+      {canBuildTeam && box.length > 0 && <TeamBuilder pokemon={box} />}
       {box.length === 0 ? (
         <p className="text-sm text-zinc-500">
           Esta caja está vacía. Si eres este jugador, sube tu save arriba.

@@ -1,6 +1,7 @@
 import { SALA_ID } from './constants'
 import { isDonProdigioRoute } from './activity'
 import { parseRxDataSave } from './rxdataParser'
+import type { PokemonBattleData } from './rxdataParser'
 import { supabase } from './supabase'
 import type { SessionPlayer } from './types'
 
@@ -17,6 +18,7 @@ type CapturaSaveRow = {
   is_team: boolean
   save_pokemon_id: string
   origen: string
+  battle_data: PokemonBattleData
 }
 
 type ExistingRow = {
@@ -30,6 +32,7 @@ type ExistingRow = {
   habilidad: string | null
   is_shiny: boolean
   is_team: boolean
+  battle_data: PokemonBattleData | null
 }
 
 type ActivityRow = {
@@ -77,11 +80,12 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     is_team: !!pokemon.isTeam,
     save_pokemon_id: `${save.trainerId}:${pokemon.personalID}`,
     origen: 'save',
+    battle_data: pokemon.battleData,
   }))
 
   const { data: existentes, error: errorExistentes } = await supabase
     .from('capturas')
-    .select('id, save_pokemon_id, estado, ruta, pokemon_name, pokemon_nickname, pokemon_id, habilidad, is_shiny, is_team')
+    .select('id, save_pokemon_id, estado, ruta, pokemon_name, pokemon_nickname, pokemon_id, habilidad, is_shiny, is_team, battle_data')
     .eq('sala_id', SALA_ID)
     .eq('jugador_id', player.id)
     .not('save_pokemon_id', 'is', null)
@@ -116,6 +120,7 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     if ((existente.habilidad ?? null) !== pokemon.habilidad) payload.habilidad = pokemon.habilidad
     if (pokemon.is_shiny && !existente.is_shiny) payload.is_shiny = true
     if (!!existente.is_team !== pokemon.is_team) payload.is_team = pokemon.is_team
+    if (JSON.stringify(existente.battle_data ?? null) !== JSON.stringify(pokemon.battle_data)) payload.battle_data = pokemon.battle_data
 
     if (Object.keys(payload).length > 0) {
       actualizaciones.push({ id: existente.id, payload })

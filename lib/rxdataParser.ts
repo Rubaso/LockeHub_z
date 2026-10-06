@@ -3,6 +3,7 @@ import { ROUTES } from '@/lib/constants'
 import { MAP_Z } from '@/lib/mapZ'
 import { POKEMON_Z_SPECIES_BY_ID } from '@/lib/pokemonZSpecies'
 import pokemonZAbilitySlots from '@/lib/pokemon-z-abilities.json'
+import pokemonZBattleData from '@/lib/pokemon-z-battle-data.json'
 
 export interface PokemonSaveData {
   species: string
@@ -25,6 +26,17 @@ export interface PokemonSaveData {
   isTeam: boolean
   originalTrainerName: string | null
   originalTrainerId: number | null
+  battleData: PokemonBattleData
+}
+
+export interface PokemonBattleData {
+  ability: string | null
+  item: string | null
+  nature: string | null
+  gender: string | null
+  level: number | null
+  ivs: Record<string, number> | null
+  moves: string[]
 }
 
 export interface UnknownMapPokemon {
@@ -47,9 +59,19 @@ interface PokemonApiInfo {
   id: number
 }
 
+type BattleDataMap = {
+  key: string
+  showdown: string
+}
+
 let cachedPokemonMap: Map<string, number> | null = null
 let cachedPokemonNameMap: Map<number, string> | null = null
 const cachedSpeciesVariants = new Map<string, PokemonApiInfo[]>()
+const battleDataMaps = pokemonZBattleData as {
+  moves: Record<string, BattleDataMap>
+  items: Record<string, BattleDataMap>
+  abilities: Record<string, BattleDataMap>
+}
 const pokemonZAbilities = pokemonZAbilitySlots as Record<
   string,
   (number | null)[]
@@ -581,6 +603,70 @@ function normalizeNickname(value: any): string | null {
     : null
 }
 
+function normalizeBattleName(value: any): string | null {
+  const name = symbolName(value) ?? (typeof value === 'string' ? value : '')
+  const normalized = name.trim().replace(/^:/, '')
+  if (normalized.length > 0 && normalized.toUpperCase() !== 'NONE') {
+    return normalized
+  }
+  return null
+}
+
+function resolveMoveName(value: unknown): string | null {
+  const direct = normalizeBattleName(value)
+  if (direct) return direct
+
+  const id = numberValue(value)
+  if (id === null || id <= 0) return null
+  return battleDataMaps.moves[String(id)]?.showdown ?? null
+}
+
+function resolveBattleDataName(value: unknown, map: Record<string, BattleDataMap>): string | null {
+  const id = numberValue(value)
+  if (id !== null) {
+    return map[String(id)]?.showdown ?? null
+  }
+
+  return normalizeBattleName(value)
+}
+
+async function extractBattleData(pokemon: any, ability: string | null): Promise<PokemonBattleData> {
+  const rawMoves = getIvarFromNames(pokemon, ['@moves', '@moveList'])
+  const moves: string[] = []
+  if (Array.isArray(rawMoves)) {
+    for (const move of rawMoves) {
+      const moveValue = getIvarFromNames(move, ['@move', '@id', '@name']) ?? move
+      const name = resolveMoveName(moveValue)
+      if (name) moves.push(name)
+    }
+  }
+
+  const rawIvs = getIvarFromNames(pokemon, ['@iv', '@ivs', '@individualValues'])
+  const ivs: Record<string, number> = {}
+  if (Array.isArray(rawIvs)) {
+    for (const [index, value] of rawIvs.entries()) {
+      const parsed = numberValue(value)
+      if (parsed !== null) ivs[['hp', 'atk', 'def', 'spa', 'spd', 'spe'][index] ?? `stat${index}`] = parsed
+    }
+  } else if (rawIvs && typeof rawIvs === 'object') {
+    for (const stat of ['hp', 'atk', 'def', 'spa', 'spd', 'spe']) {
+      const value = getHashValue(rawIvs, stat) ?? getHashValue(rawIvs, stat.toUpperCase())
+      const parsed = numberValue(value)
+      if (parsed !== null) ivs[stat] = parsed
+    }
+  }
+
+  return {
+    ability: resolveBattleDataName(ability, battleDataMaps.abilities),
+    item: resolveBattleDataName(getIvarFromNames(pokemon, ['@item', '@held_item', '@heldItem']), battleDataMaps.items),
+    nature: normalizeBattleName(getIvarFromNames(pokemon, ['@nature'])),
+    gender: normalizeBattleName(getIvarFromNames(pokemon, ['@gender'])),
+    level: numberValue(getIvar(pokemon, '@level')),
+    ivs: Object.keys(ivs).length > 0 ? ivs : null,
+    moves,
+  }
+}
+
 function timestampFromSave(value: unknown): string | null {
   const timestamp = numberValue(value)
   if (timestamp === null || timestamp <= 0) {
@@ -666,6 +752,7 @@ async function extractPokemon(
   // El randomizer de Pokémon Añil guarda @randomized en el propio Pokémon.
   // Es true cuando la especie original fue sustituida por el randomizer.
   const randomized = getIvar(pokemon, '@randomized') === true
+  const ability = getPokemonAbility(pokemon, speciesRaw, globalMetadata)
 
   const ruta =
     resolveSpecialRoute(
@@ -697,13 +784,14 @@ async function extractPokemon(
     randomized,
     ruta,
     shiny: getIvar(pokemon, '@shiny') === true,
-    ability: getPokemonAbility(pokemon, speciesRaw, globalMetadata),
+    ability,
     level: numberValue(getIvar(pokemon, '@level')),
     obtainLevel,
     nickname: normalizeNickname(getIvar(pokemon, '@name')),
     isTeam,
     originalTrainerName,
-    originalTrainerId
+    originalTrainerId,
+    battleData: await extractBattleData(pokemon, ability)
   }
 }
 

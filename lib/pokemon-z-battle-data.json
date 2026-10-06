@@ -1,0 +1,5860 @@
+{
+  "moves": {
+    "1": {
+      "key": "MEGAHORN",
+      "showdown": "Megahorn"
+    },
+    "2": {
+      "key": "ATTACKORDER",
+      "showdown": "Attack Order"
+    },
+    "3": {
+      "key": "BUGBUZZ",
+      "showdown": "Bug Buzz"
+    },
+    "4": {
+      "key": "XSCISSOR",
+      "showdown": "X Scissor"
+    },
+    "5": {
+      "key": "SIGNALBEAM",
+      "showdown": "Signal Beam"
+    },
+    "6": {
+      "key": "UTURN",
+      "showdown": "U Turn"
+    },
+    "7": {
+      "key": "STEAMROLLER",
+      "showdown": "Steamroller"
+    },
+    "8": {
+      "key": "BUGBITE",
+      "showdown": "Bug Bite"
+    },
+    "9": {
+      "key": "SILVERWIND",
+      "showdown": "Silver Wind"
+    },
+    "10": {
+      "key": "STRUGGLEBUG",
+      "showdown": "Struggle Bug"
+    },
+    "11": {
+      "key": "TWINEEDLE",
+      "showdown": "Twineedle"
+    },
+    "12": {
+      "key": "FURYCUTTER",
+      "showdown": "Fury Cutter"
+    },
+    "13": {
+      "key": "LEECHLIFE",
+      "showdown": "Leech Life"
+    },
+    "14": {
+      "key": "PINMISSILE",
+      "showdown": "Pin Missile"
+    },
+    "15": {
+      "key": "DEFENDORDER",
+      "showdown": "Defend Order"
+    },
+    "16": {
+      "key": "HEALORDER",
+      "showdown": "Heal Order"
+    },
+    "17": {
+      "key": "QUIVERDANCE",
+      "showdown": "Quiver Dance"
+    },
+    "18": {
+      "key": "RAGEPOWDER",
+      "showdown": "Rage Powder"
+    },
+    "19": {
+      "key": "SPIDERWEB",
+      "showdown": "Spider Web"
+    },
+    "20": {
+      "key": "STRINGSHOT",
+      "showdown": "String Shot"
+    },
+    "21": {
+      "key": "TAILGLOW",
+      "showdown": "Tail Glow"
+    },
+    "22": {
+      "key": "FOULPLAY",
+      "showdown": "Foul Play"
+    },
+    "23": {
+      "key": "NIGHTDAZE",
+      "showdown": "Night Daze"
+    },
+    "24": {
+      "key": "CRUNCH",
+      "showdown": "Crunch"
+    },
+    "25": {
+      "key": "DARKPULSE",
+      "showdown": "Dark Pulse"
+    },
+    "26": {
+      "key": "SUCKERPUNCH",
+      "showdown": "Sucker Punch"
+    },
+    "27": {
+      "key": "NIGHTSLASH",
+      "showdown": "Night Slash"
+    },
+    "28": {
+      "key": "BITE",
+      "showdown": "Bite"
+    },
+    "30": {
+      "key": "SNARL",
+      "showdown": "Snarl"
+    },
+    "31": {
+      "key": "ASSURANCE",
+      "showdown": "Assurance"
+    },
+    "32": {
+      "key": "PAYBACK",
+      "showdown": "Payback"
+    },
+    "33": {
+      "key": "PURSUIT",
+      "showdown": "Pursuit"
+    },
+    "34": {
+      "key": "THIEF",
+      "showdown": "Thief"
+    },
+    "35": {
+      "key": "KNOCKOFF",
+      "showdown": "Knock Off"
+    },
+    "36": {
+      "key": "BEATUP",
+      "showdown": "Beat Up"
+    },
+    "38": {
+      "key": "PUNISHMENT",
+      "showdown": "Punishment"
+    },
+    "39": {
+      "key": "DARKVOID",
+      "showdown": "Dark Void"
+    },
+    "40": {
+      "key": "EMBARGO",
+      "showdown": "Embargo"
+    },
+    "41": {
+      "key": "FAKETEARS",
+      "showdown": "Fake Tears"
+    },
+    "42": {
+      "key": "FLATTER",
+      "showdown": "Flatter"
+    },
+    "43": {
+      "key": "HONECLAWS",
+      "showdown": "Hone Claws"
+    },
+    "44": {
+      "key": "MEMENTO",
+      "showdown": "Memento"
+    },
+    "45": {
+      "key": "NASTYPLOT",
+      "showdown": "Nasty Plot"
+    },
+    "46": {
+      "key": "QUASH",
+      "showdown": "Quash"
+    },
+    "47": {
+      "key": "SNATCH",
+      "showdown": "Snatch"
+    },
+    "48": {
+      "key": "SWITCHEROO",
+      "showdown": "Switcheroo"
+    },
+    "49": {
+      "key": "TAUNT",
+      "showdown": "Taunt"
+    },
+    "50": {
+      "key": "TORMENT",
+      "showdown": "Torment"
+    },
+    "51": {
+      "key": "ROAROFTIME",
+      "showdown": "Roar Of Time"
+    },
+    "52": {
+      "key": "DRACOMETEOR",
+      "showdown": "Draco Meteor"
+    },
+    "53": {
+      "key": "OUTRAGE",
+      "showdown": "Outrage"
+    },
+    "54": {
+      "key": "DRAGONRUSH",
+      "showdown": "Dragon Rush"
+    },
+    "55": {
+      "key": "SPACIALREND",
+      "showdown": "Spacial Rend"
+    },
+    "56": {
+      "key": "DRAGONPULSE",
+      "showdown": "Dragon Pulse"
+    },
+    "57": {
+      "key": "DRAGONCLAW",
+      "showdown": "Dragon Claw"
+    },
+    "58": {
+      "key": "DRAGONTAIL",
+      "showdown": "Dragon Tail"
+    },
+    "59": {
+      "key": "DRAGONBREATH",
+      "showdown": "Dragon Breath"
+    },
+    "60": {
+      "key": "DUALCHOP",
+      "showdown": "Dual Chop"
+    },
+    "61": {
+      "key": "TWISTER",
+      "showdown": "Twister"
+    },
+    "62": {
+      "key": "DRAGONRAGE",
+      "showdown": "Dragon Rage"
+    },
+    "63": {
+      "key": "DRAGONDANCE",
+      "showdown": "Dragon Dance"
+    },
+    "64": {
+      "key": "BOLTSTRIKE",
+      "showdown": "Bolt Strike"
+    },
+    "65": {
+      "key": "THUNDER",
+      "showdown": "Thunder"
+    },
+    "66": {
+      "key": "VOLTTACKLE",
+      "showdown": "Volt Tackle"
+    },
+    "67": {
+      "key": "ZAPCANNON",
+      "showdown": "Zap Cannon"
+    },
+    "68": {
+      "key": "FUSIONBOLT",
+      "showdown": "Fusion Bolt"
+    },
+    "69": {
+      "key": "THUNDERBOLT",
+      "showdown": "Thunderbolt"
+    },
+    "70": {
+      "key": "WILDCHARGE",
+      "showdown": "Wild Charge"
+    },
+    "71": {
+      "key": "DISCHARGE",
+      "showdown": "Discharge"
+    },
+    "72": {
+      "key": "THUNDERPUNCH",
+      "showdown": "Thunder Punch"
+    },
+    "73": {
+      "key": "VOLTSWITCH",
+      "showdown": "Volt Switch"
+    },
+    "74": {
+      "key": "SPARK",
+      "showdown": "Spark"
+    },
+    "75": {
+      "key": "THUNDERFANG",
+      "showdown": "Thunder Fang"
+    },
+    "76": {
+      "key": "SHOCKWAVE",
+      "showdown": "Shock Wave"
+    },
+    "77": {
+      "key": "ELECTROWEB",
+      "showdown": "Electroweb"
+    },
+    "78": {
+      "key": "CHARGEBEAM",
+      "showdown": "Charge Beam"
+    },
+    "79": {
+      "key": "THUNDERSHOCK",
+      "showdown": "Thunder Shock"
+    },
+    "80": {
+      "key": "ELECTROBALL",
+      "showdown": "Electro Ball"
+    },
+    "81": {
+      "key": "CHARGE",
+      "showdown": "Charge"
+    },
+    "82": {
+      "key": "MAGNETRISE",
+      "showdown": "Magnet Rise"
+    },
+    "83": {
+      "key": "THUNDERWAVE",
+      "showdown": "Thunder Wave"
+    },
+    "84": {
+      "key": "FOCUSPUNCH",
+      "showdown": "Focus Punch"
+    },
+    "86": {
+      "key": "CLOSECOMBAT",
+      "showdown": "Close Combat"
+    },
+    "87": {
+      "key": "FOCUSBLAST",
+      "showdown": "Focus Blast"
+    },
+    "88": {
+      "key": "SUPERPOWER",
+      "showdown": "Superpower"
+    },
+    "89": {
+      "key": "CROSSCHOP",
+      "showdown": "Cross Chop"
+    },
+    "90": {
+      "key": "DYNAMICPUNCH",
+      "showdown": "Dynamic Punch"
+    },
+    "91": {
+      "key": "HAMMERARM",
+      "showdown": "Hammer Arm"
+    },
+    "92": {
+      "key": "JUMPKICK",
+      "showdown": "Jump Kick"
+    },
+    "93": {
+      "key": "AURASPHERE",
+      "showdown": "Aura Sphere"
+    },
+    "94": {
+      "key": "SACREDSWORD",
+      "showdown": "Sacred Sword"
+    },
+    "95": {
+      "key": "SECRETSWORD",
+      "showdown": "Secret Sword"
+    },
+    "96": {
+      "key": "SKYUPPERCUT",
+      "showdown": "Sky Uppercut"
+    },
+    "97": {
+      "key": "SUBMISSION",
+      "showdown": "Submission"
+    },
+    "98": {
+      "key": "BRICKBREAK",
+      "showdown": "Brick Break"
+    },
+    "99": {
+      "key": "DRAINPUNCH",
+      "showdown": "Drain Punch"
+    },
+    "100": {
+      "key": "VITALTHROW",
+      "showdown": "Vital Throw"
+    },
+    "101": {
+      "key": "CIRCLETHROW",
+      "showdown": "Circle Throw"
+    },
+    "102": {
+      "key": "FORCEPALM",
+      "showdown": "Force Palm"
+    },
+    "103": {
+      "key": "LOWSWEEP",
+      "showdown": "Low Sweep"
+    },
+    "104": {
+      "key": "REVENGE",
+      "showdown": "Revenge"
+    },
+    "105": {
+      "key": "ROLLINGKICK",
+      "showdown": "Rolling Kick"
+    },
+    "106": {
+      "key": "WAKEUPSLAP",
+      "showdown": "Wake Up Slap"
+    },
+    "107": {
+      "key": "KARATECHOP",
+      "showdown": "Karate Chop"
+    },
+    "108": {
+      "key": "MACHPUNCH",
+      "showdown": "Mach Punch"
+    },
+    "109": {
+      "key": "ROCKSMASH",
+      "showdown": "Rock Smash"
+    },
+    "110": {
+      "key": "STORMTHROW",
+      "showdown": "Storm Throw"
+    },
+    "111": {
+      "key": "VACUUMWAVE",
+      "showdown": "Vacuum Wave"
+    },
+    "112": {
+      "key": "DOUBLEKICK",
+      "showdown": "Double Kick"
+    },
+    "113": {
+      "key": "ARMTHRUST",
+      "showdown": "Arm Thrust"
+    },
+    "114": {
+      "key": "TRIPLEKICK",
+      "showdown": "Triple Kick"
+    },
+    "115": {
+      "key": "COUNTER",
+      "showdown": "Counter"
+    },
+    "116": {
+      "key": "FINALGAMBIT",
+      "showdown": "Final Gambit"
+    },
+    "117": {
+      "key": "LOWKICK",
+      "showdown": "Low Kick"
+    },
+    "118": {
+      "key": "REVERSAL",
+      "showdown": "Reversal"
+    },
+    "119": {
+      "key": "SEISMICTOSS",
+      "showdown": "Seismic Toss"
+    },
+    "120": {
+      "key": "BULKUP",
+      "showdown": "Bulk Up"
+    },
+    "121": {
+      "key": "DETECT",
+      "showdown": "Detect"
+    },
+    "122": {
+      "key": "QUICKGUARD",
+      "showdown": "Quick Guard"
+    },
+    "123": {
+      "key": "VCREATE",
+      "showdown": "V Create"
+    },
+    "124": {
+      "key": "BLASTBURN",
+      "showdown": "Blast Burn"
+    },
+    "125": {
+      "key": "ERUPTION",
+      "showdown": "Eruption"
+    },
+    "126": {
+      "key": "OVERHEAT",
+      "showdown": "Overheat"
+    },
+    "127": {
+      "key": "BLUEFLARE",
+      "showdown": "Blue Flare"
+    },
+    "128": {
+      "key": "FIREBLAST",
+      "showdown": "Fire Blast"
+    },
+    "129": {
+      "key": "FLAREBLITZ",
+      "showdown": "Flare Blitz"
+    },
+    "130": {
+      "key": "MAGMASTORM",
+      "showdown": "Magma Storm"
+    },
+    "131": {
+      "key": "FUSIONFLARE",
+      "showdown": "Fusion Flare"
+    },
+    "132": {
+      "key": "HEATWAVE",
+      "showdown": "Heat Wave"
+    },
+    "133": {
+      "key": "INFERNO",
+      "showdown": "Inferno"
+    },
+    "134": {
+      "key": "SACREDFIRE",
+      "showdown": "Sacred Fire"
+    },
+    "135": {
+      "key": "SEARINGSHOT",
+      "showdown": "Searing Shot"
+    },
+    "136": {
+      "key": "FLAMETHROWER",
+      "showdown": "Flamethrower"
+    },
+    "137": {
+      "key": "BLAZEKICK",
+      "showdown": "Blaze Kick"
+    },
+    "138": {
+      "key": "FIERYDANCE",
+      "showdown": "Fiery Dance"
+    },
+    "139": {
+      "key": "LAVAPLUME",
+      "showdown": "Lava Plume"
+    },
+    "140": {
+      "key": "FIREPUNCH",
+      "showdown": "Fire Punch"
+    },
+    "141": {
+      "key": "FLAMEBURST",
+      "showdown": "Flame Burst"
+    },
+    "142": {
+      "key": "FIREFANG",
+      "showdown": "Fire Fang"
+    },
+    "143": {
+      "key": "FLAMEWHEEL",
+      "showdown": "Flame Wheel"
+    },
+    "144": {
+      "key": "FIREPLEDGE",
+      "showdown": "Fire Pledge"
+    },
+    "145": {
+      "key": "FLAMECHARGE",
+      "showdown": "Flame Charge"
+    },
+    "146": {
+      "key": "EMBER",
+      "showdown": "Ember"
+    },
+    "147": {
+      "key": "FIRESPIN",
+      "showdown": "Fire Spin"
+    },
+    "148": {
+      "key": "INCINERATE",
+      "showdown": "Incinerate"
+    },
+    "149": {
+      "key": "HEATCRASH",
+      "showdown": "Heat Crash"
+    },
+    "150": {
+      "key": "SUNNYDAY",
+      "showdown": "Sunny Day"
+    },
+    "151": {
+      "key": "WILLOWISP",
+      "showdown": "Will O Wisp"
+    },
+    "152": {
+      "key": "SKYATTACK",
+      "showdown": "Sky Attack"
+    },
+    "153": {
+      "key": "BRAVEBIRD",
+      "showdown": "Brave Bird"
+    },
+    "154": {
+      "key": "HURRICANE",
+      "showdown": "Hurricane"
+    },
+    "155": {
+      "key": "AEROBLAST",
+      "showdown": "Aeroblast"
+    },
+    "156": {
+      "key": "FLY",
+      "showdown": "Fly"
+    },
+    "157": {
+      "key": "BOUNCE",
+      "showdown": "Bounce"
+    },
+    "158": {
+      "key": "DRILLPECK",
+      "showdown": "Drill Peck"
+    },
+    "159": {
+      "key": "AIRSLASH",
+      "showdown": "Air Slash"
+    },
+    "160": {
+      "key": "AERIALACE",
+      "showdown": "Aerial Ace"
+    },
+    "162": {
+      "key": "PLUCK",
+      "showdown": "Pluck"
+    },
+    "164": {
+      "key": "WINGATTACK",
+      "showdown": "Wing Attack"
+    },
+    "165": {
+      "key": "ACROBATICS",
+      "showdown": "Acrobatics"
+    },
+    "166": {
+      "key": "AIRCUTTER",
+      "showdown": "Air Cutter"
+    },
+    "167": {
+      "key": "GUST",
+      "showdown": "Gust"
+    },
+    "168": {
+      "key": "PECK",
+      "showdown": "Peck"
+    },
+    "169": {
+      "key": "DEFOG",
+      "showdown": "Defog"
+    },
+    "170": {
+      "key": "FEATHERDANCE",
+      "showdown": "Feather Dance"
+    },
+    "171": {
+      "key": "MIRRORMOVE",
+      "showdown": "Mirror Move"
+    },
+    "172": {
+      "key": "ROOST",
+      "showdown": "Roost"
+    },
+    "173": {
+      "key": "TAILWIND",
+      "showdown": "Tailwind"
+    },
+    "174": {
+      "key": "SHADOWFORCE",
+      "showdown": "Shadow Force"
+    },
+    "175": {
+      "key": "SHADOWBALL",
+      "showdown": "Shadow Ball"
+    },
+    "176": {
+      "key": "SHADOWCLAW",
+      "showdown": "Shadow Claw"
+    },
+    "177": {
+      "key": "OMINOUSWIND",
+      "showdown": "Ominous Wind"
+    },
+    "178": {
+      "key": "SHADOWPUNCH",
+      "showdown": "Shadow Punch"
+    },
+    "179": {
+      "key": "HEX",
+      "showdown": "Hex"
+    },
+    "180": {
+      "key": "SHADOWSNEAK",
+      "showdown": "Shadow Sneak"
+    },
+    "181": {
+      "key": "ASTONISH",
+      "showdown": "Astonish"
+    },
+    "182": {
+      "key": "LICK",
+      "showdown": "Lick"
+    },
+    "183": {
+      "key": "NIGHTSHADE",
+      "showdown": "Night Shade"
+    },
+    "184": {
+      "key": "CONFUSERAY",
+      "showdown": "Confuse Ray"
+    },
+    "185": {
+      "key": "CURSE",
+      "showdown": "Curse"
+    },
+    "186": {
+      "key": "DESTINYBOND",
+      "showdown": "Destiny Bond"
+    },
+    "187": {
+      "key": "GRUDGE",
+      "showdown": "Grudge"
+    },
+    "188": {
+      "key": "NIGHTMARE",
+      "showdown": "Nightmare"
+    },
+    "189": {
+      "key": "SPITE",
+      "showdown": "Spite"
+    },
+    "190": {
+      "key": "FRENZYPLANT",
+      "showdown": "Frenzy Plant"
+    },
+    "191": {
+      "key": "LEAFSTORM",
+      "showdown": "Leaf Storm"
+    },
+    "192": {
+      "key": "PETALDANCE",
+      "showdown": "Petal Dance"
+    },
+    "193": {
+      "key": "POWERWHIP",
+      "showdown": "Power Whip"
+    },
+    "194": {
+      "key": "SEEDFLARE",
+      "showdown": "Seed Flare"
+    },
+    "195": {
+      "key": "SOLARBEAM",
+      "showdown": "Solar Beam"
+    },
+    "196": {
+      "key": "WOODHAMMER",
+      "showdown": "Wood Hammer"
+    },
+    "197": {
+      "key": "LEAFBLADE",
+      "showdown": "Leaf Blade"
+    },
+    "198": {
+      "key": "ENERGYBALL",
+      "showdown": "Energy Ball"
+    },
+    "199": {
+      "key": "SEEDBOMB",
+      "showdown": "Seed Bomb"
+    },
+    "200": {
+      "key": "GIGADRAIN",
+      "showdown": "Giga Drain"
+    },
+    "201": {
+      "key": "HORNLEECH",
+      "showdown": "Horn Leech"
+    },
+    "202": {
+      "key": "LEAFTORNADO",
+      "showdown": "Leaf Tornado"
+    },
+    "203": {
+      "key": "MAGICALLEAF",
+      "showdown": "Magical Leaf"
+    },
+    "204": {
+      "key": "NEEDLEARM",
+      "showdown": "Needle Arm"
+    },
+    "205": {
+      "key": "RAZORLEAF",
+      "showdown": "Razor Leaf"
+    },
+    "206": {
+      "key": "GRASSPLEDGE",
+      "showdown": "Grass Pledge"
+    },
+    "207": {
+      "key": "MEGADRAIN",
+      "showdown": "Mega Drain"
+    },
+    "208": {
+      "key": "VINEWHIP",
+      "showdown": "Vine Whip"
+    },
+    "209": {
+      "key": "BULLETSEED",
+      "showdown": "Bullet Seed"
+    },
+    "210": {
+      "key": "ABSORB",
+      "showdown": "Absorb"
+    },
+    "211": {
+      "key": "GRASSKNOT",
+      "showdown": "Grass Knot"
+    },
+    "212": {
+      "key": "AROMATHERAPY",
+      "showdown": "Aromatherapy"
+    },
+    "213": {
+      "key": "COTTONGUARD",
+      "showdown": "Cotton Guard"
+    },
+    "214": {
+      "key": "COTTONSPORE",
+      "showdown": "Cotton Spore"
+    },
+    "215": {
+      "key": "GRASSWHISTLE",
+      "showdown": "Grass Whistle"
+    },
+    "216": {
+      "key": "INGRAIN",
+      "showdown": "Ingrain"
+    },
+    "217": {
+      "key": "LEECHSEED",
+      "showdown": "Leech Seed"
+    },
+    "218": {
+      "key": "SLEEPPOWDER",
+      "showdown": "Sleep Powder"
+    },
+    "219": {
+      "key": "SPORE",
+      "showdown": "Spore"
+    },
+    "220": {
+      "key": "STUNSPORE",
+      "showdown": "Stun Spore"
+    },
+    "221": {
+      "key": "SYNTHESIS",
+      "showdown": "Synthesis"
+    },
+    "222": {
+      "key": "WORRYSEED",
+      "showdown": "Worry Seed"
+    },
+    "223": {
+      "key": "EARTHQUAKE",
+      "showdown": "Earthquake"
+    },
+    "224": {
+      "key": "EARTHPOWER",
+      "showdown": "Earth Power"
+    },
+    "225": {
+      "key": "DIG",
+      "showdown": "Dig"
+    },
+    "226": {
+      "key": "DRILLRUN",
+      "showdown": "Drill Run"
+    },
+    "227": {
+      "key": "BONECLUB",
+      "showdown": "Bone Club"
+    },
+    "228": {
+      "key": "MUDBOMB",
+      "showdown": "Mud Bomb"
+    },
+    "229": {
+      "key": "BULLDOZE",
+      "showdown": "Bulldoze"
+    },
+    "230": {
+      "key": "MUDSHOT",
+      "showdown": "Mud Shot"
+    },
+    "231": {
+      "key": "BONEMERANG",
+      "showdown": "Bonemerang"
+    },
+    "232": {
+      "key": "SANDTOMB",
+      "showdown": "Sand Tomb"
+    },
+    "233": {
+      "key": "BONERUSH",
+      "showdown": "Bone Rush"
+    },
+    "234": {
+      "key": "MUDSLAP",
+      "showdown": "Mud Slap"
+    },
+    "235": {
+      "key": "FISSURE",
+      "showdown": "Fissure"
+    },
+    "236": {
+      "key": "MAGNITUDE",
+      "showdown": "Magnitude"
+    },
+    "237": {
+      "key": "MUDSPORT",
+      "showdown": "Mud Sport"
+    },
+    "238": {
+      "key": "SANDATTACK",
+      "showdown": "Sand Attack"
+    },
+    "239": {
+      "key": "SPIKES",
+      "showdown": "Spikes"
+    },
+    "240": {
+      "key": "FREEZESHOCK",
+      "showdown": "Freeze Shock"
+    },
+    "241": {
+      "key": "ICEBURN",
+      "showdown": "Ice Burn"
+    },
+    "242": {
+      "key": "BLIZZARD",
+      "showdown": "Blizzard"
+    },
+    "243": {
+      "key": "ICEBEAM",
+      "showdown": "Ice Beam"
+    },
+    "244": {
+      "key": "ICICLECRASH",
+      "showdown": "Icicle Crash"
+    },
+    "245": {
+      "key": "ICEPUNCH",
+      "showdown": "Ice Punch"
+    },
+    "246": {
+      "key": "AURORABEAM",
+      "showdown": "Aurora Beam"
+    },
+    "247": {
+      "key": "GLACIATE",
+      "showdown": "Glaciate"
+    },
+    "248": {
+      "key": "ICEFANG",
+      "showdown": "Ice Fang"
+    },
+    "249": {
+      "key": "AVALANCHE",
+      "showdown": "Avalanche"
+    },
+    "250": {
+      "key": "ICYWIND",
+      "showdown": "Icy Wind"
+    },
+    "251": {
+      "key": "FROSTBREATH",
+      "showdown": "Frost Breath"
+    },
+    "252": {
+      "key": "ICESHARD",
+      "showdown": "Ice Shard"
+    },
+    "253": {
+      "key": "POWDERSNOW",
+      "showdown": "Powder Snow"
+    },
+    "254": {
+      "key": "ICEBALL",
+      "showdown": "Ice Ball"
+    },
+    "255": {
+      "key": "ICICLESPEAR",
+      "showdown": "Icicle Spear"
+    },
+    "256": {
+      "key": "SHEERCOLD",
+      "showdown": "Sheer Cold"
+    },
+    "257": {
+      "key": "HAIL",
+      "showdown": "Hail"
+    },
+    "258": {
+      "key": "HAZE",
+      "showdown": "Haze"
+    },
+    "259": {
+      "key": "MIST",
+      "showdown": "Mist"
+    },
+    "260": {
+      "key": "EXPLOSION",
+      "showdown": "Explosion"
+    },
+    "261": {
+      "key": "SELFDESTRUCT",
+      "showdown": "Self Destruct"
+    },
+    "262": {
+      "key": "GIGAIMPACT",
+      "showdown": "Giga Impact"
+    },
+    "263": {
+      "key": "HYPERBEAM",
+      "showdown": "Hyper Beam"
+    },
+    "264": {
+      "key": "LASTRESORT",
+      "showdown": "Last Resort"
+    },
+    "265": {
+      "key": "DOUBLEEDGE",
+      "showdown": "Double Edge"
+    },
+    "266": {
+      "key": "HEADCHARGE",
+      "showdown": "Head Charge"
+    },
+    "267": {
+      "key": "MEGAKICK",
+      "showdown": "Mega Kick"
+    },
+    "268": {
+      "key": "THRASH",
+      "showdown": "Thrash"
+    },
+    "269": {
+      "key": "EGGBOMB",
+      "showdown": "Egg Bomb"
+    },
+    "270": {
+      "key": "JUDGMENT",
+      "showdown": "Judgment"
+    },
+    "271": {
+      "key": "SKULLBASH",
+      "showdown": "Skull Bash"
+    },
+    "272": {
+      "key": "HYPERVOICE",
+      "showdown": "Hyper Voice"
+    },
+    "273": {
+      "key": "ROCKCLIMB",
+      "showdown": "Rock Climb"
+    },
+    "274": {
+      "key": "TAKEDOWN",
+      "showdown": "Take Down"
+    },
+    "275": {
+      "key": "UPROAR",
+      "showdown": "Uproar"
+    },
+    "276": {
+      "key": "BODYSLAM",
+      "showdown": "Body Slam"
+    },
+    "277": {
+      "key": "TECHNOBLAST",
+      "showdown": "Techno Blast"
+    },
+    "278": {
+      "key": "EXTREMESPEED",
+      "showdown": "Extreme Speed"
+    },
+    "279": {
+      "key": "HYPERFANG",
+      "showdown": "Hyper Fang"
+    },
+    "280": {
+      "key": "MEGAPUNCH",
+      "showdown": "Mega Punch"
+    },
+    "281": {
+      "key": "RAZORWIND",
+      "showdown": "Razor Wind"
+    },
+    "282": {
+      "key": "SLAM",
+      "showdown": "Slam"
+    },
+    "283": {
+      "key": "STRENGTH",
+      "showdown": "Strength"
+    },
+    "284": {
+      "key": "TRIATTACK",
+      "showdown": "Tri Attack"
+    },
+    "285": {
+      "key": "CRUSHCLAW",
+      "showdown": "Crush Claw"
+    },
+    "286": {
+      "key": "RELICSONG",
+      "showdown": "Relic Song"
+    },
+    "287": {
+      "key": "CHIPAWAY",
+      "showdown": "Chip Away"
+    },
+    "288": {
+      "key": "DIZZYPUNCH",
+      "showdown": "Dizzy Punch"
+    },
+    "289": {
+      "key": "FACADE",
+      "showdown": "Facade"
+    },
+    "290": {
+      "key": "HEADBUTT",
+      "showdown": "Headbutt"
+    },
+    "291": {
+      "key": "RETALIATE",
+      "showdown": "Retaliate"
+    },
+    "292": {
+      "key": "SECRETPOWER",
+      "showdown": "Secret Power"
+    },
+    "293": {
+      "key": "SLASH",
+      "showdown": "Slash"
+    },
+    "294": {
+      "key": "HORNATTACK",
+      "showdown": "Horn Attack"
+    },
+    "295": {
+      "key": "STOMP",
+      "showdown": "Stomp"
+    },
+    "296": {
+      "key": "COVET",
+      "showdown": "Covet"
+    },
+    "297": {
+      "key": "ROUND",
+      "showdown": "Round"
+    },
+    "299": {
+      "key": "SWIFT",
+      "showdown": "Swift"
+    },
+    "300": {
+      "key": "VICEGRIP",
+      "showdown": "Vice Grip"
+    },
+    "301": {
+      "key": "CUT",
+      "showdown": "Cut"
+    },
+    "302": {
+      "key": "STRUGGLE",
+      "showdown": "Struggle"
+    },
+    "303": {
+      "key": "TACKLE",
+      "showdown": "Tackle"
+    },
+    "304": {
+      "key": "WEATHERBALL",
+      "showdown": "Weather Ball"
+    },
+    "305": {
+      "key": "ECHOEDVOICE",
+      "showdown": "Echoed Voice"
+    },
+    "306": {
+      "key": "FAKEOUT",
+      "showdown": "Fake Out"
+    },
+    "307": {
+      "key": "FALSESWIPE",
+      "showdown": "False Swipe"
+    },
+    "308": {
+      "key": "PAYDAY",
+      "showdown": "Pay Day"
+    },
+    "309": {
+      "key": "POUND",
+      "showdown": "Pound"
+    },
+    "310": {
+      "key": "QUICKATTACK",
+      "showdown": "Quick Attack"
+    },
+    "311": {
+      "key": "SCRATCH",
+      "showdown": "Scratch"
+    },
+    "312": {
+      "key": "SNORE",
+      "showdown": "Snore"
+    },
+    "313": {
+      "key": "DOUBLEHIT",
+      "showdown": "Double Hit"
+    },
+    "314": {
+      "key": "FEINT",
+      "showdown": "Feint"
+    },
+    "315": {
+      "key": "TAILSLAP",
+      "showdown": "Tail Slap"
+    },
+    "316": {
+      "key": "RAGE",
+      "showdown": "Rage"
+    },
+    "317": {
+      "key": "RAPIDSPIN",
+      "showdown": "Rapid Spin"
+    },
+    "318": {
+      "key": "SPIKECANNON",
+      "showdown": "Spike Cannon"
+    },
+    "319": {
+      "key": "COMETPUNCH",
+      "showdown": "Comet Punch"
+    },
+    "320": {
+      "key": "FURYSWIPES",
+      "showdown": "Fury Swipes"
+    },
+    "321": {
+      "key": "BARRAGE",
+      "showdown": "Barrage"
+    },
+    "322": {
+      "key": "BIND",
+      "showdown": "Bind"
+    },
+    "323": {
+      "key": "DOUBLESLAP",
+      "showdown": "Double Slap"
+    },
+    "324": {
+      "key": "FURYATTACK",
+      "showdown": "Fury Attack"
+    },
+    "325": {
+      "key": "WRAP",
+      "showdown": "Wrap"
+    },
+    "326": {
+      "key": "CONSTRICT",
+      "showdown": "Constrict"
+    },
+    "327": {
+      "key": "BIDE",
+      "showdown": "Bide"
+    },
+    "328": {
+      "key": "CRUSHGRIP",
+      "showdown": "Crush Grip"
+    },
+    "329": {
+      "key": "ENDEAVOR",
+      "showdown": "Endeavor"
+    },
+    "330": {
+      "key": "FLAIL",
+      "showdown": "Flail"
+    },
+    "331": {
+      "key": "FRUSTRATION",
+      "showdown": "Frustration"
+    },
+    "332": {
+      "key": "GUILLOTINE",
+      "showdown": "Guillotine"
+    },
+    "333": {
+      "key": "HIDDENPOWER",
+      "showdown": "Hidden Power"
+    },
+    "334": {
+      "key": "HORNDRILL",
+      "showdown": "Horn Drill"
+    },
+    "335": {
+      "key": "NATURALGIFT",
+      "showdown": "Natural Gift"
+    },
+    "336": {
+      "key": "PRESENT",
+      "showdown": "Present"
+    },
+    "337": {
+      "key": "RETURN",
+      "showdown": "Return"
+    },
+    "338": {
+      "key": "SONICBOOM",
+      "showdown": "Sonic Boom"
+    },
+    "339": {
+      "key": "SPITUP",
+      "showdown": "Spit Up"
+    },
+    "340": {
+      "key": "SUPERFANG",
+      "showdown": "Super Fang"
+    },
+    "341": {
+      "key": "TRUMPCARD",
+      "showdown": "Trump Card"
+    },
+    "342": {
+      "key": "WRINGOUT",
+      "showdown": "Wring Out"
+    },
+    "343": {
+      "key": "ACUPRESSURE",
+      "showdown": "Acupressure"
+    },
+    "344": {
+      "key": "AFTERYOU",
+      "showdown": "After You"
+    },
+    "345": {
+      "key": "ASSIST",
+      "showdown": "Assist"
+    },
+    "346": {
+      "key": "ATTRACT",
+      "showdown": "Attract"
+    },
+    "347": {
+      "key": "BATONPASS",
+      "showdown": "Baton Pass"
+    },
+    "348": {
+      "key": "BELLYDRUM",
+      "showdown": "Belly Drum"
+    },
+    "349": {
+      "key": "BESTOW",
+      "showdown": "Bestow"
+    },
+    "350": {
+      "key": "BLOCK",
+      "showdown": "Block"
+    },
+    "351": {
+      "key": "CAMOUFLAGE",
+      "showdown": "Camouflage"
+    },
+    "352": {
+      "key": "CAPTIVATE",
+      "showdown": "Captivate"
+    },
+    "353": {
+      "key": "CHARM",
+      "showdown": "Charm"
+    },
+    "354": {
+      "key": "CONVERSION",
+      "showdown": "Conversion"
+    },
+    "355": {
+      "key": "CONVERSION2",
+      "showdown": "Conversion 2"
+    },
+    "357": {
+      "key": "DEFENSECURL",
+      "showdown": "Defense Curl"
+    },
+    "358": {
+      "key": "DISABLE",
+      "showdown": "Disable"
+    },
+    "359": {
+      "key": "DOUBLETEAM",
+      "showdown": "Double Team"
+    },
+    "360": {
+      "key": "ENCORE",
+      "showdown": "Encore"
+    },
+    "361": {
+      "key": "ENDURE",
+      "showdown": "Endure"
+    },
+    "362": {
+      "key": "ENTRAINMENT",
+      "showdown": "Entrainment"
+    },
+    "363": {
+      "key": "FLASH",
+      "showdown": "Flash"
+    },
+    "364": {
+      "key": "FOCUSENERGY",
+      "showdown": "Focus Energy"
+    },
+    "365": {
+      "key": "FOLLOWME",
+      "showdown": "Follow Me"
+    },
+    "366": {
+      "key": "FORESIGHT",
+      "showdown": "Foresight"
+    },
+    "367": {
+      "key": "GLARE",
+      "showdown": "Glare"
+    },
+    "368": {
+      "key": "GROWL",
+      "showdown": "Growl"
+    },
+    "369": {
+      "key": "GROWTH",
+      "showdown": "Growth"
+    },
+    "370": {
+      "key": "HARDEN",
+      "showdown": "Harden"
+    },
+    "371": {
+      "key": "HEALBELL",
+      "showdown": "Heal Bell"
+    },
+    "372": {
+      "key": "HELPINGHAND",
+      "showdown": "Helping Hand"
+    },
+    "373": {
+      "key": "HOWL",
+      "showdown": "Howl"
+    },
+    "374": {
+      "key": "LEER",
+      "showdown": "Leer"
+    },
+    "375": {
+      "key": "LOCKON",
+      "showdown": "Lock On"
+    },
+    "376": {
+      "key": "LOVELYKISS",
+      "showdown": "Lovely Kiss"
+    },
+    "377": {
+      "key": "LUCKYCHANT",
+      "showdown": "Lucky Chant"
+    },
+    "378": {
+      "key": "MEFIRST",
+      "showdown": "Me First"
+    },
+    "379": {
+      "key": "MEANLOOK",
+      "showdown": "Mean Look"
+    },
+    "380": {
+      "key": "METRONOME",
+      "showdown": "Metronome"
+    },
+    "381": {
+      "key": "MILKDRINK",
+      "showdown": "Milk Drink"
+    },
+    "382": {
+      "key": "MIMIC",
+      "showdown": "Mimic"
+    },
+    "383": {
+      "key": "MINDREADER",
+      "showdown": "Mind Reader"
+    },
+    "384": {
+      "key": "MINIMIZE",
+      "showdown": "Minimize"
+    },
+    "385": {
+      "key": "MOONLIGHT",
+      "showdown": "Moonlight"
+    },
+    "386": {
+      "key": "MORNINGSUN",
+      "showdown": "Morning Sun"
+    },
+    "387": {
+      "key": "NATUREPOWER",
+      "showdown": "Nature Power"
+    },
+    "388": {
+      "key": "ODORSLEUTH",
+      "showdown": "Odor Sleuth"
+    },
+    "389": {
+      "key": "PAINSPLIT",
+      "showdown": "Pain Split"
+    },
+    "390": {
+      "key": "PERISHSONG",
+      "showdown": "Perish Song"
+    },
+    "391": {
+      "key": "PROTECT",
+      "showdown": "Protect"
+    },
+    "392": {
+      "key": "PSYCHUP",
+      "showdown": "Psych Up"
+    },
+    "393": {
+      "key": "RECOVER",
+      "showdown": "Recover"
+    },
+    "394": {
+      "key": "RECYCLE",
+      "showdown": "Recycle"
+    },
+    "395": {
+      "key": "REFLECTTYPE",
+      "showdown": "Reflect Type"
+    },
+    "396": {
+      "key": "REFRESH",
+      "showdown": "Refresh"
+    },
+    "397": {
+      "key": "ROAR",
+      "showdown": "Roar"
+    },
+    "398": {
+      "key": "SAFEGUARD",
+      "showdown": "Safeguard"
+    },
+    "399": {
+      "key": "SCARYFACE",
+      "showdown": "Scary Face"
+    },
+    "400": {
+      "key": "SCREECH",
+      "showdown": "Screech"
+    },
+    "401": {
+      "key": "SHARPEN",
+      "showdown": "Sharpen"
+    },
+    "402": {
+      "key": "SHELLSMASH",
+      "showdown": "Shell Smash"
+    },
+    "403": {
+      "key": "SIMPLEBEAM",
+      "showdown": "Simple Beam"
+    },
+    "404": {
+      "key": "SING",
+      "showdown": "Sing"
+    },
+    "405": {
+      "key": "SKETCH",
+      "showdown": "Sketch"
+    },
+    "406": {
+      "key": "SLACKOFF",
+      "showdown": "Slack Off"
+    },
+    "407": {
+      "key": "SLEEPTALK",
+      "showdown": "Sleep Talk"
+    },
+    "408": {
+      "key": "SMOKESCREEN",
+      "showdown": "Smokescreen"
+    },
+    "409": {
+      "key": "SOFTBOILED",
+      "showdown": "Soft Boiled"
+    },
+    "410": {
+      "key": "SPLASH",
+      "showdown": "Splash"
+    },
+    "411": {
+      "key": "STOCKPILE",
+      "showdown": "Stockpile"
+    },
+    "412": {
+      "key": "SUBSTITUTE",
+      "showdown": "Substitute"
+    },
+    "413": {
+      "key": "SUPERSONIC",
+      "showdown": "Supersonic"
+    },
+    "414": {
+      "key": "SWAGGER",
+      "showdown": "Swagger"
+    },
+    "415": {
+      "key": "SWALLOW",
+      "showdown": "Swallow"
+    },
+    "416": {
+      "key": "SWEETKISS",
+      "showdown": "Sweet Kiss"
+    },
+    "417": {
+      "key": "SWEETSCENT",
+      "showdown": "Sweet Scent"
+    },
+    "418": {
+      "key": "SWORDSDANCE",
+      "showdown": "Swords Dance"
+    },
+    "419": {
+      "key": "TAILWHIP",
+      "showdown": "Tail Whip"
+    },
+    "420": {
+      "key": "TEETERDANCE",
+      "showdown": "Teeter Dance"
+    },
+    "421": {
+      "key": "TICKLE",
+      "showdown": "Tickle"
+    },
+    "422": {
+      "key": "TRANSFORM",
+      "showdown": "Transform"
+    },
+    "423": {
+      "key": "WHIRLWIND",
+      "showdown": "Whirlwind"
+    },
+    "424": {
+      "key": "WISH",
+      "showdown": "Wish"
+    },
+    "425": {
+      "key": "WORKUP",
+      "showdown": "Work Up"
+    },
+    "426": {
+      "key": "YAWN",
+      "showdown": "Yawn"
+    },
+    "427": {
+      "key": "GUNKSHOT",
+      "showdown": "Gunk Shot"
+    },
+    "428": {
+      "key": "SLUDGEWAVE",
+      "showdown": "Sludge Wave"
+    },
+    "429": {
+      "key": "SLUDGEBOMB",
+      "showdown": "Sludge Bomb"
+    },
+    "430": {
+      "key": "POISONJAB",
+      "showdown": "Poison Jab"
+    },
+    "431": {
+      "key": "CROSSPOISON",
+      "showdown": "Cross Poison"
+    },
+    "432": {
+      "key": "SLUDGE",
+      "showdown": "Sludge"
+    },
+    "433": {
+      "key": "VENOSHOCK",
+      "showdown": "Venoshock"
+    },
+    "434": {
+      "key": "CLEARSMOG",
+      "showdown": "Clear Smog"
+    },
+    "435": {
+      "key": "POISONFANG",
+      "showdown": "Poison Fang"
+    },
+    "436": {
+      "key": "POISONTAIL",
+      "showdown": "Poison Tail"
+    },
+    "437": {
+      "key": "ACID",
+      "showdown": "Acid"
+    },
+    "438": {
+      "key": "ACIDSPRAY",
+      "showdown": "Acid Spray"
+    },
+    "439": {
+      "key": "SMOG",
+      "showdown": "Smog"
+    },
+    "440": {
+      "key": "POISONSTING",
+      "showdown": "Poison Sting"
+    },
+    "441": {
+      "key": "ACIDARMOR",
+      "showdown": "Acid Armor"
+    },
+    "442": {
+      "key": "COIL",
+      "showdown": "Coil"
+    },
+    "443": {
+      "key": "GASTROACID",
+      "showdown": "Gastro Acid"
+    },
+    "444": {
+      "key": "POISONGAS",
+      "showdown": "Poison Gas"
+    },
+    "445": {
+      "key": "POISONPOWDER",
+      "showdown": "Poison Powder"
+    },
+    "446": {
+      "key": "TOXIC",
+      "showdown": "Toxic"
+    },
+    "447": {
+      "key": "TOXICSPIKES",
+      "showdown": "Toxic Spikes"
+    },
+    "448": {
+      "key": "PSYCHOBOOST",
+      "showdown": "Psycho Boost"
+    },
+    "449": {
+      "key": "DREAMEATER",
+      "showdown": "Dream Eater"
+    },
+    "450": {
+      "key": "FUTURESIGHT",
+      "showdown": "Future Sight"
+    },
+    "451": {
+      "key": "PSYSTRIKE",
+      "showdown": "Psystrike"
+    },
+    "452": {
+      "key": "PSYCHIC",
+      "showdown": "Psychic"
+    },
+    "453": {
+      "key": "EXTRASENSORY",
+      "showdown": "Extrasensory"
+    },
+    "454": {
+      "key": "PSYSHOCK",
+      "showdown": "Psyshock"
+    },
+    "455": {
+      "key": "ZENHEADBUTT",
+      "showdown": "Zen Headbutt"
+    },
+    "456": {
+      "key": "LUSTERPURGE",
+      "showdown": "Luster Purge"
+    },
+    "457": {
+      "key": "MISTBALL",
+      "showdown": "Mist Ball"
+    },
+    "458": {
+      "key": "PSYCHOCUT",
+      "showdown": "Psycho Cut"
+    },
+    "459": {
+      "key": "SYNCHRONOISE",
+      "showdown": "Synchronoise"
+    },
+    "460": {
+      "key": "PSYBEAM",
+      "showdown": "Psybeam"
+    },
+    "461": {
+      "key": "HEARTSTAMP",
+      "showdown": "Heart Stamp"
+    },
+    "462": {
+      "key": "CONFUSION",
+      "showdown": "Confusion"
+    },
+    "463": {
+      "key": "MIRRORCOAT",
+      "showdown": "Mirror Coat"
+    },
+    "464": {
+      "key": "PSYWAVE",
+      "showdown": "Psywave"
+    },
+    "465": {
+      "key": "STOREDPOWER",
+      "showdown": "Stored Power"
+    },
+    "466": {
+      "key": "AGILITY",
+      "showdown": "Agility"
+    },
+    "467": {
+      "key": "ALLYSWITCH",
+      "showdown": "Ally Switch"
+    },
+    "468": {
+      "key": "AMNESIA",
+      "showdown": "Amnesia"
+    },
+    "469": {
+      "key": "BARRIER",
+      "showdown": "Barrier"
+    },
+    "470": {
+      "key": "CALMMIND",
+      "showdown": "Calm Mind"
+    },
+    "471": {
+      "key": "COSMICPOWER",
+      "showdown": "Cosmic Power"
+    },
+    "472": {
+      "key": "GRAVITY",
+      "showdown": "Gravity"
+    },
+    "473": {
+      "key": "GUARDSPLIT",
+      "showdown": "Guard Split"
+    },
+    "474": {
+      "key": "GUARDSWAP",
+      "showdown": "Guard Swap"
+    },
+    "475": {
+      "key": "HEALBLOCK",
+      "showdown": "Heal Block"
+    },
+    "476": {
+      "key": "HEALPULSE",
+      "showdown": "Heal Pulse"
+    },
+    "477": {
+      "key": "HEALINGWISH",
+      "showdown": "Healing Wish"
+    },
+    "478": {
+      "key": "HEARTSWAP",
+      "showdown": "Heart Swap"
+    },
+    "479": {
+      "key": "HYPNOSIS",
+      "showdown": "Hypnosis"
+    },
+    "480": {
+      "key": "IMPRISON",
+      "showdown": "Imprison"
+    },
+    "481": {
+      "key": "KINESIS",
+      "showdown": "Kinesis"
+    },
+    "482": {
+      "key": "LIGHTSCREEN",
+      "showdown": "Light Screen"
+    },
+    "483": {
+      "key": "LUNARDANCE",
+      "showdown": "Lunar Dance"
+    },
+    "484": {
+      "key": "MAGICCOAT",
+      "showdown": "Magic Coat"
+    },
+    "485": {
+      "key": "MAGICROOM",
+      "showdown": "Magic Room"
+    },
+    "486": {
+      "key": "MEDITATE",
+      "showdown": "Meditate"
+    },
+    "487": {
+      "key": "MIRACLEEYE",
+      "showdown": "Miracle Eye"
+    },
+    "488": {
+      "key": "POWERSPLIT",
+      "showdown": "Power Split"
+    },
+    "489": {
+      "key": "POWERSWAP",
+      "showdown": "Power Swap"
+    },
+    "490": {
+      "key": "POWERTRICK",
+      "showdown": "Power Trick"
+    },
+    "491": {
+      "key": "PSYCHOSHIFT",
+      "showdown": "Psycho Shift"
+    },
+    "492": {
+      "key": "REFLECT",
+      "showdown": "Reflect"
+    },
+    "493": {
+      "key": "REST",
+      "showdown": "Rest"
+    },
+    "494": {
+      "key": "ROLEPLAY",
+      "showdown": "Role Play"
+    },
+    "495": {
+      "key": "SKILLSWAP",
+      "showdown": "Skill Swap"
+    },
+    "496": {
+      "key": "TELEKINESIS",
+      "showdown": "Telekinesis"
+    },
+    "497": {
+      "key": "TELEPORT",
+      "showdown": "Teleport"
+    },
+    "498": {
+      "key": "TRICK",
+      "showdown": "Trick"
+    },
+    "499": {
+      "key": "TRICKROOM",
+      "showdown": "Trick Room"
+    },
+    "500": {
+      "key": "WONDERROOM",
+      "showdown": "Wonder Room"
+    },
+    "501": {
+      "key": "HEADSMASH",
+      "showdown": "Head Smash"
+    },
+    "502": {
+      "key": "ROCKWRECKER",
+      "showdown": "Rock Wrecker"
+    },
+    "503": {
+      "key": "STONEEDGE",
+      "showdown": "Stone Edge"
+    },
+    "504": {
+      "key": "ROCKSLIDE",
+      "showdown": "Rock Slide"
+    },
+    "505": {
+      "key": "POWERGEM",
+      "showdown": "Power Gem"
+    },
+    "506": {
+      "key": "ANCIENTPOWER",
+      "showdown": "Ancient Power"
+    },
+    "507": {
+      "key": "ROCKTHROW",
+      "showdown": "Rock Throw"
+    },
+    "508": {
+      "key": "ROCKTOMB",
+      "showdown": "Rock Tomb"
+    },
+    "509": {
+      "key": "SMACKDOWN",
+      "showdown": "Smack Down"
+    },
+    "510": {
+      "key": "ROLLOUT",
+      "showdown": "Rollout"
+    },
+    "511": {
+      "key": "ROCKBLAST",
+      "showdown": "Rock Blast"
+    },
+    "512": {
+      "key": "ROCKPOLISH",
+      "showdown": "Rock Polish"
+    },
+    "513": {
+      "key": "SANDSTORM",
+      "showdown": "Sandstorm"
+    },
+    "514": {
+      "key": "STEALTHROCK",
+      "showdown": "Stealth Rock"
+    },
+    "515": {
+      "key": "WIDEGUARD",
+      "showdown": "Wide Guard"
+    },
+    "516": {
+      "key": "DOOMDESIRE",
+      "showdown": "Doom Desire"
+    },
+    "517": {
+      "key": "IRONTAIL",
+      "showdown": "Iron Tail"
+    },
+    "518": {
+      "key": "METEORMASH",
+      "showdown": "Meteor Mash"
+    },
+    "519": {
+      "key": "FLASHCANNON",
+      "showdown": "Flash Cannon"
+    },
+    "520": {
+      "key": "IRONHEAD",
+      "showdown": "Iron Head"
+    },
+    "521": {
+      "key": "STEELWING",
+      "showdown": "Steel Wing"
+    },
+    "522": {
+      "key": "MIRRORSHOT",
+      "showdown": "Mirror Shot"
+    },
+    "523": {
+      "key": "MAGNETBOMB",
+      "showdown": "Magnet Bomb"
+    },
+    "524": {
+      "key": "GEARGRIND",
+      "showdown": "Gear Grind"
+    },
+    "525": {
+      "key": "METALCLAW",
+      "showdown": "Metal Claw"
+    },
+    "526": {
+      "key": "BULLETPUNCH",
+      "showdown": "Bullet Punch"
+    },
+    "527": {
+      "key": "GYROBALL",
+      "showdown": "Gyro Ball"
+    },
+    "528": {
+      "key": "HEAVYSLAM",
+      "showdown": "Heavy Slam"
+    },
+    "529": {
+      "key": "METALBURST",
+      "showdown": "Metal Burst"
+    },
+    "530": {
+      "key": "AUTOTOMIZE",
+      "showdown": "Autotomize"
+    },
+    "531": {
+      "key": "IRONDEFENSE",
+      "showdown": "Iron Defense"
+    },
+    "532": {
+      "key": "METALSOUND",
+      "showdown": "Metal Sound"
+    },
+    "533": {
+      "key": "SHIFTGEAR",
+      "showdown": "Shift Gear"
+    },
+    "534": {
+      "key": "HYDROCANNON",
+      "showdown": "Hydro Cannon"
+    },
+    "535": {
+      "key": "WATERSPOUT",
+      "showdown": "Water Spout"
+    },
+    "536": {
+      "key": "HYDROPUMP",
+      "showdown": "Hydro Pump"
+    },
+    "537": {
+      "key": "MUDDYWATER",
+      "showdown": "Muddy Water"
+    },
+    "538": {
+      "key": "SURF",
+      "showdown": "Surf"
+    },
+    "539": {
+      "key": "AQUATAIL",
+      "showdown": "Aqua Tail"
+    },
+    "540": {
+      "key": "CRABHAMMER",
+      "showdown": "Crabhammer"
+    },
+    "541": {
+      "key": "DIVE",
+      "showdown": "Dive"
+    },
+    "542": {
+      "key": "SCALD",
+      "showdown": "Scald"
+    },
+    "543": {
+      "key": "WATERFALL",
+      "showdown": "Waterfall"
+    },
+    "544": {
+      "key": "RAZORSHELL",
+      "showdown": "Razor Shell"
+    },
+    "545": {
+      "key": "BRINE",
+      "showdown": "Brine"
+    },
+    "546": {
+      "key": "BUBBLEBEAM",
+      "showdown": "Bubble Beam"
+    },
+    "547": {
+      "key": "OCTAZOOKA",
+      "showdown": "Octazooka"
+    },
+    "548": {
+      "key": "WATERPULSE",
+      "showdown": "Water Pulse"
+    },
+    "549": {
+      "key": "WATERPLEDGE",
+      "showdown": "Water Pledge"
+    },
+    "550": {
+      "key": "AQUAJET",
+      "showdown": "Aqua Jet"
+    },
+    "551": {
+      "key": "WATERGUN",
+      "showdown": "Water Gun"
+    },
+    "552": {
+      "key": "CLAMP",
+      "showdown": "Clamp"
+    },
+    "553": {
+      "key": "WHIRLPOOL",
+      "showdown": "Whirlpool"
+    },
+    "554": {
+      "key": "BUBBLE",
+      "showdown": "Bubble"
+    },
+    "555": {
+      "key": "AQUARING",
+      "showdown": "Aqua Ring"
+    },
+    "556": {
+      "key": "RAINDANCE",
+      "showdown": "Rain Dance"
+    },
+    "557": {
+      "key": "SOAK",
+      "showdown": "Soak"
+    },
+    "558": {
+      "key": "WATERSPORT",
+      "showdown": "Water Sport"
+    },
+    "559": {
+      "key": "WITHDRAW",
+      "showdown": "Withdraw"
+    },
+    "560": {
+      "key": "BELCH",
+      "showdown": "Belch"
+    },
+    "561": {
+      "key": "BOOMBURST",
+      "showdown": "Boomburst"
+    },
+    "562": {
+      "key": "DAZZLINGGLEAM",
+      "showdown": "Dazzling Gleam"
+    },
+    "563": {
+      "key": "DISARMINGVOICE",
+      "showdown": "Disarming Voice"
+    },
+    "564": {
+      "key": "DRAININGKISS",
+      "showdown": "Draining Kiss"
+    },
+    "565": {
+      "key": "FAIRYWIND",
+      "showdown": "Fairy Wind"
+    },
+    "566": {
+      "key": "FELLSTINGER",
+      "showdown": "Fell Stinger"
+    },
+    "567": {
+      "key": "FLYINGPRESS",
+      "showdown": "Flying Press"
+    },
+    "568": {
+      "key": "FREEZEDRY",
+      "showdown": "Freeze Dry"
+    },
+    "569": {
+      "key": "STONEAXE",
+      "showdown": "Stone Axe"
+    },
+    "570": {
+      "key": "MOONBLAST",
+      "showdown": "Moonblast"
+    },
+    "571": {
+      "key": "MYSTICALFIRE",
+      "showdown": "Mystical Fire"
+    },
+    "572": {
+      "key": "NUZZLE",
+      "showdown": "Nuzzle"
+    },
+    "573": {
+      "key": "OBLIVIONWING",
+      "showdown": "Oblivion Wing"
+    },
+    "574": {
+      "key": "PARABOLICCHARGE",
+      "showdown": "Parabolic Charge"
+    },
+    "575": {
+      "key": "PETALBLIZZARD",
+      "showdown": "Petal Blizzard"
+    },
+    "576": {
+      "key": "PHANTOMFORCE",
+      "showdown": "Phantom Force"
+    },
+    "577": {
+      "key": "PLAYROUGH",
+      "showdown": "Play Rough"
+    },
+    "578": {
+      "key": "POWERUPPUNCH",
+      "showdown": "Power Up Punch"
+    },
+    "579": {
+      "key": "WATERSHURIKEN",
+      "showdown": "Water Shuriken"
+    },
+    "580": {
+      "key": "DIAMONDSTORM",
+      "showdown": "Diamond Storm"
+    },
+    "581": {
+      "key": "STEAMERUPTION",
+      "showdown": "Steam Eruption"
+    },
+    "582": {
+      "key": "THOUSANDWAVES",
+      "showdown": "Thousand Waves"
+    },
+    "583": {
+      "key": "LIGHTOFRUIN",
+      "showdown": "Light Of Ruin"
+    },
+    "584": {
+      "key": "DRAGONASCENT",
+      "showdown": "Dragon Ascent"
+    },
+    "585": {
+      "key": "ORIGINPULSE",
+      "showdown": "Origin Pulse"
+    },
+    "586": {
+      "key": "DRAGONHAMMER",
+      "showdown": "Dragon Hammer"
+    },
+    "587": {
+      "key": "SHADOWBONE",
+      "showdown": "Shadow Bone"
+    },
+    "588": {
+      "key": "TROPKICK",
+      "showdown": "Trop Kick"
+    },
+    "589": {
+      "key": "SPIRITSHACKLE",
+      "showdown": "Spirit Shackle"
+    },
+    "590": {
+      "key": "SOLARBLADE",
+      "showdown": "Solar Blade"
+    },
+    "591": {
+      "key": "SHOREUP",
+      "showdown": "Shore Up"
+    },
+    "592": {
+      "key": "ICEHAMMER",
+      "showdown": "Ice Hammer"
+    },
+    "594": {
+      "key": "APPLEACID",
+      "showdown": "Apple Acid"
+    },
+    "595": {
+      "key": "STRANGESTEAM",
+      "showdown": "Strange Steam"
+    },
+    "596": {
+      "key": "SPIRITBREAK",
+      "showdown": "Spirit Break"
+    },
+    "597": {
+      "key": "FALSESURRENDER",
+      "showdown": "False Surrender"
+    },
+    "598": {
+      "key": "OVERDRIVE",
+      "showdown": "Overdrive"
+    },
+    "599": {
+      "key": "SNAPTRAP",
+      "showdown": "Snap Trap"
+    },
+    "600": {
+      "key": "DRAGONDARTS",
+      "showdown": "Dragon Darts"
+    },
+    "602": {
+      "key": "BODYPRESS",
+      "showdown": "Body Press"
+    },
+    "603": {
+      "key": "SKITTERSMACK",
+      "showdown": "Skitter Smack"
+    },
+    "604": {
+      "key": "METEORBEAM",
+      "showdown": "Meteor Beam"
+    },
+    "605": {
+      "key": "POLTERGEIST",
+      "showdown": "Poltergeist"
+    },
+    "606": {
+      "key": "SCALESHOT",
+      "showdown": "Scale Shot"
+    },
+    "607": {
+      "key": "TEARFULLOOK",
+      "showdown": "Tearful Look"
+    },
+    "608": {
+      "key": "PSYCHICTERRAIN",
+      "showdown": "Psychic Terrain"
+    },
+    "609": {
+      "key": "MISTYTERRAIN",
+      "showdown": "Misty Terrain"
+    },
+    "610": {
+      "key": "ELECTRICTERRAIN",
+      "showdown": "Electric Terrain"
+    },
+    "611": {
+      "key": "GRASSYTERRAIN",
+      "showdown": "Grassy Terrain"
+    },
+    "620": {
+      "key": "TRIPLEAXEL",
+      "showdown": "Triple Axel"
+    },
+    "624": {
+      "key": "GRASSYGLIDE",
+      "showdown": "Grassy Glide"
+    },
+    "625": {
+      "key": "RISINGVOLTAGE",
+      "showdown": "Rising Voltage"
+    },
+    "626": {
+      "key": "EXPANDINGFORCE",
+      "showdown": "Expanding Force"
+    },
+    "637": {
+      "key": "STICKYWEB",
+      "showdown": "Sticky Web"
+    },
+    "638": {
+      "key": "SNIPESHOT",
+      "showdown": "Snipe Shot"
+    },
+    "639": {
+      "key": "LUMINACRASH",
+      "showdown": "Lumina Crash"
+    },
+    "640": {
+      "key": "SPINOUT",
+      "showdown": "Spin Out"
+    },
+    "641": {
+      "key": "BITTERBLADE",
+      "showdown": "Bitter Blade"
+    },
+    "642": {
+      "key": "ARMORCANNON",
+      "showdown": "Armor Cannon"
+    },
+    "679": {
+      "key": "TRICKORTREAT",
+      "showdown": "Trick Or Treat"
+    },
+    "681": {
+      "key": "SPIKYSHIELD",
+      "showdown": "Spiky Shield"
+    },
+    "682": {
+      "key": "PARTINGSHOT",
+      "showdown": "Parting Shot"
+    },
+    "683": {
+      "key": "VENOMDRENCH",
+      "showdown": "Venom Drench"
+    },
+    "684": {
+      "key": "EERIEIMPULSE",
+      "showdown": "Eerie Impulse"
+    },
+    "685": {
+      "key": "CONFIDE",
+      "showdown": "Confide"
+    },
+    "686": {
+      "key": "NOBLEROAR",
+      "showdown": "Noble Roar"
+    },
+    "687": {
+      "key": "BURNUP",
+      "showdown": "Burn Up"
+    },
+    "688": {
+      "key": "BOLTBEAK",
+      "showdown": "Bolt Beak"
+    },
+    "689": {
+      "key": "FISHIOUSREND",
+      "showdown": "Fishious Rend"
+    },
+    "690": {
+      "key": "STEELBEAM",
+      "showdown": "Steel Beam"
+    },
+    "691": {
+      "key": "CHLOROBLAST",
+      "showdown": "Chloroblast"
+    },
+    "693": {
+      "key": "STRENGTHSAP",
+      "showdown": "Strength Sap"
+    },
+    "694": {
+      "key": "GIGATONHAMMER",
+      "showdown": "Gigaton Hammer"
+    },
+    "695": {
+      "key": "KINGSSHIELD",
+      "showdown": "Kings Shield"
+    },
+    "696": {
+      "key": "BANEFULBUNKER",
+      "showdown": "Baneful Bunker"
+    },
+    "697": {
+      "key": "PSYSHIELDBASH",
+      "showdown": "Psyshield Bash"
+    },
+    "704": {
+      "key": "MAGICPOWDER",
+      "showdown": "Magic Powder"
+    },
+    "705": {
+      "key": "CEASELESSEDGE",
+      "showdown": "Ceaseless Edge"
+    },
+    "709": {
+      "key": "TOXICTHREAD",
+      "showdown": "Toxic Thread"
+    },
+    "710": {
+      "key": "AURORAVEIL",
+      "showdown": "Aurora Veil"
+    },
+    "711": {
+      "key": "JAWLOCK",
+      "showdown": "Jaw Lock"
+    },
+    "712": {
+      "key": "TRIPLEARROWS",
+      "showdown": "Triple Arrows"
+    },
+    "713": {
+      "key": "BARBBARRAGE",
+      "showdown": "Barb Barrage"
+    },
+    "714": {
+      "key": "INFERNALPARADE",
+      "showdown": "Infernal Parade"
+    },
+    "715": {
+      "key": "MORTALSPIN",
+      "showdown": "Mortal Spin"
+    },
+    "716": {
+      "key": "DIRECLAW",
+      "showdown": "Dire Claw"
+    },
+    "717": {
+      "key": "MAKEITRAIN",
+      "showdown": "Make It Rain"
+    },
+    "718": {
+      "key": "ELECTROSHOT",
+      "showdown": "Electro Shot"
+    },
+    "719": {
+      "key": "FICKLEBEAM",
+      "showdown": "Fickle Beam"
+    },
+    "720": {
+      "key": "THUNDERCLAP",
+      "showdown": "Thunderclap"
+    },
+    "721": {
+      "key": "TACHYONCUTTER",
+      "showdown": "Tachyon Cutter"
+    },
+    "722": {
+      "key": "KOWTOWCLEAVE",
+      "showdown": "Kowtow Cleave"
+    },
+    "723": {
+      "key": "SURGINGSTRIKES",
+      "showdown": "Surging Strikes"
+    },
+    "724": {
+      "key": "WICKEDBLOW",
+      "showdown": "Wicked Blow"
+    },
+    "728": {
+      "key": "SECRETSWORD",
+      "showdown": "Secret Sword"
+    },
+    "729": {
+      "key": "NOXIOUSTORQUE",
+      "showdown": "Noxious Torque"
+    },
+    "732": {
+      "key": "DOUBLEIRONBASH",
+      "showdown": "Double Iron Bash"
+    }
+  },
+  "items": {
+    "1": {
+      "key": "REPEL",
+      "showdown": "Repel"
+    },
+    "2": {
+      "key": "SUPERREPEL",
+      "showdown": "Super Repel"
+    },
+    "3": {
+      "key": "MAXREPEL",
+      "showdown": "Max Repel"
+    },
+    "4": {
+      "key": "BLACKFLUTE",
+      "showdown": "Black Flute"
+    },
+    "5": {
+      "key": "WHITEFLUTE",
+      "showdown": "White Flute"
+    },
+    "6": {
+      "key": "HONEY",
+      "showdown": "Honey"
+    },
+    "7": {
+      "key": "ESCAPEROPE",
+      "showdown": "Escape Rope"
+    },
+    "8": {
+      "key": "REDSHARD",
+      "showdown": "Red Shard"
+    },
+    "9": {
+      "key": "YELLOWSHARD",
+      "showdown": "Yellow Shard"
+    },
+    "10": {
+      "key": "BLUESHARD",
+      "showdown": "Blue Shard"
+    },
+    "11": {
+      "key": "GREENSHARD",
+      "showdown": "Green Shard"
+    },
+    "12": {
+      "key": "FIRESTONE",
+      "showdown": "Fire Stone"
+    },
+    "13": {
+      "key": "THUNDERSTONE",
+      "showdown": "Thunder Stone"
+    },
+    "14": {
+      "key": "WATERSTONE",
+      "showdown": "Water Stone"
+    },
+    "15": {
+      "key": "LEAFSTONE",
+      "showdown": "Leaf Stone"
+    },
+    "16": {
+      "key": "MOONSTONE",
+      "showdown": "Moon Stone"
+    },
+    "17": {
+      "key": "SUNSTONE",
+      "showdown": "Sun Stone"
+    },
+    "18": {
+      "key": "DUSKSTONE",
+      "showdown": "Dusk Stone"
+    },
+    "19": {
+      "key": "DAWNSTONE",
+      "showdown": "Dawn Stone"
+    },
+    "20": {
+      "key": "SHINYSTONE",
+      "showdown": "Shiny Stone"
+    },
+    "21": {
+      "key": "REDAPRICORN",
+      "showdown": "Red Apricorn"
+    },
+    "28": {
+      "key": "HELIXFOSSIL",
+      "showdown": "Helix Fossil"
+    },
+    "29": {
+      "key": "DOMEFOSSIL",
+      "showdown": "Dome Fossil"
+    },
+    "30": {
+      "key": "OLDAMBER",
+      "showdown": "Old Amber"
+    },
+    "31": {
+      "key": "ROOTFOSSIL",
+      "showdown": "Root Fossil"
+    },
+    "32": {
+      "key": "CLAWFOSSIL",
+      "showdown": "Claw Fossil"
+    },
+    "33": {
+      "key": "SKULLFOSSIL",
+      "showdown": "Skull Fossil"
+    },
+    "34": {
+      "key": "ARMORFOSSIL",
+      "showdown": "Armor Fossil"
+    },
+    "35": {
+      "key": "COVERFOSSIL",
+      "showdown": "Cover Fossil"
+    },
+    "36": {
+      "key": "PLUMEFOSSIL",
+      "showdown": "Plume Fossil"
+    },
+    "37": {
+      "key": "PRETTYWING",
+      "showdown": "Pretty Wing"
+    },
+    "38": {
+      "key": "TINYMUSHROOM",
+      "showdown": "Tiny Mushroom"
+    },
+    "39": {
+      "key": "BIGMUSHROOM",
+      "showdown": "Big Mushroom"
+    },
+    "40": {
+      "key": "BALMMUSHROOM",
+      "showdown": "Balm Mushroom"
+    },
+    "41": {
+      "key": "PEARL",
+      "showdown": "Pearl"
+    },
+    "42": {
+      "key": "BIGPEARL",
+      "showdown": "Big Pearl"
+    },
+    "43": {
+      "key": "PEARLSTRING",
+      "showdown": "Pearl String"
+    },
+    "44": {
+      "key": "STARDUST",
+      "showdown": "Stardust"
+    },
+    "45": {
+      "key": "STARPIECE",
+      "showdown": "Star Piece"
+    },
+    "46": {
+      "key": "COMETSHARD",
+      "showdown": "Comet Shard"
+    },
+    "47": {
+      "key": "NUGGET",
+      "showdown": "Nugget"
+    },
+    "48": {
+      "key": "BIGNUGGET",
+      "showdown": "Big Nugget"
+    },
+    "49": {
+      "key": "HEARTSCALE",
+      "showdown": "Heart Scale"
+    },
+    "50": {
+      "key": "SLOWPOKETAIL",
+      "showdown": "Slowpoke Tail"
+    },
+    "51": {
+      "key": "RAREBONE",
+      "showdown": "Rare Bone"
+    },
+    "52": {
+      "key": "RELICCOPPER",
+      "showdown": "Relic Copper"
+    },
+    "53": {
+      "key": "RELICSILVER",
+      "showdown": "Relic Silver"
+    },
+    "54": {
+      "key": "RELICGOLD",
+      "showdown": "Relic Gold"
+    },
+    "55": {
+      "key": "RELICVASE",
+      "showdown": "Relic Vase"
+    },
+    "56": {
+      "key": "RELICBAND",
+      "showdown": "Relic Band"
+    },
+    "57": {
+      "key": "RELICSTATUE",
+      "showdown": "Relic Statue"
+    },
+    "58": {
+      "key": "RELICCROWN",
+      "showdown": "Relic Crown"
+    },
+    "59": {
+      "key": "GROWTHMULCH",
+      "showdown": "Growth Mulch"
+    },
+    "60": {
+      "key": "DAMPMULCH",
+      "showdown": "Damp Mulch"
+    },
+    "61": {
+      "key": "STABLEMULCH",
+      "showdown": "Stable Mulch"
+    },
+    "62": {
+      "key": "GOOEYMULCH",
+      "showdown": "Gooey Mulch"
+    },
+    "63": {
+      "key": "SHOALSALT",
+      "showdown": "Shoal Salt"
+    },
+    "64": {
+      "key": "SHOALSHELL",
+      "showdown": "Shoal Shell"
+    },
+    "65": {
+      "key": "ODDKEYSTONE",
+      "showdown": "Odd Keystone"
+    },
+    "66": {
+      "key": "AIRBALLOON",
+      "showdown": "Air Balloon"
+    },
+    "67": {
+      "key": "BRIGHTPOWDER",
+      "showdown": "Bright Powder"
+    },
+    "68": {
+      "key": "EVIOLITE",
+      "showdown": "Eviolite"
+    },
+    "69": {
+      "key": "FLOATSTONE",
+      "showdown": "Float Stone"
+    },
+    "70": {
+      "key": "DESTINYKNOT",
+      "showdown": "Destiny Knot"
+    },
+    "71": {
+      "key": "ROCKYHELMET",
+      "showdown": "Rocky Helmet"
+    },
+    "72": {
+      "key": "EJECTBUTTON",
+      "showdown": "Eject Button"
+    },
+    "73": {
+      "key": "REDCARD",
+      "showdown": "Red Card"
+    },
+    "74": {
+      "key": "SHEDSHELL",
+      "showdown": "Shed Shell"
+    },
+    "75": {
+      "key": "SMOKEBALL",
+      "showdown": "Smoke Ball"
+    },
+    "76": {
+      "key": "LUCKYEGG",
+      "showdown": "Lucky Egg"
+    },
+    "77": {
+      "key": "EXPSHARE",
+      "showdown": "Exp Share"
+    },
+    "78": {
+      "key": "AMULETCOIN",
+      "showdown": "Amulet Coin"
+    },
+    "79": {
+      "key": "SOOTHEBELL",
+      "showdown": "Soothe Bell"
+    },
+    "80": {
+      "key": "CLEANSETAG",
+      "showdown": "Cleanse Tag"
+    },
+    "81": {
+      "key": "CHOICEBAND",
+      "showdown": "Choice Band"
+    },
+    "82": {
+      "key": "CHOICESPECS",
+      "showdown": "Choice Specs"
+    },
+    "83": {
+      "key": "CHOICESCARF",
+      "showdown": "Choice Scarf"
+    },
+    "84": {
+      "key": "HEATROCK",
+      "showdown": "Heat Rock"
+    },
+    "85": {
+      "key": "DAMPROCK",
+      "showdown": "Damp Rock"
+    },
+    "86": {
+      "key": "SMOOTHROCK",
+      "showdown": "Smooth Rock"
+    },
+    "87": {
+      "key": "ICYROCK",
+      "showdown": "Icy Rock"
+    },
+    "88": {
+      "key": "LIGHTCLAY",
+      "showdown": "Light Clay"
+    },
+    "89": {
+      "key": "GRIPCLAW",
+      "showdown": "Grip Claw"
+    },
+    "90": {
+      "key": "BINDINGBAND",
+      "showdown": "Binding Band"
+    },
+    "91": {
+      "key": "BIGROOT",
+      "showdown": "Big Root"
+    },
+    "92": {
+      "key": "BLACKSLUDGE",
+      "showdown": "Black Sludge"
+    },
+    "93": {
+      "key": "LEFTOVERS",
+      "showdown": "Leftovers"
+    },
+    "94": {
+      "key": "SHELLBELL",
+      "showdown": "Shell Bell"
+    },
+    "95": {
+      "key": "MENTALHERB",
+      "showdown": "Mental Herb"
+    },
+    "96": {
+      "key": "WHITEHERB",
+      "showdown": "White Herb"
+    },
+    "97": {
+      "key": "POWERHERB",
+      "showdown": "Power Herb"
+    },
+    "98": {
+      "key": "ABSORBBULB",
+      "showdown": "Absorb Bulb"
+    },
+    "99": {
+      "key": "CELLBATTERY",
+      "showdown": "Cell Battery"
+    },
+    "100": {
+      "key": "LIFEORB",
+      "showdown": "Life Orb"
+    },
+    "101": {
+      "key": "EXPERTBELT",
+      "showdown": "Expert Belt"
+    },
+    "102": {
+      "key": "METRONOME",
+      "showdown": "Metronome"
+    },
+    "103": {
+      "key": "MUSCLEBAND",
+      "showdown": "Muscle Band"
+    },
+    "104": {
+      "key": "WISEGLASSES",
+      "showdown": "Wise Glasses"
+    },
+    "105": {
+      "key": "RAZORCLAW",
+      "showdown": "Razor Claw"
+    },
+    "106": {
+      "key": "SCOPELENS",
+      "showdown": "Scope Lens"
+    },
+    "107": {
+      "key": "WIDELENS",
+      "showdown": "Wide Lens"
+    },
+    "108": {
+      "key": "ZOOMLENS",
+      "showdown": "Zoom Lens"
+    },
+    "109": {
+      "key": "KINGSROCK",
+      "showdown": "Kings Rock"
+    },
+    "110": {
+      "key": "RAZORFANG",
+      "showdown": "Razor Fang"
+    },
+    "111": {
+      "key": "LAGGINGTAIL",
+      "showdown": "Lagging Tail"
+    },
+    "112": {
+      "key": "QUICKCLAW",
+      "showdown": "Quick Claw"
+    },
+    "113": {
+      "key": "FOCUSBAND",
+      "showdown": "Focus Band"
+    },
+    "114": {
+      "key": "FOCUSSASH",
+      "showdown": "Focus Sash"
+    },
+    "115": {
+      "key": "FLAMEORB",
+      "showdown": "Flame Orb"
+    },
+    "116": {
+      "key": "TOXICORB",
+      "showdown": "Toxic Orb"
+    },
+    "117": {
+      "key": "STICKYBARB",
+      "showdown": "Sticky Barb"
+    },
+    "118": {
+      "key": "IRONBALL",
+      "showdown": "Iron Ball"
+    },
+    "119": {
+      "key": "RINGTARGET",
+      "showdown": "Ring Target"
+    },
+    "120": {
+      "key": "MACHOBRACE",
+      "showdown": "Macho Brace"
+    },
+    "121": {
+      "key": "POWERWEIGHT",
+      "showdown": "Power Weight"
+    },
+    "122": {
+      "key": "POWERBRACER",
+      "showdown": "Power Bracer"
+    },
+    "123": {
+      "key": "POWERBELT",
+      "showdown": "Power Belt"
+    },
+    "124": {
+      "key": "POWERLENS",
+      "showdown": "Power Lens"
+    },
+    "125": {
+      "key": "POWERBAND",
+      "showdown": "Power Band"
+    },
+    "126": {
+      "key": "POWERANKLET",
+      "showdown": "Power Anklet"
+    },
+    "127": {
+      "key": "LAXINCENSE",
+      "showdown": "Lax Incense"
+    },
+    "128": {
+      "key": "FULLINCENSE",
+      "showdown": "Full Incense"
+    },
+    "129": {
+      "key": "LUCKINCENSE",
+      "showdown": "Luck Incense"
+    },
+    "130": {
+      "key": "PUREINCENSE",
+      "showdown": "Pure Incense"
+    },
+    "131": {
+      "key": "SEAINCENSE",
+      "showdown": "Sea Incense"
+    },
+    "132": {
+      "key": "WAVEINCENSE",
+      "showdown": "Wave Incense"
+    },
+    "133": {
+      "key": "ROSEINCENSE",
+      "showdown": "Rose Incense"
+    },
+    "134": {
+      "key": "ODDINCENSE",
+      "showdown": "Odd Incense"
+    },
+    "135": {
+      "key": "ROCKINCENSE",
+      "showdown": "Rock Incense"
+    },
+    "136": {
+      "key": "CHARCOAL",
+      "showdown": "Charcoal"
+    },
+    "137": {
+      "key": "MYSTICWATER",
+      "showdown": "Mystic Water"
+    },
+    "138": {
+      "key": "MAGNET",
+      "showdown": "Magnet"
+    },
+    "139": {
+      "key": "MIRACLESEED",
+      "showdown": "Miracle Seed"
+    },
+    "140": {
+      "key": "NEVERMELTICE",
+      "showdown": "Never Melt Ice"
+    },
+    "141": {
+      "key": "BLACKBELT",
+      "showdown": "Black Belt"
+    },
+    "142": {
+      "key": "POISONBARB",
+      "showdown": "Poison Barb"
+    },
+    "143": {
+      "key": "SOFTSAND",
+      "showdown": "Soft Sand"
+    },
+    "144": {
+      "key": "SHARPBEAK",
+      "showdown": "Sharp Beak"
+    },
+    "145": {
+      "key": "TWISTEDSPOON",
+      "showdown": "Twisted Spoon"
+    },
+    "146": {
+      "key": "SILVERPOWDER",
+      "showdown": "Silver Powder"
+    },
+    "147": {
+      "key": "HARDSTONE",
+      "showdown": "Hard Stone"
+    },
+    "148": {
+      "key": "SPELLTAG",
+      "showdown": "Spell Tag"
+    },
+    "149": {
+      "key": "DRAGONFANG",
+      "showdown": "Dragon Fang"
+    },
+    "150": {
+      "key": "BLACKGLASSES",
+      "showdown": "Black Glasses"
+    },
+    "151": {
+      "key": "METALCOAT",
+      "showdown": "Metal Coat"
+    },
+    "152": {
+      "key": "SILKSCARF",
+      "showdown": "Silk Scarf"
+    },
+    "153": {
+      "key": "FLAMEPLATE",
+      "showdown": "Flame Plate"
+    },
+    "154": {
+      "key": "SPLASHPLATE",
+      "showdown": "Splash Plate"
+    },
+    "155": {
+      "key": "ZAPPLATE",
+      "showdown": "Zap Plate"
+    },
+    "156": {
+      "key": "MEADOWPLATE",
+      "showdown": "Meadow Plate"
+    },
+    "157": {
+      "key": "ICICLEPLATE",
+      "showdown": "Icicle Plate"
+    },
+    "158": {
+      "key": "FISTPLATE",
+      "showdown": "Fist Plate"
+    },
+    "159": {
+      "key": "TOXICPLATE",
+      "showdown": "Toxic Plate"
+    },
+    "160": {
+      "key": "EARTHPLATE",
+      "showdown": "Earth Plate"
+    },
+    "161": {
+      "key": "SKYPLATE",
+      "showdown": "Sky Plate"
+    },
+    "162": {
+      "key": "MINDPLATE",
+      "showdown": "Mind Plate"
+    },
+    "163": {
+      "key": "INSECTPLATE",
+      "showdown": "Insect Plate"
+    },
+    "164": {
+      "key": "STONEPLATE",
+      "showdown": "Stone Plate"
+    },
+    "165": {
+      "key": "SPOOKYPLATE",
+      "showdown": "Spooky Plate"
+    },
+    "166": {
+      "key": "DRACOPLATE",
+      "showdown": "Draco Plate"
+    },
+    "167": {
+      "key": "DREADPLATE",
+      "showdown": "Dread Plate"
+    },
+    "168": {
+      "key": "IRONPLATE",
+      "showdown": "Iron Plate"
+    },
+    "169": {
+      "key": "FIREGEM",
+      "showdown": "Fire Gem"
+    },
+    "170": {
+      "key": "WATERGEM",
+      "showdown": "Water Gem"
+    },
+    "171": {
+      "key": "ELECTRICGEM",
+      "showdown": "Electric Gem"
+    },
+    "172": {
+      "key": "GRASSGEM",
+      "showdown": "Grass Gem"
+    },
+    "173": {
+      "key": "ICEGEM",
+      "showdown": "Ice Gem"
+    },
+    "174": {
+      "key": "FIGHTINGGEM",
+      "showdown": "Fighting Gem"
+    },
+    "175": {
+      "key": "POISONGEM",
+      "showdown": "Poison Gem"
+    },
+    "176": {
+      "key": "GROUNDGEM",
+      "showdown": "Ground Gem"
+    },
+    "177": {
+      "key": "FLYINGGEM",
+      "showdown": "Flying Gem"
+    },
+    "178": {
+      "key": "PSYCHICGEM",
+      "showdown": "Psychic Gem"
+    },
+    "179": {
+      "key": "BUGGEM",
+      "showdown": "Bug Gem"
+    },
+    "180": {
+      "key": "ROCKGEM",
+      "showdown": "Rock Gem"
+    },
+    "181": {
+      "key": "GHOSTGEM",
+      "showdown": "Ghost Gem"
+    },
+    "182": {
+      "key": "DRAGONGEM",
+      "showdown": "Dragon Gem"
+    },
+    "183": {
+      "key": "DARKGEM",
+      "showdown": "Dark Gem"
+    },
+    "184": {
+      "key": "STEELGEM",
+      "showdown": "Steel Gem"
+    },
+    "185": {
+      "key": "NORMALGEM",
+      "showdown": "Normal Gem"
+    },
+    "186": {
+      "key": "LIGHTBALL",
+      "showdown": "Light Ball"
+    },
+    "187": {
+      "key": "LUCKYPUNCH",
+      "showdown": "Lucky Punch"
+    },
+    "188": {
+      "key": "METALPOWDER",
+      "showdown": "Metal Powder"
+    },
+    "189": {
+      "key": "QUICKPOWDER",
+      "showdown": "Quick Powder"
+    },
+    "190": {
+      "key": "THICKCLUB",
+      "showdown": "Thick Club"
+    },
+    "191": {
+      "key": "STICK",
+      "showdown": "Stick"
+    },
+    "192": {
+      "key": "SOULDEW",
+      "showdown": "Soul Dew"
+    },
+    "193": {
+      "key": "DEEPSEATOOTH",
+      "showdown": "Deep Sea Tooth"
+    },
+    "194": {
+      "key": "DEEPSEASCALE",
+      "showdown": "Deep Sea Scale"
+    },
+    "195": {
+      "key": "ADAMANTORB",
+      "showdown": "Adamant Orb"
+    },
+    "196": {
+      "key": "LUSTROUSORB",
+      "showdown": "Lustrous Orb"
+    },
+    "197": {
+      "key": "GRISEOUSORB",
+      "showdown": "Griseous Orb"
+    },
+    "198": {
+      "key": "DOUSEDRIVE",
+      "showdown": "Douse Drive"
+    },
+    "199": {
+      "key": "SHOCKDRIVE",
+      "showdown": "Shock Drive"
+    },
+    "200": {
+      "key": "BURNDRIVE",
+      "showdown": "Burn Drive"
+    },
+    "201": {
+      "key": "CHILLDRIVE",
+      "showdown": "Chill Drive"
+    },
+    "202": {
+      "key": "EVERSTONE",
+      "showdown": "Everstone"
+    },
+    "203": {
+      "key": "DRAGONSCALE",
+      "showdown": "Dragon Scale"
+    },
+    "204": {
+      "key": "UPGRADE",
+      "showdown": "Up Grade"
+    },
+    "205": {
+      "key": "DUBIOUSDISC",
+      "showdown": "Dubious Disc"
+    },
+    "206": {
+      "key": "PROTECTOR",
+      "showdown": "Protector"
+    },
+    "207": {
+      "key": "ELECTIRIZER",
+      "showdown": "Electirizer"
+    },
+    "208": {
+      "key": "MAGMARIZER",
+      "showdown": "Magmarizer"
+    },
+    "209": {
+      "key": "REAPERCLOTH",
+      "showdown": "Reaper Cloth"
+    },
+    "210": {
+      "key": "PRISMSCALE",
+      "showdown": "Prism Scale"
+    },
+    "211": {
+      "key": "OVALSTONE",
+      "showdown": "Oval Stone"
+    },
+    "212": {
+      "key": "REDSCARF",
+      "showdown": "Red Scarf"
+    },
+    "213": {
+      "key": "BLUESCARF",
+      "showdown": "Blue Scarf"
+    },
+    "214": {
+      "key": "PINKSCARF",
+      "showdown": "Pink Scarf"
+    },
+    "215": {
+      "key": "GREENSCARF",
+      "showdown": "Green Scarf"
+    },
+    "216": {
+      "key": "YELLOWSCARF",
+      "showdown": "Yellow Scarf"
+    },
+    "217": {
+      "key": "POTION",
+      "showdown": "Potion"
+    },
+    "218": {
+      "key": "SUPERPOTION",
+      "showdown": "Super Potion"
+    },
+    "219": {
+      "key": "HYPERPOTION",
+      "showdown": "Hyper Potion"
+    },
+    "220": {
+      "key": "MAXPOTION",
+      "showdown": "Max Potion"
+    },
+    "221": {
+      "key": "FULLRESTORE",
+      "showdown": "Full Restore"
+    },
+    "222": {
+      "key": "SACREDASH",
+      "showdown": "Sacred Ash"
+    },
+    "223": {
+      "key": "AWAKENING",
+      "showdown": "Awakening"
+    },
+    "224": {
+      "key": "ANTIDOTE",
+      "showdown": "Antidote"
+    },
+    "225": {
+      "key": "BURNHEAL",
+      "showdown": "Burn Heal"
+    },
+    "227": {
+      "key": "ICEHEAL",
+      "showdown": "Ice Heal"
+    },
+    "228": {
+      "key": "FULLHEAL",
+      "showdown": "Full Heal"
+    },
+    "229": {
+      "key": "LAVACOOKIE",
+      "showdown": "Lava Cookie"
+    },
+    "231": {
+      "key": "CASTELIACONE",
+      "showdown": "Casteliacone"
+    },
+    "232": {
+      "key": "REVIVE",
+      "showdown": "Revive"
+    },
+    "233": {
+      "key": "MAXREVIVE",
+      "showdown": "Max Revive"
+    },
+    "234": {
+      "key": "BERRYJUICE",
+      "showdown": "Berry Juice"
+    },
+    "235": {
+      "key": "RAGECANDYBAR",
+      "showdown": "Rage Candy Bar"
+    },
+    "236": {
+      "key": "SWEETHEART",
+      "showdown": "Sweet Heart"
+    },
+    "237": {
+      "key": "FRESHWATER",
+      "showdown": "Fresh Water"
+    },
+    "238": {
+      "key": "SODAPOP",
+      "showdown": "Soda Pop"
+    },
+    "239": {
+      "key": "LEMONADE",
+      "showdown": "Lemonade"
+    },
+    "240": {
+      "key": "MOOMOOMILK",
+      "showdown": "Moomoo Milk"
+    },
+    "241": {
+      "key": "ENERGYPOWDER",
+      "showdown": "Energy Powder"
+    },
+    "242": {
+      "key": "ENERGYROOT",
+      "showdown": "Energy Root"
+    },
+    "243": {
+      "key": "HEALPOWDER",
+      "showdown": "Heal Powder"
+    },
+    "244": {
+      "key": "REVIVALHERB",
+      "showdown": "Revival Herb"
+    },
+    "245": {
+      "key": "ETHER",
+      "showdown": "Ether"
+    },
+    "246": {
+      "key": "MAXETHER",
+      "showdown": "Max Ether"
+    },
+    "247": {
+      "key": "ELIXIR",
+      "showdown": "Elixir"
+    },
+    "248": {
+      "key": "MAXELIXIR",
+      "showdown": "Max Elixir"
+    },
+    "249": {
+      "key": "PPUP",
+      "showdown": "Pp Up"
+    },
+    "250": {
+      "key": "PPMAX",
+      "showdown": "Pp Max"
+    },
+    "251": {
+      "key": "HPUP",
+      "showdown": "Hp Up"
+    },
+    "252": {
+      "key": "PROTEIN",
+      "showdown": "Protein"
+    },
+    "253": {
+      "key": "IRON",
+      "showdown": "Iron"
+    },
+    "254": {
+      "key": "CALCIUM",
+      "showdown": "Calcium"
+    },
+    "255": {
+      "key": "ZINC",
+      "showdown": "Zinc"
+    },
+    "256": {
+      "key": "CARBOS",
+      "showdown": "Carbos"
+    },
+    "257": {
+      "key": "HEALTHWING",
+      "showdown": "Health Wing"
+    },
+    "258": {
+      "key": "MUSCLEWING",
+      "showdown": "Muscle Wing"
+    },
+    "259": {
+      "key": "RESISTWING",
+      "showdown": "Resist Wing"
+    },
+    "260": {
+      "key": "GENIUSWING",
+      "showdown": "Genius Wing"
+    },
+    "261": {
+      "key": "CLEVERWING",
+      "showdown": "Clever Wing"
+    },
+    "262": {
+      "key": "SWIFTWING",
+      "showdown": "Swift Wing"
+    },
+    "263": {
+      "key": "RARECANDY",
+      "showdown": "Rare Candy"
+    },
+    "264": {
+      "key": "MASTERBALL",
+      "showdown": "Master Ball"
+    },
+    "265": {
+      "key": "ULTRABALL",
+      "showdown": "Ultra Ball"
+    },
+    "266": {
+      "key": "GREATBALL",
+      "showdown": "Great Ball"
+    },
+    "267": {
+      "key": "POKEBALL",
+      "showdown": "Poke Ball"
+    },
+    "268": {
+      "key": "SAFARIBALL",
+      "showdown": "Safari Ball"
+    },
+    "269": {
+      "key": "SPORTBALL",
+      "showdown": "Sport Ball"
+    },
+    "270": {
+      "key": "NETBALL",
+      "showdown": "Net Ball"
+    },
+    "271": {
+      "key": "DIVEBALL",
+      "showdown": "Dive Ball"
+    },
+    "272": {
+      "key": "NESTBALL",
+      "showdown": "Nest Ball"
+    },
+    "273": {
+      "key": "REPEATBALL",
+      "showdown": "Repeat Ball"
+    },
+    "274": {
+      "key": "TIMERBALL",
+      "showdown": "Timer Ball"
+    },
+    "275": {
+      "key": "LUXURYBALL",
+      "showdown": "Luxury Ball"
+    },
+    "276": {
+      "key": "PREMIERBALL",
+      "showdown": "Premier Ball"
+    },
+    "277": {
+      "key": "DUSKBALL",
+      "showdown": "Dusk Ball"
+    },
+    "278": {
+      "key": "HEALBALL",
+      "showdown": "Heal Ball"
+    },
+    "279": {
+      "key": "QUICKBALL",
+      "showdown": "Quick Ball"
+    },
+    "280": {
+      "key": "CHERISHBALL",
+      "showdown": "Cherish Ball"
+    },
+    "281": {
+      "key": "FASTBALL",
+      "showdown": "Fast Ball"
+    },
+    "282": {
+      "key": "LEVELBALL",
+      "showdown": "Level Ball"
+    },
+    "283": {
+      "key": "LUREBALL",
+      "showdown": "Lure Ball"
+    },
+    "284": {
+      "key": "HEAVYBALL",
+      "showdown": "Heavy Ball"
+    },
+    "285": {
+      "key": "LOVEBALL",
+      "showdown": "Love Ball"
+    },
+    "286": {
+      "key": "FRIENDBALL",
+      "showdown": "Friend Ball"
+    },
+    "287": {
+      "key": "MOONBALL",
+      "showdown": "Moon Ball"
+    },
+    "288": {
+      "key": "TM01",
+      "showdown": "Tm01"
+    },
+    "289": {
+      "key": "TM02",
+      "showdown": "Tm02"
+    },
+    "290": {
+      "key": "TM03",
+      "showdown": "Tm03"
+    },
+    "291": {
+      "key": "TM04",
+      "showdown": "Tm04"
+    },
+    "292": {
+      "key": "TM05",
+      "showdown": "Tm05"
+    },
+    "293": {
+      "key": "TM06",
+      "showdown": "Tm06"
+    },
+    "294": {
+      "key": "TM07",
+      "showdown": "Tm07"
+    },
+    "295": {
+      "key": "TM08",
+      "showdown": "Tm08"
+    },
+    "296": {
+      "key": "TM09",
+      "showdown": "Tm09"
+    },
+    "297": {
+      "key": "TM10",
+      "showdown": "Tm10"
+    },
+    "298": {
+      "key": "TM11",
+      "showdown": "Tm11"
+    },
+    "299": {
+      "key": "TM12",
+      "showdown": "Tm12"
+    },
+    "300": {
+      "key": "TM13",
+      "showdown": "Tm13"
+    },
+    "301": {
+      "key": "TM14",
+      "showdown": "Tm14"
+    },
+    "302": {
+      "key": "TM15",
+      "showdown": "Tm15"
+    },
+    "303": {
+      "key": "TM16",
+      "showdown": "Tm16"
+    },
+    "304": {
+      "key": "TM17",
+      "showdown": "Tm17"
+    },
+    "305": {
+      "key": "TM18",
+      "showdown": "Tm18"
+    },
+    "306": {
+      "key": "TM19",
+      "showdown": "Tm19"
+    },
+    "307": {
+      "key": "TM20",
+      "showdown": "Tm20"
+    },
+    "308": {
+      "key": "TM21",
+      "showdown": "Tm21"
+    },
+    "309": {
+      "key": "TM22",
+      "showdown": "Tm22"
+    },
+    "310": {
+      "key": "TM23",
+      "showdown": "Tm23"
+    },
+    "311": {
+      "key": "TM24",
+      "showdown": "Tm24"
+    },
+    "312": {
+      "key": "TM25",
+      "showdown": "Tm25"
+    },
+    "313": {
+      "key": "TM26",
+      "showdown": "Tm26"
+    },
+    "314": {
+      "key": "TM27",
+      "showdown": "Tm27"
+    },
+    "315": {
+      "key": "TM28",
+      "showdown": "Tm28"
+    },
+    "316": {
+      "key": "TM29",
+      "showdown": "Tm29"
+    },
+    "317": {
+      "key": "TM30",
+      "showdown": "Tm30"
+    },
+    "318": {
+      "key": "TM31",
+      "showdown": "Tm31"
+    },
+    "319": {
+      "key": "TM32",
+      "showdown": "Tm32"
+    },
+    "320": {
+      "key": "TM33",
+      "showdown": "Tm33"
+    },
+    "321": {
+      "key": "TM34",
+      "showdown": "Tm34"
+    },
+    "322": {
+      "key": "TM35",
+      "showdown": "Tm35"
+    },
+    "323": {
+      "key": "TM36",
+      "showdown": "Tm36"
+    },
+    "324": {
+      "key": "TM37",
+      "showdown": "Tm37"
+    },
+    "325": {
+      "key": "TM38",
+      "showdown": "Tm38"
+    },
+    "326": {
+      "key": "TM39",
+      "showdown": "Tm39"
+    },
+    "327": {
+      "key": "TM40",
+      "showdown": "Tm40"
+    },
+    "328": {
+      "key": "TM41",
+      "showdown": "Tm41"
+    },
+    "329": {
+      "key": "TM42",
+      "showdown": "Tm42"
+    },
+    "330": {
+      "key": "TM43",
+      "showdown": "Tm43"
+    },
+    "331": {
+      "key": "TM44",
+      "showdown": "Tm44"
+    },
+    "333": {
+      "key": "TM46",
+      "showdown": "Tm46"
+    },
+    "335": {
+      "key": "TM48",
+      "showdown": "Tm48"
+    },
+    "336": {
+      "key": "TM49",
+      "showdown": "Tm49"
+    },
+    "337": {
+      "key": "TM50",
+      "showdown": "Tm50"
+    },
+    "338": {
+      "key": "TM51",
+      "showdown": "Tm51"
+    },
+    "339": {
+      "key": "TM52",
+      "showdown": "Tm52"
+    },
+    "340": {
+      "key": "TM53",
+      "showdown": "Tm53"
+    },
+    "341": {
+      "key": "TM54",
+      "showdown": "Tm54"
+    },
+    "342": {
+      "key": "TM55",
+      "showdown": "Tm55"
+    },
+    "343": {
+      "key": "TM56",
+      "showdown": "Tm56"
+    },
+    "344": {
+      "key": "TM57",
+      "showdown": "Tm57"
+    },
+    "345": {
+      "key": "TM58",
+      "showdown": "Tm58"
+    },
+    "346": {
+      "key": "TM59",
+      "showdown": "Tm59"
+    },
+    "347": {
+      "key": "TM60",
+      "showdown": "Tm60"
+    },
+    "348": {
+      "key": "TM61",
+      "showdown": "Tm61"
+    },
+    "349": {
+      "key": "TM62",
+      "showdown": "Tm62"
+    },
+    "350": {
+      "key": "TM63",
+      "showdown": "Tm63"
+    },
+    "351": {
+      "key": "TM64",
+      "showdown": "Tm64"
+    },
+    "352": {
+      "key": "TM65",
+      "showdown": "Tm65"
+    },
+    "353": {
+      "key": "TM66",
+      "showdown": "Tm66"
+    },
+    "354": {
+      "key": "TM67",
+      "showdown": "Tm67"
+    },
+    "355": {
+      "key": "TM68",
+      "showdown": "Tm68"
+    },
+    "356": {
+      "key": "TM69",
+      "showdown": "Tm69"
+    },
+    "357": {
+      "key": "TM70",
+      "showdown": "Tm70"
+    },
+    "358": {
+      "key": "TM71",
+      "showdown": "Tm71"
+    },
+    "359": {
+      "key": "TM72",
+      "showdown": "Tm72"
+    },
+    "360": {
+      "key": "TM73",
+      "showdown": "Tm73"
+    },
+    "361": {
+      "key": "TM74",
+      "showdown": "Tm74"
+    },
+    "362": {
+      "key": "TM75",
+      "showdown": "Tm75"
+    },
+    "363": {
+      "key": "TM76",
+      "showdown": "Tm76"
+    },
+    "364": {
+      "key": "TM77",
+      "showdown": "Tm77"
+    },
+    "365": {
+      "key": "TM78",
+      "showdown": "Tm78"
+    },
+    "366": {
+      "key": "TM79",
+      "showdown": "Tm79"
+    },
+    "367": {
+      "key": "TM80",
+      "showdown": "Tm80"
+    },
+    "368": {
+      "key": "TM81",
+      "showdown": "Tm81"
+    },
+    "369": {
+      "key": "TM82",
+      "showdown": "Tm82"
+    },
+    "370": {
+      "key": "TM83",
+      "showdown": "Tm83"
+    },
+    "371": {
+      "key": "TM84",
+      "showdown": "Tm84"
+    },
+    "372": {
+      "key": "TM85",
+      "showdown": "Tm85"
+    },
+    "373": {
+      "key": "TM86",
+      "showdown": "Tm86"
+    },
+    "374": {
+      "key": "TM87",
+      "showdown": "Tm87"
+    },
+    "375": {
+      "key": "TM88",
+      "showdown": "Tm88"
+    },
+    "376": {
+      "key": "TM89",
+      "showdown": "Tm89"
+    },
+    "377": {
+      "key": "TM90",
+      "showdown": "Tm90"
+    },
+    "378": {
+      "key": "TM91",
+      "showdown": "Tm91"
+    },
+    "379": {
+      "key": "TM92",
+      "showdown": "Tm92"
+    },
+    "380": {
+      "key": "TM93",
+      "showdown": "Tm93"
+    },
+    "381": {
+      "key": "TM94",
+      "showdown": "Tm94"
+    },
+    "382": {
+      "key": "TM95",
+      "showdown": "Tm95"
+    },
+    "383": {
+      "key": "HM01",
+      "showdown": "Hm01"
+    },
+    "384": {
+      "key": "HM02",
+      "showdown": "Hm02"
+    },
+    "385": {
+      "key": "HM03",
+      "showdown": "Hm03"
+    },
+    "386": {
+      "key": "HM04",
+      "showdown": "Hm04"
+    },
+    "387": {
+      "key": "HM05",
+      "showdown": "Hm05"
+    },
+    "388": {
+      "key": "HM06",
+      "showdown": "Hm06"
+    },
+    "389": {
+      "key": "CHERIBERRY",
+      "showdown": "Cheri Berry"
+    },
+    "390": {
+      "key": "CHESTOBERRY",
+      "showdown": "Chesto Berry"
+    },
+    "391": {
+      "key": "PECHABERRY",
+      "showdown": "Pecha Berry"
+    },
+    "392": {
+      "key": "RAWSTBERRY",
+      "showdown": "Rawst Berry"
+    },
+    "393": {
+      "key": "ASPEARBERRY",
+      "showdown": "Aspear Berry"
+    },
+    "394": {
+      "key": "LEPPABERRY",
+      "showdown": "Leppa Berry"
+    },
+    "395": {
+      "key": "ORANBERRY",
+      "showdown": "Oran Berry"
+    },
+    "396": {
+      "key": "PERSIMBERRY",
+      "showdown": "Persim Berry"
+    },
+    "397": {
+      "key": "LUMBERRY",
+      "showdown": "Lum Berry"
+    },
+    "398": {
+      "key": "SITRUSBERRY",
+      "showdown": "Sitrus Berry"
+    },
+    "399": {
+      "key": "FIGYBERRY",
+      "showdown": "Figy Berry"
+    },
+    "400": {
+      "key": "WIKIBERRY",
+      "showdown": "Wiki Berry"
+    },
+    "401": {
+      "key": "MAGOBERRY",
+      "showdown": "Mago Berry"
+    },
+    "402": {
+      "key": "AGUAVBERRY",
+      "showdown": "Aguav Berry"
+    },
+    "403": {
+      "key": "IAPAPABERRY",
+      "showdown": "Iapapa Berry"
+    },
+    "404": {
+      "key": "RAZZBERRY",
+      "showdown": "Razz Berry"
+    },
+    "405": {
+      "key": "BLUKBERRY",
+      "showdown": "Bluk Berry"
+    },
+    "406": {
+      "key": "NANABBERRY",
+      "showdown": "Nanab Berry"
+    },
+    "407": {
+      "key": "WEPEARBERRY",
+      "showdown": "Wepear Berry"
+    },
+    "408": {
+      "key": "PINAPBERRY",
+      "showdown": "Pinap Berry"
+    },
+    "409": {
+      "key": "POMEGBERRY",
+      "showdown": "Pomeg Berry"
+    },
+    "410": {
+      "key": "KELPSYBERRY",
+      "showdown": "Kelpsy Berry"
+    },
+    "411": {
+      "key": "QUALOTBERRY",
+      "showdown": "Qualot Berry"
+    },
+    "412": {
+      "key": "HONDEWBERRY",
+      "showdown": "Hondew Berry"
+    },
+    "413": {
+      "key": "GREPABERRY",
+      "showdown": "Grepa Berry"
+    },
+    "414": {
+      "key": "TAMATOBERRY",
+      "showdown": "Tamato Berry"
+    },
+    "415": {
+      "key": "CORNNBERRY",
+      "showdown": "Cornn Berry"
+    },
+    "416": {
+      "key": "MAGOSTBERRY",
+      "showdown": "Magost Berry"
+    },
+    "417": {
+      "key": "RABUTABERRY",
+      "showdown": "Rabuta Berry"
+    },
+    "418": {
+      "key": "NOMELBERRY",
+      "showdown": "Nomel Berry"
+    },
+    "419": {
+      "key": "SPELONBERRY",
+      "showdown": "Spelon Berry"
+    },
+    "420": {
+      "key": "PAMTREBERRY",
+      "showdown": "Pamtre Berry"
+    },
+    "421": {
+      "key": "WATMELBERRY",
+      "showdown": "Watmel Berry"
+    },
+    "422": {
+      "key": "DURINBERRY",
+      "showdown": "Durin Berry"
+    },
+    "423": {
+      "key": "BELUEBERRY",
+      "showdown": "Belue Berry"
+    },
+    "424": {
+      "key": "OCCABERRY",
+      "showdown": "Occa Berry"
+    },
+    "425": {
+      "key": "PASSHOBERRY",
+      "showdown": "Passho Berry"
+    },
+    "426": {
+      "key": "WACANBERRY",
+      "showdown": "Wacan Berry"
+    },
+    "427": {
+      "key": "RINDOBERRY",
+      "showdown": "Rindo Berry"
+    },
+    "428": {
+      "key": "YACHEBERRY",
+      "showdown": "Yache Berry"
+    },
+    "429": {
+      "key": "CHOPLEBERRY",
+      "showdown": "Chople Berry"
+    },
+    "430": {
+      "key": "KEBIABERRY",
+      "showdown": "Kebia Berry"
+    },
+    "431": {
+      "key": "SHUCABERRY",
+      "showdown": "Shuca Berry"
+    },
+    "432": {
+      "key": "COBABERRY",
+      "showdown": "Coba Berry"
+    },
+    "433": {
+      "key": "PAYAPABERRY",
+      "showdown": "Payapa Berry"
+    },
+    "434": {
+      "key": "TANGABERRY",
+      "showdown": "Tanga Berry"
+    },
+    "435": {
+      "key": "CHARTIBERRY",
+      "showdown": "Charti Berry"
+    },
+    "436": {
+      "key": "KASIBBERRY",
+      "showdown": "Kasib Berry"
+    },
+    "437": {
+      "key": "HABANBERRY",
+      "showdown": "Haban Berry"
+    },
+    "438": {
+      "key": "COLBURBERRY",
+      "showdown": "Colbur Berry"
+    },
+    "439": {
+      "key": "BABIRIBERRY",
+      "showdown": "Babiri Berry"
+    },
+    "440": {
+      "key": "CHILANBERRY",
+      "showdown": "Chilan Berry"
+    },
+    "441": {
+      "key": "LIECHIBERRY",
+      "showdown": "Liechi Berry"
+    },
+    "442": {
+      "key": "GANLONBERRY",
+      "showdown": "Ganlon Berry"
+    },
+    "443": {
+      "key": "SALACBERRY",
+      "showdown": "Salac Berry"
+    },
+    "444": {
+      "key": "PETAYABERRY",
+      "showdown": "Petaya Berry"
+    },
+    "445": {
+      "key": "APICOTBERRY",
+      "showdown": "Apicot Berry"
+    },
+    "446": {
+      "key": "LANSATBERRY",
+      "showdown": "Lansat Berry"
+    },
+    "447": {
+      "key": "STARFBERRY",
+      "showdown": "Starf Berry"
+    },
+    "448": {
+      "key": "ENIGMABERRY",
+      "showdown": "Enigma Berry"
+    },
+    "449": {
+      "key": "MICLEBERRY",
+      "showdown": "Micle Berry"
+    },
+    "450": {
+      "key": "CUSTAPBERRY",
+      "showdown": "Custap Berry"
+    },
+    "451": {
+      "key": "JABOCABERRY",
+      "showdown": "Jaboca Berry"
+    },
+    "452": {
+      "key": "ROWAPBERRY",
+      "showdown": "Rowap Berry"
+    },
+    "453": {
+      "key": "GRASSMAIL",
+      "showdown": "Grass Mail"
+    },
+    "454": {
+      "key": "FLAMEMAIL",
+      "showdown": "Flame Mail"
+    },
+    "455": {
+      "key": "BUBBLEMAIL",
+      "showdown": "Bubble Mail"
+    },
+    "456": {
+      "key": "BLOOMMAIL",
+      "showdown": "Bloom Mail"
+    },
+    "457": {
+      "key": "TUNNELMAIL",
+      "showdown": "Tunnel Mail"
+    },
+    "458": {
+      "key": "STEELMAIL",
+      "showdown": "Steel Mail"
+    },
+    "459": {
+      "key": "HEARTMAIL",
+      "showdown": "Heart Mail"
+    },
+    "460": {
+      "key": "SNOWMAIL",
+      "showdown": "Snow Mail"
+    },
+    "461": {
+      "key": "SPACEMAIL",
+      "showdown": "Space Mail"
+    },
+    "462": {
+      "key": "AIRMAIL",
+      "showdown": "Air Mail"
+    },
+    "463": {
+      "key": "MOSAICMAIL",
+      "showdown": "Mosaic Mail"
+    },
+    "464": {
+      "key": "BRICKMAIL",
+      "showdown": "Brick Mail"
+    },
+    "465": {
+      "key": "XATTACK",
+      "showdown": "X Attack"
+    },
+    "466": {
+      "key": "XATTACK2",
+      "showdown": "X Attack 2"
+    },
+    "467": {
+      "key": "XATTACK3",
+      "showdown": "X Attack 3"
+    },
+    "468": {
+      "key": "XATTACK6",
+      "showdown": "X Attack 6"
+    },
+    "477": {
+      "key": "XSPDEF",
+      "showdown": "X Sp Def"
+    },
+    "478": {
+      "key": "XSPDEF2",
+      "showdown": "X Sp Def 2"
+    },
+    "479": {
+      "key": "XSPDEF3",
+      "showdown": "X Sp Def 3"
+    },
+    "480": {
+      "key": "XSPDEF6",
+      "showdown": "X Sp Def 6"
+    },
+    "481": {
+      "key": "XSPEED",
+      "showdown": "X Speed"
+    },
+    "482": {
+      "key": "XSPEED2",
+      "showdown": "X Speed 2"
+    },
+    "483": {
+      "key": "XSPEED3",
+      "showdown": "X Speed 3"
+    },
+    "484": {
+      "key": "XSPEED6",
+      "showdown": "X Speed 6"
+    },
+    "485": {
+      "key": "XACCURACY",
+      "showdown": "X Accuracy"
+    },
+    "486": {
+      "key": "XACCURACY2",
+      "showdown": "X Accuracy 2"
+    },
+    "487": {
+      "key": "XACCURACY3",
+      "showdown": "X Accuracy 3"
+    },
+    "488": {
+      "key": "XACCURACY6",
+      "showdown": "X Accuracy 6"
+    },
+    "489": {
+      "key": "DIREHIT",
+      "showdown": "Dire Hit"
+    },
+    "490": {
+      "key": "DIREHIT2",
+      "showdown": "Dire Hit 2"
+    },
+    "491": {
+      "key": "DIREHIT3",
+      "showdown": "Dire Hit 3"
+    },
+    "492": {
+      "key": "GUARDSPEC",
+      "showdown": "Guard Spec"
+    },
+    "493": {
+      "key": "RESETURGE",
+      "showdown": "Reset Urge"
+    },
+    "494": {
+      "key": "ABILITYURGE",
+      "showdown": "Ability Urge"
+    },
+    "495": {
+      "key": "ITEMURGE",
+      "showdown": "Item Urge"
+    },
+    "496": {
+      "key": "ITEMDROP",
+      "showdown": "Item Drop"
+    },
+    "497": {
+      "key": "BLUEFLUTE",
+      "showdown": "Blue Flute"
+    },
+    "498": {
+      "key": "YELLOWFLUTE",
+      "showdown": "Yellow Flute"
+    },
+    "499": {
+      "key": "REDFLUTE",
+      "showdown": "Red Flute"
+    },
+    "500": {
+      "key": "POKEDOLL",
+      "showdown": "Poke Doll"
+    },
+    "501": {
+      "key": "FLUFFYTAIL",
+      "showdown": "Fluffy Tail"
+    },
+    "502": {
+      "key": "POKETOY",
+      "showdown": "Poke Toy"
+    },
+    "503": {
+      "key": "BICYCLE",
+      "showdown": "Bicycle"
+    },
+    "504": {
+      "key": "OLDROD",
+      "showdown": "Old Rod"
+    },
+    "505": {
+      "key": "GOODROD",
+      "showdown": "Good Rod"
+    },
+    "506": {
+      "key": "SUPERROD",
+      "showdown": "Super Rod"
+    },
+    "508": {
+      "key": "DOWSINGMACHINE",
+      "showdown": "Dowsing Machine"
+    },
+    "509": {
+      "key": "POKERADAR",
+      "showdown": "Poke Radar"
+    },
+    "510": {
+      "key": "TOWNMAP",
+      "showdown": "Town Map"
+    },
+    "511": {
+      "key": "POKEFLUTE",
+      "showdown": "Poke Flute"
+    },
+    "512": {
+      "key": "COINCASE",
+      "showdown": "Coin Case"
+    },
+    "513": {
+      "key": "SOOTSACK",
+      "showdown": "Soot Sack"
+    },
+    "514": {
+      "key": "SILPHSCOPE",
+      "showdown": "Silph Scope"
+    },
+    "515": {
+      "key": "DEVONSCOPE",
+      "showdown": "Devon Scope"
+    },
+    "516": {
+      "key": "SQUIRTBOTTLE",
+      "showdown": "Squirt Bottle"
+    },
+    "517": {
+      "key": "SPRAYDUCK",
+      "showdown": "Sprayduck"
+    },
+    "518": {
+      "key": "WAILMERPAIL",
+      "showdown": "Wailmer Pail"
+    },
+    "519": {
+      "key": "GRACIDEA",
+      "showdown": "Gracidea"
+    },
+    "520": {
+      "key": "AURORATICKET",
+      "showdown": "Auroraticket"
+    },
+    "521": {
+      "key": "OLDSEAMAP",
+      "showdown": "Old Sea Map"
+    },
+    "522": {
+      "key": "DNASPLICERS",
+      "showdown": "Dna Splicers"
+    },
+    "523": {
+      "key": "REVEALGLASS",
+      "showdown": "Reveal Glass"
+    },
+    "524": {
+      "key": "OVALCHARM",
+      "showdown": "Oval Charm"
+    },
+    "525": {
+      "key": "SHINYCHARM",
+      "showdown": "Shiny Charm"
+    },
+    "541": {
+      "key": "ASSAULTVEST",
+      "showdown": "Assault Vest"
+    },
+    "667": {
+      "key": "TM96",
+      "showdown": "Tm96"
+    },
+    "668": {
+      "key": "TM97",
+      "showdown": "Tm97"
+    },
+    "669": {
+      "key": "TM98",
+      "showdown": "Tm98"
+    },
+    "670": {
+      "key": "TM99",
+      "showdown": "Tm99"
+    },
+    "671": {
+      "key": "TM100",
+      "showdown": "Tm100"
+    },
+    "672": {
+      "key": "BLAZIKENITE",
+      "showdown": "Blazikenite"
+    },
+    "676": {
+      "key": "VENUSAURITE",
+      "showdown": "Venusaurite"
+    },
+    "677": {
+      "key": "CHARIZARDITEY",
+      "showdown": "Charizardite Y"
+    },
+    "678": {
+      "key": "BLASTOISINITE",
+      "showdown": "Blastoisinite"
+    },
+    "679": {
+      "key": "TM101",
+      "showdown": "Tm101"
+    },
+    "680": {
+      "key": "TM102",
+      "showdown": "Tm102"
+    },
+    "681": {
+      "key": "TM103",
+      "showdown": "Tm103"
+    },
+    "682": {
+      "key": "HASTYMINT",
+      "showdown": "Hasty Mint"
+    },
+    "683": {
+      "key": "MILDMINT",
+      "showdown": "Mild Mint"
+    },
+    "684": {
+      "key": "IMPISHMINT",
+      "showdown": "Impish Mint"
+    },
+    "685": {
+      "key": "JOLLYMINT",
+      "showdown": "Jolly Mint"
+    },
+    "686": {
+      "key": "RASHMINT",
+      "showdown": "Rash Mint"
+    },
+    "687": {
+      "key": "GENTLEMINT",
+      "showdown": "Gentle Mint"
+    },
+    "688": {
+      "key": "BRAVEMINT",
+      "showdown": "Brave Mint"
+    },
+    "689": {
+      "key": "CAREFULMINT",
+      "showdown": "Careful Mint"
+    },
+    "690": {
+      "key": "ADAMANTMINT",
+      "showdown": "Adamant Mint"
+    },
+    "691": {
+      "key": "LAXMINT",
+      "showdown": "Lax Mint"
+    },
+    "692": {
+      "key": "SASSYMINT",
+      "showdown": "Sassy Mint"
+    },
+    "693": {
+      "key": "LONELYMINT",
+      "showdown": "Lonely Mint"
+    },
+    "694": {
+      "key": "NAIVEMINT",
+      "showdown": "Naive Mint"
+    },
+    "695": {
+      "key": "QUIETMINT",
+      "showdown": "Quiet Mint"
+    },
+    "696": {
+      "key": "TIMIDMINT",
+      "showdown": "Timid Mint"
+    },
+    "697": {
+      "key": "MODESTMINT",
+      "showdown": "Modest Mint"
+    },
+    "698": {
+      "key": "BOLDMINT",
+      "showdown": "Bold Mint"
+    },
+    "699": {
+      "key": "NAUGHTYMINT",
+      "showdown": "Naughty Mint"
+    },
+    "700": {
+      "key": "RELAXEDMINT",
+      "showdown": "Relaxed Mint"
+    },
+    "701": {
+      "key": "CALMMINT",
+      "showdown": "Calm Mint"
+    },
+    "702": {
+      "key": "SERIOUSMINT",
+      "showdown": "Serious Mint"
+    },
+    "704": {
+      "key": "TYRANITARITE",
+      "showdown": "Tyranitarite"
+    },
+    "705": {
+      "key": "SCEPTILITE",
+      "showdown": "Sceptilite"
+    },
+    "706": {
+      "key": "SWAMPERTITE",
+      "showdown": "Swampertite"
+    },
+    "708": {
+      "key": "CHARIZARDITEX",
+      "showdown": "Charizardite X"
+    },
+    "712": {
+      "key": "TM104",
+      "showdown": "Tm104"
+    },
+    "713": {
+      "key": "TM105",
+      "showdown": "Tm105"
+    },
+    "714": {
+      "key": "TM106",
+      "showdown": "Tm106"
+    },
+    "715": {
+      "key": "TM107",
+      "showdown": "Tm107"
+    },
+    "716": {
+      "key": "TM108",
+      "showdown": "Tm108"
+    },
+    "718": {
+      "key": "PIXIEPLATE",
+      "showdown": "Pixie Plate"
+    },
+    "721": {
+      "key": "WEAKNESSPOLICY",
+      "showdown": "Weakness Policy"
+    },
+    "724": {
+      "key": "SALAMENCITE",
+      "showdown": "Salamencite"
+    },
+    "725": {
+      "key": "METAGROSSITE",
+      "showdown": "Metagrossite"
+    },
+    "726": {
+      "key": "GARCHOMPITE",
+      "showdown": "Garchompite"
+    },
+    "794": {
+      "key": "TM47",
+      "showdown": "Tm47"
+    },
+    "811": {
+      "key": "COVERTCLOAK",
+      "showdown": "Covert Cloak"
+    },
+    "812": {
+      "key": "PUNCHINGGLOVE",
+      "showdown": "Punching Glove"
+    },
+    "813": {
+      "key": "CLEARAMULET",
+      "showdown": "Clear Amulet"
+    },
+    "845": {
+      "key": "TM45",
+      "showdown": "Tm45"
+    },
+    "905": {
+      "key": "DRAMPANITE",
+      "showdown": "Drampanite"
+    },
+    "906": {
+      "key": "VICTREEBELITE",
+      "showdown": "Victreebelite"
+    },
+    "907": {
+      "key": "DRAGONINITE",
+      "showdown": "Dragoninite"
+    },
+    "908": {
+      "key": "MALAMARITE",
+      "showdown": "Malamarite"
+    },
+    "909": {
+      "key": "HAWLUCHANITE",
+      "showdown": "Hawluchanite"
+    },
+    "910": {
+      "key": "CLEFABLITE",
+      "showdown": "Clefablite"
+    },
+    "911": {
+      "key": "STARMINITE",
+      "showdown": "Starminite"
+    },
+    "912": {
+      "key": "MEGANIUMITE",
+      "showdown": "Meganiumite"
+    },
+    "913": {
+      "key": "FERALIGITE",
+      "showdown": "Feraligite"
+    },
+    "914": {
+      "key": "SKARMORITE",
+      "showdown": "Skarmorite"
+    },
+    "915": {
+      "key": "FROSLASSITE",
+      "showdown": "Froslassite"
+    },
+    "916": {
+      "key": "EMBOARITE",
+      "showdown": "Emboarite"
+    },
+    "917": {
+      "key": "EXCADRITE",
+      "showdown": "Excadrite"
+    },
+    "918": {
+      "key": "SCOLIPITE",
+      "showdown": "Scolipite"
+    },
+    "919": {
+      "key": "SCRAFTINITE",
+      "showdown": "Scraftinite"
+    },
+    "920": {
+      "key": "EELEKTROSSITE",
+      "showdown": "Eelektrossite"
+    },
+    "921": {
+      "key": "CHANDELURITE",
+      "showdown": "Chandelurite"
+    },
+    "922": {
+      "key": "PYROARITE",
+      "showdown": "Pyroarite"
+    },
+    "923": {
+      "key": "BARBARACITE",
+      "showdown": "Barbaracite"
+    },
+    "924": {
+      "key": "DRAGALGITE",
+      "showdown": "Dragalgite"
+    },
+    "925": {
+      "key": "FALINKSITE",
+      "showdown": "Falinksite"
+    },
+    "927": {
+      "key": "CHIMECHITE",
+      "showdown": "Chimechite"
+    },
+    "928": {
+      "key": "ABSOLITEZ",
+      "showdown": "Absolite Z"
+    },
+    "929": {
+      "key": "STARAPTITE",
+      "showdown": "Staraptite"
+    },
+    "930": {
+      "key": "GARCHOMPITEZ",
+      "showdown": "Garchompite Z"
+    },
+    "931": {
+      "key": "LUCARIONITEZ",
+      "showdown": "Lucarionite Z"
+    },
+    "932": {
+      "key": "GOLURKITE",
+      "showdown": "Golurkite"
+    },
+    "933": {
+      "key": "MEOWSTICITE",
+      "showdown": "Meowsticite"
+    },
+    "934": {
+      "key": "CRABOMINITE",
+      "showdown": "Crabominite"
+    },
+    "935": {
+      "key": "GOLISOPITE",
+      "showdown": "Golisopite"
+    },
+    "936": {
+      "key": "MAGEARNITE",
+      "showdown": "Magearnite"
+    },
+    "937": {
+      "key": "SCOVILLAINITE",
+      "showdown": "Scovillainite"
+    },
+    "938": {
+      "key": "BAXCALIBRITE",
+      "showdown": "Baxcalibrite"
+    },
+    "939": {
+      "key": "TATSUGIRINITE",
+      "showdown": "Tatsugirinite"
+    },
+    "940": {
+      "key": "GLIMMORANITE",
+      "showdown": "Glimmoranite"
+    },
+    "941": {
+      "key": "HEATRANITE",
+      "showdown": "Heatranite"
+    },
+    "942": {
+      "key": "DARKRANITE",
+      "showdown": "Darkranite"
+    },
+    "943": {
+      "key": "ZERAORITE",
+      "showdown": "Zeraorite"
+    },
+    "946": {
+      "key": "LOADEDDICE",
+      "showdown": "Loaded Dice"
+    }
+  },
+  "abilities": {
+    "1": {
+      "key": "STENCH",
+      "showdown": "Stench"
+    },
+    "2": {
+      "key": "DRIZZLE",
+      "showdown": "Drizzle"
+    },
+    "3": {
+      "key": "SPEEDBOOST",
+      "showdown": "Speed Boost"
+    },
+    "4": {
+      "key": "BATTLEARMOR",
+      "showdown": "Battle Armor"
+    },
+    "5": {
+      "key": "STURDY",
+      "showdown": "Sturdy"
+    },
+    "6": {
+      "key": "DAMP",
+      "showdown": "Damp"
+    },
+    "7": {
+      "key": "LIMBER",
+      "showdown": "Limber"
+    },
+    "8": {
+      "key": "SANDVEIL",
+      "showdown": "Sand Veil"
+    },
+    "9": {
+      "key": "STATIC",
+      "showdown": "Static"
+    },
+    "10": {
+      "key": "VOLTABSORB",
+      "showdown": "Volt Absorb"
+    },
+    "11": {
+      "key": "WATERABSORB",
+      "showdown": "Water Absorb"
+    },
+    "12": {
+      "key": "OBLIVIOUS",
+      "showdown": "Oblivious"
+    },
+    "13": {
+      "key": "CLOUDNINE",
+      "showdown": "Cloud Nine"
+    },
+    "14": {
+      "key": "COMPOUNDEYES",
+      "showdown": "Compound Eyes"
+    },
+    "15": {
+      "key": "INSOMNIA",
+      "showdown": "Insomnia"
+    },
+    "16": {
+      "key": "COLORCHANGE",
+      "showdown": "Color Change"
+    },
+    "17": {
+      "key": "IMMUNITY",
+      "showdown": "Immunity"
+    },
+    "18": {
+      "key": "FLASHFIRE",
+      "showdown": "Flash Fire"
+    },
+    "19": {
+      "key": "SHIELDDUST",
+      "showdown": "Shield Dust"
+    },
+    "20": {
+      "key": "OWNTEMPO",
+      "showdown": "Own Tempo"
+    },
+    "21": {
+      "key": "SUCTIONCUPS",
+      "showdown": "Suction Cups"
+    },
+    "22": {
+      "key": "INTIMIDATE",
+      "showdown": "Intimidate"
+    },
+    "23": {
+      "key": "SHADOWTAG",
+      "showdown": "Shadow Tag"
+    },
+    "24": {
+      "key": "ROUGHSKIN",
+      "showdown": "Rough Skin"
+    },
+    "25": {
+      "key": "WONDERGUARD",
+      "showdown": "Wonder Guard"
+    },
+    "26": {
+      "key": "LEVITATE",
+      "showdown": "Levitate"
+    },
+    "27": {
+      "key": "EFFECTSPORE",
+      "showdown": "Effect Spore"
+    },
+    "28": {
+      "key": "SYNCHRONIZE",
+      "showdown": "Synchronize"
+    },
+    "29": {
+      "key": "CLEARBODY",
+      "showdown": "Clear Body"
+    },
+    "30": {
+      "key": "NATURALCURE",
+      "showdown": "Natural Cure"
+    },
+    "31": {
+      "key": "LIGHTNINGROD",
+      "showdown": "Lightning Rod"
+    },
+    "32": {
+      "key": "SERENEGRACE",
+      "showdown": "Serene Grace"
+    },
+    "33": {
+      "key": "SWIFTSWIM",
+      "showdown": "Swift Swim"
+    },
+    "34": {
+      "key": "CHLOROPHYLL",
+      "showdown": "Chlorophyll"
+    },
+    "35": {
+      "key": "ILLUMINATE",
+      "showdown": "Illuminate"
+    },
+    "36": {
+      "key": "TRACE",
+      "showdown": "Trace"
+    },
+    "37": {
+      "key": "HUGEPOWER",
+      "showdown": "Huge Power"
+    },
+    "38": {
+      "key": "POISONPOINT",
+      "showdown": "Poison Point"
+    },
+    "39": {
+      "key": "INNERFOCUS",
+      "showdown": "Inner Focus"
+    },
+    "40": {
+      "key": "MAGMAARMOR",
+      "showdown": "Magma Armor"
+    },
+    "41": {
+      "key": "WATERVEIL",
+      "showdown": "Water Veil"
+    },
+    "42": {
+      "key": "MAGNETPULL",
+      "showdown": "Magnet Pull"
+    },
+    "43": {
+      "key": "SOUNDPROOF",
+      "showdown": "Soundproof"
+    },
+    "44": {
+      "key": "RAINDISH",
+      "showdown": "Rain Dish"
+    },
+    "45": {
+      "key": "SANDSTREAM",
+      "showdown": "Sand Stream"
+    },
+    "46": {
+      "key": "PRESSURE",
+      "showdown": "Pressure"
+    },
+    "47": {
+      "key": "THICKFAT",
+      "showdown": "Thick Fat"
+    },
+    "48": {
+      "key": "EARLYBIRD",
+      "showdown": "Early Bird"
+    },
+    "49": {
+      "key": "FLAMEBODY",
+      "showdown": "Flame Body"
+    },
+    "50": {
+      "key": "RUNAWAY",
+      "showdown": "Run Away"
+    },
+    "51": {
+      "key": "KEENEYE",
+      "showdown": "Keen Eye"
+    },
+    "52": {
+      "key": "HYPERCUTTER",
+      "showdown": "Hyper Cutter"
+    },
+    "53": {
+      "key": "PICKUP",
+      "showdown": "Pickup"
+    },
+    "54": {
+      "key": "TRUANT",
+      "showdown": "Truant"
+    },
+    "55": {
+      "key": "HUSTLE",
+      "showdown": "Hustle"
+    },
+    "56": {
+      "key": "CUTECHARM",
+      "showdown": "Cute Charm"
+    },
+    "57": {
+      "key": "PLUS",
+      "showdown": "Plus"
+    },
+    "58": {
+      "key": "MINUS",
+      "showdown": "Minus"
+    },
+    "59": {
+      "key": "FORECAST",
+      "showdown": "Forecast"
+    },
+    "60": {
+      "key": "STICKYHOLD",
+      "showdown": "Sticky Hold"
+    },
+    "61": {
+      "key": "SHEDSKIN",
+      "showdown": "Shed Skin"
+    },
+    "62": {
+      "key": "GUTS",
+      "showdown": "Guts"
+    },
+    "63": {
+      "key": "MARVELSCALE",
+      "showdown": "Marvel Scale"
+    },
+    "64": {
+      "key": "LIQUIDOOZE",
+      "showdown": "Liquid Ooze"
+    },
+    "65": {
+      "key": "OVERGROW",
+      "showdown": "Overgrow"
+    },
+    "66": {
+      "key": "BLAZE",
+      "showdown": "Blaze"
+    },
+    "67": {
+      "key": "TORRENT",
+      "showdown": "Torrent"
+    },
+    "68": {
+      "key": "SWARM",
+      "showdown": "Swarm"
+    },
+    "69": {
+      "key": "ROCKHEAD",
+      "showdown": "Rock Head"
+    },
+    "70": {
+      "key": "DROUGHT",
+      "showdown": "Drought"
+    },
+    "71": {
+      "key": "ARENATRAP",
+      "showdown": "Arena Trap"
+    },
+    "72": {
+      "key": "VITALSPIRIT",
+      "showdown": "Vital Spirit"
+    },
+    "73": {
+      "key": "WHITESMOKE",
+      "showdown": "White Smoke"
+    },
+    "74": {
+      "key": "PUREPOWER",
+      "showdown": "Pure Power"
+    },
+    "75": {
+      "key": "SHELLARMOR",
+      "showdown": "Shell Armor"
+    },
+    "76": {
+      "key": "AIRLOCK",
+      "showdown": "Air Lock"
+    },
+    "77": {
+      "key": "TANGLEDFEET",
+      "showdown": "Tangled Feet"
+    },
+    "78": {
+      "key": "MOTORDRIVE",
+      "showdown": "Motor Drive"
+    },
+    "79": {
+      "key": "RIVALRY",
+      "showdown": "Rivalry"
+    },
+    "80": {
+      "key": "STEADFAST",
+      "showdown": "Steadfast"
+    },
+    "81": {
+      "key": "SNOWCLOAK",
+      "showdown": "Snow Cloak"
+    },
+    "82": {
+      "key": "GLUTTONY",
+      "showdown": "Gluttony"
+    },
+    "83": {
+      "key": "ANGERPOINT",
+      "showdown": "Anger Point"
+    },
+    "84": {
+      "key": "UNBURDEN",
+      "showdown": "Unburden"
+    },
+    "85": {
+      "key": "HEATPROOF",
+      "showdown": "Heatproof"
+    },
+    "86": {
+      "key": "SIMPLE",
+      "showdown": "Simple"
+    },
+    "87": {
+      "key": "DRYSKIN",
+      "showdown": "Dry Skin"
+    },
+    "88": {
+      "key": "DOWNLOAD",
+      "showdown": "Download"
+    },
+    "89": {
+      "key": "IRONFIST",
+      "showdown": "Iron Fist"
+    },
+    "90": {
+      "key": "POISONHEAL",
+      "showdown": "Poison Heal"
+    },
+    "91": {
+      "key": "ADAPTABILITY",
+      "showdown": "Adaptability"
+    },
+    "92": {
+      "key": "SKILLLINK",
+      "showdown": "Skill Link"
+    },
+    "93": {
+      "key": "HYDRATION",
+      "showdown": "Hydration"
+    },
+    "94": {
+      "key": "SOLARPOWER",
+      "showdown": "Solar Power"
+    },
+    "95": {
+      "key": "QUICKFEET",
+      "showdown": "Quick Feet"
+    },
+    "96": {
+      "key": "NORMALIZE",
+      "showdown": "Normalize"
+    },
+    "97": {
+      "key": "SNIPER",
+      "showdown": "Sniper"
+    },
+    "98": {
+      "key": "MAGICGUARD",
+      "showdown": "Magic Guard"
+    },
+    "99": {
+      "key": "NOGUARD",
+      "showdown": "No Guard"
+    },
+    "100": {
+      "key": "STALL",
+      "showdown": "Stall"
+    },
+    "101": {
+      "key": "TECHNICIAN",
+      "showdown": "Technician"
+    },
+    "102": {
+      "key": "LEAFGUARD",
+      "showdown": "Leaf Guard"
+    },
+    "103": {
+      "key": "KLUTZ",
+      "showdown": "Klutz"
+    },
+    "104": {
+      "key": "MOLDBREAKER",
+      "showdown": "Mold Breaker"
+    },
+    "105": {
+      "key": "SUPERLUCK",
+      "showdown": "Super Luck"
+    },
+    "106": {
+      "key": "AFTERMATH",
+      "showdown": "Aftermath"
+    },
+    "107": {
+      "key": "ANTICIPATION",
+      "showdown": "Anticipation"
+    },
+    "108": {
+      "key": "FOREWARN",
+      "showdown": "Forewarn"
+    },
+    "109": {
+      "key": "UNAWARE",
+      "showdown": "Unaware"
+    },
+    "110": {
+      "key": "TINTEDLENS",
+      "showdown": "Tinted Lens"
+    },
+    "111": {
+      "key": "FILTER",
+      "showdown": "Filter"
+    },
+    "112": {
+      "key": "SLOWSTART",
+      "showdown": "Slow Start"
+    },
+    "113": {
+      "key": "SCRAPPY",
+      "showdown": "Scrappy"
+    },
+    "114": {
+      "key": "STORMDRAIN",
+      "showdown": "Storm Drain"
+    },
+    "115": {
+      "key": "ICEBODY",
+      "showdown": "Ice Body"
+    },
+    "116": {
+      "key": "SOLIDROCK",
+      "showdown": "Solid Rock"
+    },
+    "117": {
+      "key": "SNOWWARNING",
+      "showdown": "Snow Warning"
+    },
+    "118": {
+      "key": "HONEYGATHER",
+      "showdown": "Honey Gather"
+    },
+    "119": {
+      "key": "FRISK",
+      "showdown": "Frisk"
+    },
+    "120": {
+      "key": "RECKLESS",
+      "showdown": "Reckless"
+    },
+    "121": {
+      "key": "MULTITYPE",
+      "showdown": "Multitype"
+    },
+    "122": {
+      "key": "FLOWERGIFT",
+      "showdown": "Flower Gift"
+    },
+    "123": {
+      "key": "BADDREAMS",
+      "showdown": "Bad Dreams"
+    },
+    "124": {
+      "key": "PICKPOCKET",
+      "showdown": "Pickpocket"
+    },
+    "125": {
+      "key": "SHEERFORCE",
+      "showdown": "Sheer Force"
+    },
+    "126": {
+      "key": "STEELWORKER",
+      "showdown": "Steelworker"
+    },
+    "127": {
+      "key": "UNNERVE",
+      "showdown": "Unnerve"
+    },
+    "128": {
+      "key": "DEFIANT",
+      "showdown": "Defiant"
+    },
+    "129": {
+      "key": "DEFEATIST",
+      "showdown": "Defeatist"
+    },
+    "130": {
+      "key": "CURSEDBODY",
+      "showdown": "Cursed Body"
+    },
+    "131": {
+      "key": "HEALER",
+      "showdown": "Healer"
+    },
+    "132": {
+      "key": "FRIENDGUARD",
+      "showdown": "Friend Guard"
+    },
+    "133": {
+      "key": "WEAKARMOR",
+      "showdown": "Weak Armor"
+    },
+    "134": {
+      "key": "HEAVYMETAL",
+      "showdown": "Heavy Metal"
+    },
+    "135": {
+      "key": "LIGHTMETAL",
+      "showdown": "Light Metal"
+    },
+    "136": {
+      "key": "MULTISCALE",
+      "showdown": "Multiscale"
+    },
+    "137": {
+      "key": "TOXICBOOST",
+      "showdown": "Toxic Boost"
+    },
+    "138": {
+      "key": "FLAREBOOST",
+      "showdown": "Flare Boost"
+    },
+    "139": {
+      "key": "HARVEST",
+      "showdown": "Harvest"
+    },
+    "140": {
+      "key": "TELEPATHY",
+      "showdown": "Telepathy"
+    },
+    "141": {
+      "key": "MOODY",
+      "showdown": "Moody"
+    },
+    "142": {
+      "key": "OVERCOAT",
+      "showdown": "Overcoat"
+    },
+    "143": {
+      "key": "POISONTOUCH",
+      "showdown": "Poison Touch"
+    },
+    "144": {
+      "key": "REGENERATOR",
+      "showdown": "Regenerator"
+    },
+    "145": {
+      "key": "BIGPECKS",
+      "showdown": "Big Pecks"
+    },
+    "146": {
+      "key": "SANDRUSH",
+      "showdown": "Sand Rush"
+    },
+    "147": {
+      "key": "WONDERSKIN",
+      "showdown": "Wonder Skin"
+    },
+    "148": {
+      "key": "ANALYTIC",
+      "showdown": "Analytic"
+    },
+    "149": {
+      "key": "ILLUSION",
+      "showdown": "Illusion"
+    },
+    "150": {
+      "key": "IMPOSTER",
+      "showdown": "Imposter"
+    },
+    "151": {
+      "key": "INFILTRATOR",
+      "showdown": "Infiltrator"
+    },
+    "152": {
+      "key": "MUMMY",
+      "showdown": "Mummy"
+    },
+    "153": {
+      "key": "MOXIE",
+      "showdown": "Moxie"
+    },
+    "154": {
+      "key": "JUSTIFIED",
+      "showdown": "Justified"
+    },
+    "155": {
+      "key": "RATTLED",
+      "showdown": "Rattled"
+    },
+    "156": {
+      "key": "MAGICBOUNCE",
+      "showdown": "Magic Bounce"
+    },
+    "157": {
+      "key": "SAPSIPPER",
+      "showdown": "Sap Sipper"
+    },
+    "158": {
+      "key": "PRANKSTER",
+      "showdown": "Prankster"
+    },
+    "159": {
+      "key": "SANDFORCE",
+      "showdown": "Sand Force"
+    },
+    "160": {
+      "key": "IRONBARBS",
+      "showdown": "Iron Barbs"
+    },
+    "161": {
+      "key": "ZENMODE",
+      "showdown": "Zen Mode"
+    },
+    "162": {
+      "key": "VICTORYSTAR",
+      "showdown": "Victory Star"
+    },
+    "163": {
+      "key": "TURBOBLAZE",
+      "showdown": "Turboblaze"
+    },
+    "164": {
+      "key": "TERAVOLT",
+      "showdown": "Teravolt"
+    },
+    "165": {
+      "key": "SLUSHRUSH",
+      "showdown": "Slush Rush"
+    },
+    "166": {
+      "key": "PIXILATE",
+      "showdown": "Pixilate"
+    },
+    "169": {
+      "key": "TOUGHCLAWS",
+      "showdown": "Tough Claws"
+    },
+    "171": {
+      "key": "PARENTALBOND",
+      "showdown": "Parental Bond"
+    },
+    "176": {
+      "key": "WATERBUBBLE",
+      "showdown": "Water Bubble"
+    },
+    "177": {
+      "key": "STAMINA",
+      "showdown": "Stamina"
+    },
+    "179": {
+      "key": "STRONGJAW",
+      "showdown": "Strong Jaw"
+    },
+    "180": {
+      "key": "FURCOAT",
+      "showdown": "Fur Coat"
+    },
+    "181": {
+      "key": "AERILATE",
+      "showdown": "Aerilate"
+    },
+    "182": {
+      "key": "COMPETITIVE",
+      "showdown": "Competitive"
+    },
+    "183": {
+      "key": "MEGALAUNCHER",
+      "showdown": "Mega Launcher"
+    },
+    "184": {
+      "key": "FLUFFY",
+      "showdown": "Fluffy"
+    },
+    "187": {
+      "key": "CONTRARY",
+      "showdown": "Contrary"
+    },
+    "188": {
+      "key": "LIQUIDVOICE",
+      "showdown": "Liquid Voice"
+    },
+    "189": {
+      "key": "PROTEAN",
+      "showdown": "Protean"
+    },
+    "190": {
+      "key": "DISGUISE",
+      "showdown": "Disguise"
+    },
+    "191": {
+      "key": "STANCECHANGE",
+      "showdown": "Stance Change"
+    },
+    "194": {
+      "key": "ELECTRICSURGE",
+      "showdown": "Electric Surge"
+    },
+    "195": {
+      "key": "PSYCHICSURGE",
+      "showdown": "Psychic Surge"
+    },
+    "196": {
+      "key": "GRASSYSURGE",
+      "showdown": "Grassy Surge"
+    },
+    "197": {
+      "key": "MISTYSURGE",
+      "showdown": "Misty Surge"
+    },
+    "198": {
+      "key": "GOOEY",
+      "showdown": "Gooey"
+    },
+    "199": {
+      "key": "TRIAGE",
+      "showdown": "Triage"
+    },
+    "200": {
+      "key": "NEUROFORCE",
+      "showdown": "Neuroforce"
+    },
+    "201": {
+      "key": "BERSERK",
+      "showdown": "Berserk"
+    },
+    "202": {
+      "key": "MERCILESS",
+      "showdown": "Merciless"
+    },
+    "203": {
+      "key": "STEAMENGINE",
+      "showdown": "Steam Engine"
+    },
+    "204": {
+      "key": "GALEWINGS",
+      "showdown": "Gale Wings"
+    },
+    "209": {
+      "key": "EMERGENCYEXIT",
+      "showdown": "Emergency Exit"
+    },
+    "215": {
+      "key": "EARTHEATER",
+      "showdown": "Earth Eater"
+    },
+    "219": {
+      "key": "BULLETPROOF",
+      "showdown": "Bulletproof"
+    },
+    "220": {
+      "key": "CHEEKPOUCH",
+      "showdown": "Cheek Pouch"
+    },
+    "221": {
+      "key": "WATERCOMPACTION",
+      "showdown": "Water Compaction"
+    },
+    "226": {
+      "key": "PUNKROCK",
+      "showdown": "Punk Rock"
+    },
+    "227": {
+      "key": "ICESCALES",
+      "showdown": "Ice Scales"
+    },
+    "228": {
+      "key": "QUEENLYMAJESTY",
+      "showdown": "Queenly Majesty"
+    },
+    "230": {
+      "key": "CORROSION",
+      "showdown": "Corrosion"
+    },
+    "231": {
+      "key": "MIRRORARMOR",
+      "showdown": "Mirror Armor"
+    },
+    "240": {
+      "key": "GOODASGOLD",
+      "showdown": "Good As Gold"
+    },
+    "241": {
+      "key": "PURIFYINGSALT",
+      "showdown": "Purifying Salt"
+    },
+    "242": {
+      "key": "NEUTRALIZINGGAS",
+      "showdown": "Neutralizing Gas"
+    },
+    "243": {
+      "key": "SURGESURFER",
+      "showdown": "Surge Surfer"
+    },
+    "244": {
+      "key": "INNARDSOUT",
+      "showdown": "Innards Out"
+    },
+    "245": {
+      "key": "WINDRIDER",
+      "showdown": "Wind Rider"
+    },
+    "246": {
+      "key": "WINDPOWER",
+      "showdown": "Wind Power"
+    },
+    "247": {
+      "key": "POISONPUPPETEER",
+      "showdown": "Poison Puppeteer"
+    },
+    "248": {
+      "key": "FAIRYAURA",
+      "showdown": "Fairy Aura"
+    },
+    "249": {
+      "key": "DARKAURA",
+      "showdown": "Dark Aura"
+    },
+    "251": {
+      "key": "AURABREAK",
+      "showdown": "Aura Break"
+    },
+    "252": {
+      "key": "DRAGONSMAW",
+      "showdown": "Dragons Maw"
+    },
+    "254": {
+      "key": "GRIMNEIGH",
+      "showdown": "Grim Neigh"
+    }
+  }
+}

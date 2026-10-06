@@ -20,7 +20,7 @@ export const PLAYERS: Player[] = [
   { id: 5, name: "Malza", twitchUser: "", color: "#5ec4a0" },
   { id: 6, name: "Fyros", twitchUser: "", color: "#5ec4a0" },
   { id: 7, name: "Finghin", twitchUser: "", color: "#5ec4a0" },
-  { id: 8, name: "Doorman", twitchUser: "", color: "#5ec4a0" },
+  //{ id: 8, name: "Doorman", twitchUser: "", color: "#5ec4a0" },
   { id: 9, name: "Traint​", twitchUser: "", color: "#5ec4a0" },
   { id: 10, name: "Coca", twitchUser: "", color: "#5ec4a0" },
   { id: 11, name: "Manguera", twitchUser: "", color: "#5ec4a0" },

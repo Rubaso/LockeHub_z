@@ -24,6 +24,17 @@ export type Pokemon = {
   status: 'alive' | 'dead'
   route: string
   tramo: number
+  battleData: PokemonBattleData | null
+}
+
+export type PokemonBattleData = {
+  ability: string | null
+  item: string | null
+  nature: string | null
+  gender: string | null
+  level: number | null
+  ivs: Record<string, number> | null
+  moves: string[]
 }
 
 export type FeedItem = {

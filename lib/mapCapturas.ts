@@ -133,6 +133,7 @@ export function capturaToPokemon(row: CapturaRow): Pokemon {
     status: row.estado === 'MUERTO' ? 'dead' : 'alive',
     route: row.ruta,
     tramo: tramoFromRoute(row.ruta),
+    battleData: row.battle_data,
   }
 }
 
