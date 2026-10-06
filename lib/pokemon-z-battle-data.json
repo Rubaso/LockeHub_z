@@ -112,6 +112,10 @@
       "key": "BITE",
       "showdown": "Bite"
     },
+    "29": {
+      "key": "FAINTATTACK",
+      "showdown": "Feint Attack"
+    },
     "30": {
       "key": "SNARL",
       "showdown": "Snarl"
