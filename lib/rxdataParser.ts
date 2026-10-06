@@ -4,6 +4,7 @@ import { MAP_Z } from '@/lib/mapZ'
 import { POKEMON_Z_SPECIES_BY_ID } from '@/lib/pokemonZSpecies'
 import pokemonZAbilitySlots from '@/lib/pokemon-z-abilities.json'
 import pokemonZBattleData from '@/lib/pokemon-z-battle-data.json'
+import pokemonZBattleOverrides from '@/lib/pokemon-z-battle-overrides.json'
 
 export interface PokemonSaveData {
   species: string
@@ -71,6 +72,11 @@ const battleDataMaps = pokemonZBattleData as {
   moves: Record<string, BattleDataMap>
   items: Record<string, BattleDataMap>
   abilities: Record<string, BattleDataMap>
+}
+const battleDataOverrides = pokemonZBattleOverrides as {
+  moves: Record<string, string>
+  items: Record<string, string>
+  abilities: Record<string, string>
 }
 const pokemonZAbilities = pokemonZAbilitySlots as Record<
   string,
@@ -618,13 +624,18 @@ function resolveMoveName(value: unknown): string | null {
 
   const id = numberValue(value)
   if (id === null || id <= 0) return null
-  return battleDataMaps.moves[String(id)]?.showdown ?? null
+  return battleDataOverrides.moves[String(id)] ??
+    battleDataMaps.moves[String(id)]?.showdown ??
+    null
 }
 
 function resolveBattleDataName(value: unknown, map: Record<string, BattleDataMap>): string | null {
   const id = numberValue(value)
   if (id !== null) {
-    return map[String(id)]?.showdown ?? null
+    const overrides = map === battleDataMaps.items
+      ? battleDataOverrides.items
+      : battleDataOverrides.abilities
+    return overrides[String(id)] ?? map[String(id)]?.showdown ?? null
   }
 
   return normalizeBattleName(value)

@@ -1,5 +1,6 @@
 import type { Pokemon } from './types'
 import pokemonZBattleData from './pokemon-z-battle-data.json'
+import pokemonZBattleOverrides from './pokemon-z-battle-overrides.json'
 
 const STAT_NAMES = [
   ['hp', 'HP'],
@@ -14,6 +15,11 @@ const battleDataMaps = pokemonZBattleData as {
   items: Record<string, { showdown: string }>
   abilities: Record<string, { showdown: string }>
   moves: Record<string, { showdown: string }>
+}
+const battleDataOverrides = pokemonZBattleOverrides as {
+  moves: Record<string, string>
+  items: Record<string, string>
+  abilities: Record<string, string>
 }
 
 function showdownName(value: string): string {
@@ -40,7 +46,12 @@ function showdownBattleName(
 ): string {
   const numericId = Number(value)
   if (Number.isInteger(numericId)) {
-    return map[String(numericId)]?.showdown ?? value
+    const overrides = map === battleDataMaps.items
+      ? battleDataOverrides.items
+      : map === battleDataMaps.abilities
+        ? battleDataOverrides.abilities
+        : battleDataOverrides.moves
+    return overrides[String(numericId)] ?? map[String(numericId)]?.showdown ?? value
   }
 
   return showdownName(value)
