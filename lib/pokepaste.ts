@@ -63,7 +63,7 @@ export function pokemonToShowdown(pokemon: Pokemon): string {
   const lines = [name + (data?.item ? ` @ ${showdownBattleName(data.item, battleDataMaps.items)}` : '')]
 
   if (data?.ability) lines.push(`Ability: ${showdownBattleName(data.ability, battleDataMaps.abilities)}`)
-  if (data?.level) lines.push(`Level: ${data.level}`)
+  lines.push('Level: 50')
   if (data?.nature) lines.push(`${showdownName(data.nature)} Nature`)
 
   const ivs = STAT_NAMES

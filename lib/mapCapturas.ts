@@ -138,5 +138,8 @@ export function capturaToPokemon(row: CapturaRow): Pokemon {
 }
 
 export function isInBox(row: CapturaRow) {
-  return row.estado !== 'MUERTO' && row.estado !== 'ESCAPADO' && row.estado !== 'INTERCAMBIADO'
+  return row.estado !== 'MUERTO' &&
+    row.estado !== 'ESCAPADO' &&
+    row.estado !== 'INTERCAMBIADO' &&
+    row.estado !== 'FUERA_CAJA'
 }

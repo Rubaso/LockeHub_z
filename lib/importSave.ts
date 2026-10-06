@@ -112,6 +112,8 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     const payload: Partial<ExistingRow> = {}
     if (pokemon.estado === 'MUERTO' && existente.estado !== 'MUERTO') {
       payload.estado = 'MUERTO'
+    } else if (existente.estado === 'FUERA_CAJA') {
+      payload.estado = 'VIVO'
     }
     if (existente.ruta !== pokemon.ruta) payload.ruta = pokemon.ruta
     if (existente.pokemon_name !== pokemon.pokemon_name) payload.pokemon_name = pokemon.pokemon_name
@@ -137,12 +139,53 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
   }
 
   let actualizados = 0
+  let datosCombateActualizados = 0
   for (const cambio of actualizaciones) {
-    const { error } = await supabase.from('capturas').update(cambio.payload).eq('id', cambio.id)
+    const { data, error } = await supabase
+      .from('capturas')
+      .update(cambio.payload)
+      .eq('id', cambio.id)
+      .select('id')
     if (error) {
       throw new Error('La partida se leyó, pero hubo un error actualizando un Pokémon existente.')
     }
+    if (!data?.some((row) => row.id === cambio.id)) {
+      throw new Error(
+        `La partida se leyó, pero Supabase no confirmó la actualización del Pokémon ${cambio.id}. Comprueba los permisos de actualización de la tabla capturas.`
+      )
+    }
+    if (cambio.payload.battle_data !== undefined) {
+      datosCombateActualizados++
+    }
     actualizados++
+  }
+
+  let fueraDeCaja = 0
+  if (save.hasStorage) {
+    const presentes = new Set(pokemonDelSave.map((pokemon) => pokemon.save_pokemon_id))
+    const ausentes = ((existentes as ExistingRow[] | null) ?? []).filter(
+      (row) =>
+        row.save_pokemon_id.startsWith(`${save.trainerId}:`) &&
+        !presentes.has(row.save_pokemon_id) &&
+        !['MUERTO', 'ESCAPADO', 'INTERCAMBIADO', 'FUERA_CAJA'].includes(row.estado)
+    )
+
+    for (const pokemon of ausentes) {
+      const { data, error } = await supabase
+        .from('capturas')
+        .update({ estado: 'FUERA_CAJA', is_team: false })
+        .eq('id', pokemon.id)
+        .select('id')
+      if (error) {
+        throw new Error('La partida se importó, pero no se pudieron ocultar de la caja los Pokémon ausentes.')
+      }
+      if (!data?.some((row) => row.id === pokemon.id)) {
+        throw new Error(
+          `Supabase no confirmó que el Pokémon ${pokemon.id} dejara de aparecer en la caja. Comprueba los permisos de actualización de capturas.`
+        )
+      }
+      fueraDeCaja++
+    }
   }
 
   const encuentrosRuta: EncounterRouteSaveRow[] = save.encounters.map((encounter) => ({
@@ -303,6 +346,8 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
     `Nuevos añadidos: ${insertados}\n` +
     `Ya existentes: ${yaExistentes}\n` +
     `Actualizados: ${actualizados}\n` +
+    `Datos de combate actualizados: ${datosCombateActualizados}\n` +
+    `Ya no aparecen en cajas: ${fueraDeCaja}\n` +
     `Eventos de actividad detectados: ${eventosDetectados}\n` +
     `Estados de zonas importados: ${encuentrosRuta.length}\n` +
     `Medallas detectadas: ${medallasObtenidas.length}/12`
