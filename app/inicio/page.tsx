@@ -172,7 +172,7 @@ export default function InicioPage() {
               <p className="text-xs font-bold uppercase tracking-widest text-amber-300">Torneo iniciado</p>
               <h2 className="mt-1 text-2xl font-black text-amber-100">{tournament.name}</h2>
               <p className="mt-1 text-sm text-amber-200/70">
-                Sube tu pokepaste (o pasaselo a él si todavia falta gente por subirlo) y habla con tu rival para jugar.
+                Forma tu equipo desde tu caja y consulta aquí tu PokéPaste y el de tu rival.
               </p>
             </div>
           </section>

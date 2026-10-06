@@ -3,6 +3,8 @@
 import { useMemo, useState } from 'react'
 import type { Pokemon } from '@/lib/types'
 import { teamToShowdown } from '@/lib/pokepaste'
+import { readSession } from '@/lib/session'
+import { supabase } from '@/lib/supabase'
 
 export default function TeamBuilder({ pokemon }: { pokemon: Pokemon[] }) {
   const [selectedIds, setSelectedIds] = useState<number[]>([])
@@ -52,6 +54,17 @@ export default function TeamBuilder({ pokemon }: { pokemon: Pokemon[] }) {
       const data = await response.json()
       if (!response.ok || !data.url) throw new Error(data.error || 'No se pudo crear el PokéPaste.')
       setPasteUrl(data.url)
+      const session = readSession()
+      if (supabase && session) {
+        const { error: saveError } = await supabase.from('directos').upsert(
+          { jugador_id: session.id, pokepaste_text: text.trim() },
+          { onConflict: 'jugador_id' }
+        )
+        if (saveError) {
+          console.error('Error guardando el PokéPaste generado:', saveError)
+          throw new Error('El PokéPaste se creó, pero no se pudo guardar en el torneo.')
+        }
+      }
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : 'No se pudo crear el PokéPaste.')
     } finally {

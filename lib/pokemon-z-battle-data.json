@@ -2603,6 +2603,10 @@
     "732": {
       "key": "DOUBLEIRONBASH",
       "showdown": "Double Iron Bash"
+    },
+    "670": {
+      "key": "INFESTATION",
+      "showdown": "Infestation"
     }
   },
   "items": {

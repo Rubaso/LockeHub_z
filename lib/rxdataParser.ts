@@ -646,7 +646,9 @@ async function extractBattleData(pokemon: any, ability: string | null): Promise<
   if (Array.isArray(rawIvs)) {
     for (const [index, value] of rawIvs.entries()) {
       const parsed = numberValue(value)
-      if (parsed !== null) ivs[['hp', 'atk', 'def', 'spa', 'spd', 'spe'][index] ?? `stat${index}`] = parsed
+      if (parsed !== null) {
+        ivs[['hp', 'atk', 'def', 'spe', 'spa', 'spd'][index] ?? `stat${index}`] = parsed
+      }
     }
   } else if (rawIvs && typeof rawIvs === 'object') {
     for (const stat of ['hp', 'atk', 'def', 'spa', 'spd', 'spe']) {

@@ -29,8 +29,8 @@ export default function PokepasteStatus() {
   const [allDelivered, setAllDelivered] = useState(false)
   const [teamOpen, setTeamOpen] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [saving, setSaving] = useState(false)
-  const [copied, setCopied] = useState(false)
+  const [copiedOwn, setCopiedOwn] = useState(false)
+  const [copiedRival, setCopiedRival] = useState(false)
   const [error, setError] = useState('')
 
   const loadStatus = useCallback(async () => {
@@ -97,30 +97,18 @@ export default function PokepasteStatus() {
     void loadStatus()
   }, [loadStatus])
 
-  const savePokepaste = async (event: React.FormEvent) => {
-    event.preventDefault()
-    if (!supabase || playerId === null) return
-    setSaving(true)
-    setError('')
-    const { error: saveError } = await supabase.from('directos').upsert(
-      { jugador_id: playerId, pokepaste_text: pokepaste.trim() },
-      { onConflict: 'jugador_id' }
-    )
-    if (saveError) {
-      console.error('Error guardando PokéPaste:', saveError)
-      setError('No se pudo guardar el PokéPaste.')
-    } else {
-      setSavedPokepaste(pokepaste.trim())
-      await loadStatus()
-    }
-    setSaving(false)
+  const copyOwnPokepaste = async () => {
+    if (!pokepaste) return
+    await navigator.clipboard.writeText(pokepaste)
+    setCopiedOwn(true)
+    window.setTimeout(() => setCopiedOwn(false), 2000)
   }
 
   const copyRivalPokepaste = async () => {
     if (!rivalPokepaste) return
     await navigator.clipboard.writeText(rivalPokepaste)
-    setCopied(true)
-    window.setTimeout(() => setCopied(false), 2000)
+    setCopiedRival(true)
+    window.setTimeout(() => setCopiedRival(false), 2000)
   }
 
   if (loading || playerId === null) return null
@@ -134,7 +122,7 @@ export default function PokepasteStatus() {
           {allDelivered && rivalPokepaste ? (
             <div className="mt-4 flex flex-wrap gap-2 border-t border-sky-500/20 pt-3">
               <button type="button" onClick={() => setTeamOpen(true)} className="rounded-lg bg-sky-500 px-4 py-2 text-sm font-bold text-zinc-950 hover:bg-sky-400">VER EQUIPO</button>
-              <button type="button" onClick={copyRivalPokepaste} className="rounded-lg border border-sky-500/50 px-4 py-2 text-sm font-bold text-sky-300 hover:bg-sky-500/10">{copied ? 'Copiado' : 'Copiar'}</button>
+              <button type="button" onClick={copyRivalPokepaste} className="rounded-lg border border-sky-500/50 px-4 py-2 text-sm font-bold text-sky-300 hover:bg-sky-500/10">{copiedRival ? 'Copiado' : 'Copiar'}</button>
             </div>
           ) : (
             <p className="mt-3 border-t border-sky-500/20 pt-3 text-sm text-sky-200/70">Podrás ver su equipo cuando todos suban el PokéPaste.</p>
@@ -150,15 +138,16 @@ export default function PokepasteStatus() {
           {savedPokepaste.trim() ? 'Entregado' : 'Pendiente'}
         </span>
       </div>
-      <form onSubmit={savePokepaste} className="mt-4 space-y-3">
-        <label className="block text-sm text-zinc-400">
-          Pega aquí el texto exportado desde PokéPaste.
-          <textarea value={pokepaste} onChange={(event) => setPokepaste(event.target.value)} rows={6} className="mt-2 w-full rounded-xl border border-zinc-700 bg-zinc-950 p-3 font-mono text-xs text-zinc-200 outline-none focus:border-teal-500" placeholder="Pega aquí tu equipo..." />
-        </label>
-        <button type="submit" disabled={saving} className="rounded-lg bg-teal-500 px-4 py-2 text-sm font-bold text-zinc-950 hover:bg-teal-400 disabled:opacity-50">
-          {saving ? 'Guardando…' : 'Guardar PokéPaste'}
-        </button>
-      </form>
+      {pokepaste ? (
+        <div className="mt-4 space-y-3">
+          <pre className="max-h-80 overflow-auto whitespace-pre-wrap rounded-xl border border-zinc-800 bg-zinc-950 p-4 font-mono text-xs text-zinc-200">{pokepaste}</pre>
+          <button type="button" onClick={copyOwnPokepaste} className="rounded-lg border border-teal-500/50 px-4 py-2 text-sm font-bold text-teal-300 hover:bg-teal-500/10">
+            {copiedOwn ? 'Copiado' : 'Copiar mi PokéPaste'}
+          </button>
+        </div>
+      ) : (
+        <p className="mt-4 text-sm text-zinc-500">Forma tu equipo desde tu caja para generar tu PokéPaste.</p>
+      )}
       {error && <p className="mt-3 text-sm text-rose-400">{error}</p>}
       {teamOpen && rivalName && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
