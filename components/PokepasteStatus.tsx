@@ -5,19 +5,36 @@ import { PLAYERS, SALA_ID } from '@/lib/constants'
 import { supabase } from '@/lib/supabase'
 import { readSession } from '@/lib/session'
 
-type Match = { player1: string | null; player2: string | null }
-type Round = { matches?: Match[] }
+type Match = {
+  player1: string | null
+  player2: string | null
+  winner?: string | null
+  autoWinner?: boolean
+}
+type Round = { matches?: Match[]; placementBracket?: boolean }
 type DirectoRow = { jugador_id: number; pokepaste_text: string | null }
 
 function findRival(rounds: Round[], playerName: string) {
-  let rival: string | null = null
+  const firstRound = rounds.find((round) => !round.placementBracket)
+  const firstMatch = firstRound?.matches?.find((match) =>
+    match.player1 === playerName || match.player2 === playerName
+  )
+  if (
+    firstMatch?.winner &&
+    firstMatch.winner !== playerName &&
+    (firstMatch.player1 === playerName || firstMatch.player2 === playerName)
+  ) {
+    return null
+  }
+
   for (const round of rounds) {
     for (const match of round.matches ?? []) {
-      if (match.player1 === playerName && match.player2 && match.player2 !== 'BYE') rival = match.player2
-      if (match.player2 === playerName && match.player1 && match.player1 !== 'BYE') rival = match.player1
+      if (match.winner || match.autoWinner) continue
+      if (match.player1 === playerName && match.player2 && match.player2 !== 'BYE') return match.player2
+      if (match.player2 === playerName && match.player1 && match.player1 !== 'BYE') return match.player1
     }
   }
-  return rival
+  return null
 }
 
 export default function PokepasteStatus() {
@@ -25,6 +42,7 @@ export default function PokepasteStatus() {
   const [pokepaste, setPokepaste] = useState('')
   const [savedPokepaste, setSavedPokepaste] = useState('')
   const [rivalName, setRivalName] = useState<string | null>(null)
+  const [isParticipant, setIsParticipant] = useState(false)
   const [rivalPokepaste, setRivalPokepaste] = useState('')
   const [allDelivered, setAllDelivered] = useState(false)
   const [teamOpen, setTeamOpen] = useState(false)
@@ -65,6 +83,10 @@ export default function PokepasteStatus() {
     const rounds = (tournamentResult.data?.bracket_data ?? []) as Round[]
     const nextRivalName = findRival(rounds, player.name)
     setRivalName(nextRivalName)
+    const participantNames = (rounds[0]?.matches ?? [])
+      .flatMap((match) => [match.player1, match.player2])
+      .filter((name): name is string => Boolean(name && name !== 'BYE'))
+    setIsParticipant(participantNames.includes(player.name))
     setRivalPokepaste('')
 
     const participantIds = (rounds[0]?.matches ?? [])
@@ -115,18 +137,18 @@ export default function PokepasteStatus() {
 
   return (
     <aside className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-5">
-      {rivalName && (
+      {isParticipant && (
         <div className="mb-5 rounded-xl border border-sky-500/30 bg-sky-950/25 p-4 shadow-[0_0_20px_rgba(14,165,233,0.08)]">
           <p className="text-xs font-bold uppercase tracking-widest text-sky-300">Rival actual</p>
-          <p className="mt-1 text-xl font-black text-sky-100">{rivalName}</p>
-          {allDelivered && rivalPokepaste ? (
+          <p className="mt-1 text-xl font-black text-sky-100">{rivalName ?? 'Ninguno'}</p>
+          {rivalName && allDelivered && rivalPokepaste ? (
             <div className="mt-4 flex flex-wrap gap-2 border-t border-sky-500/20 pt-3">
               <button type="button" onClick={() => setTeamOpen(true)} className="rounded-lg bg-sky-500 px-4 py-2 text-sm font-bold text-zinc-950 hover:bg-sky-400">VER EQUIPO</button>
               <button type="button" onClick={copyRivalPokepaste} className="rounded-lg border border-sky-500/50 px-4 py-2 text-sm font-bold text-sky-300 hover:bg-sky-500/10">{copiedRival ? 'Copiado' : 'Copiar'}</button>
             </div>
-          ) : (
+          ) : rivalName ? (
             <p className="mt-3 border-t border-sky-500/20 pt-3 text-sm text-sky-200/70">Podrás ver su equipo cuando todos suban el PokéPaste.</p>
-          )}
+          ) : null}
         </div>
       )}
       <div className="flex flex-wrap items-start justify-between gap-3">
