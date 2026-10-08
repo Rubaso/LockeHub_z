@@ -529,9 +529,6 @@ function getPokemonAbility(
   const abilityFlag = numberValue(getIvar(pokemon, '@abilityflag'))
   const personalId = numberValue(getIvar(pokemon, '@personalID'))
   const abilityIndex = abilityFlag ?? (personalId === null ? null : personalId & 1)
-  if (abilityIndex === null) {
-    return null
-  }
 
   const form = numberValue(getIvar(pokemon, '@form')) ?? 0
   const abilityMode = symbolName(
@@ -554,19 +551,33 @@ function getPokemonAbility(
     )
 
     if (Array.isArray(randomizedAbilities)) {
-      const ability = randomizedAbilities.find(
-        (entry) =>
-          Array.isArray(entry) &&
-          numberValue(entry[1]) === abilityIndex
+      const validAbilities = randomizedAbilities.filter(
+        (entry): entry is unknown[] =>
+          Array.isArray(entry) && numberValue(entry[0]) !== null
       )
-      const randomizedAbilityId = Array.isArray(ability)
-        ? numberValue(ability[0])
+      const selectedAbility = validAbilities.length === 1
+        ? validAbilities[0]
+        : abilityIndex === null
+          ? undefined
+          : validAbilities.find(
+              (entry) => numberValue(entry[1]) === abilityIndex
+            )
+      const randomizedAbilityId = selectedAbility
+        ? numberValue(selectedAbility[0])
         : null
 
       if (randomizedAbilityId !== null) {
         return String(randomizedAbilityId)
       }
+
+      if (validAbilities.length > 0) {
+        return null
+      }
     }
+  }
+
+  if (abilityIndex === null) {
+    return null
   }
 
   const fallbackIndex = abilityIndex >= 2 && personalId !== null

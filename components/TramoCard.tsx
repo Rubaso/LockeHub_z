@@ -92,7 +92,7 @@ export default function TramoCard({ tramo, captures, fallen, markingShiny = fals
                 key={poke.id}
                 name={poke.name}
                 pokemonId={poke.pokemonId}
-                ability={poke.ability}
+                ability={poke.battleData?.ability ?? poke.ability}
                 pokemon={poke}
                 markingShiny={markingShiny}
               />
@@ -111,7 +111,7 @@ export default function TramoCard({ tramo, captures, fallen, markingShiny = fals
                 key={poke.id}
                 name={poke.name}
                 pokemonId={poke.pokemonId}
-                ability={poke.ability}
+                ability={poke.battleData?.ability ?? poke.ability}
                 faded
                 pokemon={poke}
               />

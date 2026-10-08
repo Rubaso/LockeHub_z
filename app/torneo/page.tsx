@@ -359,6 +359,8 @@ export default function TorneoPage() {
   const [delivered, setDelivered] = useState<Set<number>>(new Set())
   const [sessionId, setSessionId] = useState<number | null>(null)
   const [teamModal, setTeamModal] = useState<TeamModal | null>(null)
+  const [teamLoading, setTeamLoading] = useState<string | null>(null)
+  const [teamError, setTeamError] = useState('')
   const [colors, setColors] = useState<Record<number, string>>({})
   const [teamCopied, setTeamCopied] = useState(false)
   const [clipboardError, setClipboardError] = useState('')
@@ -516,6 +518,7 @@ export default function TorneoPage() {
     if (!supabase || !canSeeTeam(name)) return
     setTeamCopied(false)
     setClipboardError('')
+    setTeamError('')
     const player = PLAYERS.find((item) => item.name === name)
     if (!player || sessionId === null) return
 
@@ -529,12 +532,27 @@ export default function TorneoPage() {
       return
     }
 
-    const { data, error } = await supabase.rpc('get_opponent_pokepaste', {
-      p_player_id: sessionId,
-      p_opponent_id: player.id,
-    })
-    const text = Array.isArray(data) ? data[0]?.pokepaste_text : null
-    if (!error && text) setTeamModal({ playerName: name, text })
+    setTeamLoading(name)
+    try {
+      const { data, error } = await supabase
+        .from('directos')
+        .select('pokepaste_text')
+        .eq('jugador_id', player.id)
+        .maybeSingle()
+
+      if (error) throw error
+      const text = data?.pokepaste_text?.trim()
+      if (!text) {
+        setTeamError(`El PokéPaste público de ${name} no está disponible.`)
+        return
+      }
+      setTeamModal({ playerName: name, text })
+    } catch (error) {
+      console.error('No se pudo cargar el PokéPaste del rival:', error)
+      setTeamError(`No se pudo cargar el equipo de ${name}.`)
+    } finally {
+      setTeamLoading(null)
+    }
   }
 
   const copyTeam = async () => {
@@ -667,10 +685,11 @@ export default function TorneoPage() {
                   {name && name !== 'BYE' && player && canSeeTeam(name) && (
                     <button
                       type="button"
+                      disabled={teamLoading !== null}
                       onClick={() => void openTeam(name)}
-                      className="text-[10px] font-black text-teal-300 hover:text-teal-200"
+                      className="text-[10px] font-black text-teal-300 hover:text-teal-200 disabled:cursor-wait disabled:opacity-50"
                     >
-                      VER EQUIPO
+                      {teamLoading === name ? 'CARGANDO…' : 'VER EQUIPO'}
                     </button>
                   )}
                 </div>
@@ -779,6 +798,7 @@ export default function TorneoPage() {
       )}
 
       {message && <p className="text-sm text-teal-300">{message}</p>}
+      {teamError && <p role="alert" className="text-sm text-rose-300">{teamError}</p>}
 
       <div className="group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950">
         <div

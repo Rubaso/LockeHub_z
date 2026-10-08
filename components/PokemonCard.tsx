@@ -23,7 +23,9 @@ export default function PokemonCard({ pokemon }: { pokemon: Pokemon }) {
         ) : null}
       </div>
       <h3 className="mt-1 text-sm font-semibold text-zinc-100">{pokemon.name}</h3>
-      <p className="text-[11px] text-zinc-400">HAB. {abilityNameInSpanish(pokemon.ability)}</p>
+      <p className="text-[11px] text-zinc-400">
+        HAB. {abilityNameInSpanish(pokemon.battleData?.ability ?? pokemon.ability)}
+      </p>
     </article>
   )
 }

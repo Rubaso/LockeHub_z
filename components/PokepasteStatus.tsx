@@ -105,11 +105,17 @@ export default function PokepasteStatus() {
     if (nextRivalName && everyoneDelivered && ownResult.data?.pokepaste_text) {
       const rival = PLAYERS.find((item) => item.name === nextRivalName)
       if (rival) {
-        const { data, error: rivalError } = await supabase.rpc('get_opponent_pokepaste', {
-          p_player_id: player.id,
-          p_opponent_id: rival.id,
-        })
-        if (!rivalError && Array.isArray(data)) setRivalPokepaste(data[0]?.pokepaste_text ?? '')
+        const { data, error: rivalError } = await supabase
+          .from('directos')
+          .select('pokepaste_text')
+          .eq('jugador_id', rival.id)
+          .maybeSingle()
+        if (rivalError) {
+          console.error('No se pudo cargar el PokéPaste del rival:', rivalError)
+          setError('No se pudo cargar el PokéPaste del rival.')
+        } else {
+          setRivalPokepaste(data?.pokepaste_text?.trim() ?? '')
+        }
       }
     }
     setLoading(false)

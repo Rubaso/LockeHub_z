@@ -51,5 +51,7 @@
     "670": "Infestation"
   },
   "items": {},
-  "abilities": {}
+  "abilities": {
+    "205": "Sharpness"
+  }
 }
