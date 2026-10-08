@@ -352,6 +352,7 @@ export default function TorneoPage() {
   const [rounds, setRounds] = useState<Round[]>([])
   const [locked, setLocked] = useState(false)
   const [tournamentName, setTournamentName] = useState('')
+  const [tournamentKey, setTournamentKey] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
@@ -368,15 +369,17 @@ export default function TorneoPage() {
     if (!supabase) return
     const { data } = await supabase
       .from('torneo')
-      .select('bracket_data, is_locked, tournament_name')
+      .select('bracket_data, is_locked, tournament_name, tournament_key')
       .eq('sala_id', SALA_ID)
       .maybeSingle()
 
     if (data?.bracket_data) {
       const loadedRounds = data.bracket_data as Round[]
       setRounds(loadedRounds)
+      setTournamentKey(data.tournament_key ?? null)
     } else {
       setRounds([])
+      setTournamentKey(null)
     }
     setLocked(Boolean(data?.is_locked))
     setTournamentName(data?.tournament_name ?? '')
@@ -423,13 +426,19 @@ export default function TorneoPage() {
     return () => window.removeEventListener('lockehub-player-settings-updated', handleSettingsUpdated)
   }, [loadDelivered, loadTournament])
 
-  const saveTournament = async (nextRounds: Round[], nextLocked = locked) => {
+  const saveTournament = async (
+    nextRounds: Round[],
+    nextLocked = locked,
+    nextTournamentKey = tournamentKey ?? crypto.randomUUID(),
+    archive = false
+  ) => {
     if (!supabase || sessionId !== ORGANIZER_PLAYER_ID) return
     setSaving(true)
     const { error } = await supabase.from('torneo').upsert(
       {
         id: 1,
         sala_id: SALA_ID,
+        tournament_key: nextTournamentKey,
         bracket_data: nextRounds,
         is_locked: nextLocked,
         tournament_name: tournamentName.trim() || 'Torneo',
@@ -438,20 +447,64 @@ export default function TorneoPage() {
       },
       { onConflict: 'id' }
     )
-    setSaving(false)
     if (error) {
+      setSaving(false)
       setMessage(`No se pudo guardar el torneo: ${error.message}`)
       return
     }
+
+    if (archive) {
+      const positions = positionsByPlayer(nextRounds)
+      const positionRows = participants(nextRounds)
+        .map((playerName) => ({
+          player_name: playerName,
+          position: positions.get(playerName) ?? 'Fuera del top 8',
+        }))
+        .sort((a, b) => {
+          const rankA = Number(a.position.match(/^(\d+)\.º$/)?.[1])
+          const rankB = Number(b.position.match(/^(\d+)\.º$/)?.[1])
+          if (Number.isInteger(rankA) && Number.isInteger(rankB)) return rankA - rankB
+          if (Number.isInteger(rankA)) return -1
+          if (Number.isInteger(rankB)) return 1
+          return a.player_name.localeCompare(b.player_name, 'es')
+        })
+      const champion = positionRows.find((entry) => entry.position === '1.º')?.player_name
+      const { error: historyError } = await supabase
+        .from('torneo_ediciones')
+        .upsert(
+          {
+            tournament_key: nextTournamentKey,
+            sala_id: SALA_ID,
+            tournament_name: tournamentName.trim() || 'Torneo',
+            champion: champion ?? 'Por determinar',
+            max_participants: participants(nextRounds).length,
+            bracket_data: nextRounds,
+            positions: positionRows,
+          },
+          { onConflict: 'tournament_key' }
+        )
+
+      if (historyError) {
+        setSaving(false)
+        setMessage(`El cuadro se guardó, pero no se pudo archivar: ${historyError.message}`)
+        setRounds(nextRounds)
+        setLocked(nextLocked)
+        setTournamentKey(nextTournamentKey)
+        return
+      }
+    }
+
     setRounds(nextRounds)
     setLocked(nextLocked)
-    setMessage('Cuadro guardado.')
+    setTournamentKey(nextTournamentKey)
+    setMessage(archive ? 'Torneo y posiciones guardados en el historial.' : 'Torneo y posiciones guardados.')
+    setSaving(false)
   }
 
   const shuffle = () => {
     if (sessionId !== ORGANIZER_PLAYER_ID) return
     const next = makeBracket(PLAYERS.map((player) => player.name), true)
-    void saveTournament(next, false)
+    void saveTournament(next, false, crypto.randomUUID())
   }
 
   const clearBracket = () => {
@@ -777,6 +830,14 @@ export default function TorneoPage() {
               </button>
               <button
                 type="button"
+                onClick={() => void saveTournament(rounds, locked, tournamentKey ?? crypto.randomUUID(), true)}
+                disabled={saving}
+                className="rounded-lg bg-teal-500 px-3 py-2 text-sm font-bold text-zinc-950 disabled:opacity-40"
+              >
+                {saving ? 'Guardando…' : 'Guardar torneo y posiciones'}
+              </button>
+              <button
+                type="button"
                 onClick={() => void saveTournament(rounds, !locked)}
                 disabled={saving}
                 className="rounded-lg border border-zinc-700 px-3 py-2 text-sm font-bold text-zinc-200 disabled:opacity-40"
@@ -785,9 +846,9 @@ export default function TorneoPage() {
               </button>
             </>
           )}
-          <Link href="/torneo/historial" className="rounded-lg border border-zinc-700 px-3 py-2 text-sm text-teal-300">
+          <a href="/torneo/historial" className="rounded-lg border border-zinc-700 px-3 py-2 text-sm text-teal-300">
             Historial
-          </Link>
+          </a>
         </div>
       </header>
 

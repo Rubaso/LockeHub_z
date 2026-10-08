@@ -8,12 +8,15 @@ import { spriteUrl } from '@/lib/sprites'
 import { supabase } from '@/lib/supabase'
 import ShinyIcon from '@/components/ShinyIcon'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { readSession } from '@/lib/session'
 
 const INITIAL_ACTIVITY_COUNT = 20
 const ACTIVITY_PAGE_SIZE = 10
 
 export default function InicioPage() {
   const [tournament, setTournament] = useState<{ name: string; locked: boolean } | null>(null)
+  const [teamSubmitted, setTeamSubmitted] = useState<boolean | null>(null)
+  const [sessionId, setSessionId] = useState<number | null>(null)
   const [activity, setActivity] = useState<ActivityEvent[]>([])
   const [activityLoading, setActivityLoading] = useState(true)
   const [activityLoadingMore, setActivityLoadingMore] = useState(false)
@@ -101,15 +104,34 @@ export default function InicioPage() {
 
     const loadTournament = async () => {
       if (!supabase) return
+      const session = readSession()
+      setSessionId(session?.id ?? null)
       const { data } = await supabase
         .from('torneo')
         .select('tournament_name, is_locked')
-        .eq('id', 1)
+        .eq('sala_id', SALA_ID)
         .maybeSingle()
       if (data?.is_locked) {
         setTournament({ name: data.tournament_name || 'Torneo', locked: true })
+        if (session) {
+          const { data: team, error } = await supabase
+            .from('directos')
+            .select('pokepaste_text')
+            .eq('jugador_id', session.id)
+            .maybeSingle()
+
+          if (error) {
+            console.error('No se pudo comprobar la entrega del PokéPaste:', error)
+            setTeamSubmitted(null)
+          } else {
+            setTeamSubmitted(Boolean(team?.pokepaste_text?.trim()))
+          }
+        } else {
+          setTeamSubmitted(null)
+        }
       } else {
         setTournament(null)
+        setTeamSubmitted(null)
       }
     }
     void loadTournament()
@@ -161,22 +183,29 @@ export default function InicioPage() {
       </section>
 
       {tournament?.locked && (
-        <Link href="/torneo" className="block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300">
-          <section className="group relative isolate overflow-hidden rounded-2xl border border-amber-400/50 bg-amber-500/10 shadow-[0_0_30px_rgba(245,158,11,0.12)]">
-            <div
-              className="absolute inset-0 scale-100 bg-cover bg-center opacity-35 transition-transform duration-500 ease-out group-hover:scale-110"
-              style={{ backgroundImage: "url('/sprites/lideres/1poster.png')" }}
-            />
-            <div className="absolute inset-0 bg-zinc-950/65" />
-            <div className="relative p-5">
-              <p className="text-xs font-bold uppercase tracking-widest text-amber-300">Torneo iniciado</p>
-              <h2 className="mt-1 text-2xl font-black text-amber-100">{tournament.name}</h2>
-              <p className="mt-1 text-sm text-amber-200/70">
-                Forma tu equipo desde tu caja y consulta aquí tu PokéPaste y el de tu rival.
-              </p>
-            </div>
-          </section>
-        </Link>
+        <section className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-amber-400/30 bg-amber-500/5 px-4 py-3">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-widest text-amber-300">Torneo iniciado</p>
+            <h2 className="font-bold text-amber-100">{tournament.name}</h2>
+          </div>
+          <Link href="/torneo" className="rounded-lg border border-amber-400/30 px-3 py-2 text-sm font-bold text-amber-200 hover:bg-amber-500/10">
+            Ver torneo
+          </Link>
+        </section>
+      )}
+
+      {tournament?.locked && teamSubmitted === false && sessionId !== null && (
+        <section className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-rose-400/40 bg-rose-950/30 px-4 py-3">
+          <p className="text-sm font-semibold text-rose-100">
+            Todavía no has entregado el equipo. Hazlo aquí.
+          </p>
+          <Link
+            href={`/jugadores/${sessionId}`}
+            className="rounded-lg bg-rose-400 px-4 py-2 text-sm font-black text-zinc-950 hover:bg-rose-300"
+          >
+            Crear equipo
+          </Link>
+        </section>
       )}
 
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
