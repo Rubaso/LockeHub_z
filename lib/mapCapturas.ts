@@ -59,6 +59,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
 
   5: [
     'Pueblo Petroglifo',
+    'Don Prodigio Fort Leviatán',
     'Ruta 13',
     'Ruta 14',
     'Ruta 15',

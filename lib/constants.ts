@@ -96,6 +96,13 @@ export const ROUTES = [
   'Santuario Prosperidad',
   'Catacumbas Septentrionales',
   'Ruta 9',
+
+  // Siguiente orden de progresión
+  'Pueblo Petroglifo',
+  'Ruta 10',
+  'Isla Certijo',
+
+  // Resto de zonas
   'Bosque Errante',
   'Cueva Psique',
   'Ruta 8 Este',
@@ -103,9 +110,7 @@ export const ROUTES = [
   'Cueva Talasia',
   'Cueva de la Cascada',
 
-  // Tramo 5 — Zafra → Clavelina
-  'Ruta 10',
-  'Pueblo Petroglifo',
+  'Don Prodigio Fort Leviatán',
   'Cueva de los Reflejos',
   'Cueva Desenlace',
   'Gruta Helada',
@@ -144,7 +149,6 @@ export const ROUTES = [
   'Ciudad Fluxus',
   'Ciudad Fractal',
   'Ruta 21',
-  'Isla Certijo',
   'Isla Montesanto',
   'Fondo del Lago',
   'Maraña Oscura',

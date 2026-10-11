@@ -245,7 +245,8 @@ const DON_PRODIGIO_MAP_ROUTES: Record<number, string> = {
   145: 'Don Prodigio Estación Magnetotrén',
   149: 'Don Prodigio Zona Safari',
   166: 'Don Prodigio Ruta 25 Norte',
-  214: 'Don Prodigio Almacén Rocket'
+  214: 'Don Prodigio Almacén Rocket',
+  126: 'Don Prodigio Fort Leviatán'
 }
 
 function normalizeTrainerName(value: any): string {
