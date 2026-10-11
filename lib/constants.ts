@@ -101,19 +101,7 @@ export const ROUTES = [
   'Pueblo Petroglifo',
   'Ruta 10',
   'Isla Certijo',
-
-  // Resto de zonas
-  'Bosque Errante',
-  'Cueva Psique',
-  'Ruta 8 Este',
-  'Ruta 8 Oeste',
-  'Cueva Talasia',
-  'Cueva de la Cascada',
-
   'Don Prodigio Fort Leviatán',
-  'Cueva de los Reflejos',
-  'Cueva Desenlace',
-  'Gruta Helada',
 
   // Tramo 6 — Clavelina → Belladona
   'Ruta 11',
@@ -123,6 +111,17 @@ export const ROUTES = [
   'Bastión Vánitas',
   'Ruta 13',
   'Ciudad Luminalia',
+
+  // Resto de zonas
+  'Bosque Errante',
+  'Cueva Psique',
+  'Ruta 8 Este',
+  'Ruta 8 Oeste',
+  'Cueva Talasia',
+  'Cueva de la Cascada',
+  'Cueva de los Reflejos',
+  'Cueva Desenlace',
+  'Gruta Helada',
   'Catacumbas Occidentales',
 
   // Tramo 7 — Belladona → Fortunia
