@@ -25,8 +25,8 @@ export const PLAYERS: Player[] = [
   { id: 10, name: "Coca", twitchUser: "", color: "#5ec4a0" },
   { id: 11, name: "Manguera", twitchUser: "", color: "#5ec4a0" },
   { id: 12, name: "Neos", twitchUser: "", color: "#5ec4a0" },
-  { id: 13, name: "Sebas", twitchUser: "", color: "#5ec4a0" },
-  { id: 14, name: "Skoll", twitchUser: "", color: "#5ec4a0" },
+  //{ id: 13, name: "Sebas", twitchUser: "", color: "#5ec4a0" },
+  //{ id: 14, name: "Skoll", twitchUser: "", color: "#5ec4a0" },
 ]
 
 export function sortPlayers(players: Player[], loggedId: number | null) {
