@@ -29,11 +29,16 @@ function MiniSprite({
 }) {
   const speciesName = pokemon?.name || name
   const nickname = pokemon?.nickname
+  const noCuenta = pokemon?.route === 'Este no vale'
 
   return (
     <div
       className={`group relative w-24 rounded-lg border p-2 text-center ${
-        faded ? 'border-rose-900/60 bg-rose-950/30 opacity-70' : 'border-zinc-700 bg-zinc-900'
+        noCuenta
+          ? 'border-red-500 bg-red-950/50'
+          : faded
+            ? 'border-rose-900/60 bg-rose-950/30 opacity-70'
+            : 'border-zinc-700 bg-zinc-900'
       }`}
     >
       {markingShiny && pokemon && <MarkShinyButton pokemon={pokemon} />}
@@ -50,6 +55,9 @@ function MiniSprite({
         ) : null}
       </div>
       <p className="truncate text-[11px] text-zinc-200">{speciesName}</p>
+      {noCuenta && (
+        <p className="mt-1 truncate text-[10px] font-bold text-red-300">Este no vale</p>
+      )}
       {nickname && nickname !== speciesName && (
         <p className="truncate text-[10px] text-zinc-400" title={`Mote: ${nickname}`}>
           {nickname}

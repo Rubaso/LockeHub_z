@@ -73,6 +73,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Bastión Vánitas',
     'Ruta 13',
     'Ciudad Luminalia',
+    'Este no vale',
     'Criptas de Luminalia',
     'Don Prodigio Ciudad Luminalia - Norte',
     'Estático especial - Catedral Señorial',

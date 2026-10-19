@@ -114,6 +114,7 @@ export const ROUTES = [
   'Gruta Tierraunida',
   'Viejo Vánitas',
   'Don Prodigio Ciudad Luminalia - Norte',
+  'Este no vale',
 
   // Resto de zonas
   'Bosque Errante',
@@ -187,6 +188,10 @@ export const SPECIAL_STATIC_ROUTES = [
   'Estático especial - Catedral Señorial',
   'Estático especial - Cueva Grisalla',
 ] as const
+
+export const SPECIAL_CAPTURE_ROUTE_OVERRIDES: Record<string, string> = {
+  '3442665411:2626078845': 'Este no vale',
+}
 
 export const NAV_LINKS = [
   { href: '/inicio', label: 'Inicio' },

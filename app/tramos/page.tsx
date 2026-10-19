@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import PlayerSelect from '@/components/PlayerSelect'
 import TramoCard from '@/components/TramoCard'
-import { PLAYERS, TRAMOS } from '@/lib/constants'
+import { PLAYERS, ROUTES, TRAMOS } from '@/lib/constants'
 import { capturaToPokemon } from '@/lib/mapCapturas'
 import { readSession } from '@/lib/session'
 import { spriteUrl } from '@/lib/sprites'
@@ -23,6 +23,8 @@ export default function TramosPage() {
       ? rows.filter((row) => row.jugador_id === playerId).map(capturaToPokemon)
       : []
   const sinTramo = pokemon.filter((poke) => poke.tramo === 0)
+  const orderByRoute = (a: (typeof pokemon)[number], b: (typeof pokemon)[number]) =>
+    ROUTES.indexOf(a.route) - ROUTES.indexOf(b.route)
 
   return (
     <div className="space-y-6">
@@ -38,8 +40,8 @@ export default function TramosPage() {
         <TramoCard
           key={tramo.id}
           tramo={tramo}
-          captures={pokemon.filter((p) => p.tramo === tramo.id && p.status === 'alive')}
-          fallen={pokemon.filter((p) => p.tramo === tramo.id && p.status === 'dead')}
+          captures={pokemon.filter((p) => p.tramo === tramo.id && p.status === 'alive').sort(orderByRoute)}
+          fallen={pokemon.filter((p) => p.tramo === tramo.id && p.status === 'dead').sort(orderByRoute)}
         />
       ))}
       {sinTramo.length > 0 && (
