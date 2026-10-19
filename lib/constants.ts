@@ -111,6 +111,9 @@ export const ROUTES = [
   'Bastión Vánitas',
   'Ruta 13',
   'Ciudad Luminalia',
+  'Gruta Tierraunida',
+  'Viejo Vánitas',
+  'Don Prodigio Ciudad Luminalia - Norte',
 
   // Resto de zonas
   'Bosque Errante',
@@ -131,7 +134,6 @@ export const ROUTES = [
   'Ciudad Batik',
   'Ruta 16',
   'Catacumbas Orientales',
-  'Gruta Tierraunida',
 
   // Tramo 8 — Fortunia → Anturia
   'Ruta 17',
@@ -172,13 +174,19 @@ export const ROUTES = [
   // Tramo 12 — Gimnasio 11 → Final
   'Ruta 26',
   'Cámara Druídica',
-  'Viejo Vánitas',
   'Torre Oscura',
   'Torre Oscura P0',
   'Torre Oscura P1',
   'Torre Oscura P2',
   'Torre Oscura P3',
+  'Estático especial - Catedral Señorial',
+  'Estático especial - Cueva Grisalla',
 ]
+
+export const SPECIAL_STATIC_ROUTES = [
+  'Estático especial - Catedral Señorial',
+  'Estático especial - Cueva Grisalla',
+] as const
 
 export const NAV_LINKS = [
   { href: '/inicio', label: 'Inicio' },

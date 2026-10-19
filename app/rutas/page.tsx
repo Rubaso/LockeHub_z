@@ -1,7 +1,12 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { PLAYERS, ROUTES, sortPlayers } from '@/lib/constants'
+import {
+  PLAYERS,
+  ROUTES,
+  SPECIAL_STATIC_ROUTES,
+  sortPlayers,
+} from '@/lib/constants'
 import { readSession } from '@/lib/session'
 import { spriteUrl } from '@/lib/sprites'
 import { useCapturas } from '@/lib/useCapturas'
@@ -62,7 +67,8 @@ export default function RutasPage() {
     <div className="space-y-4">
       <h1 className="text-2xl font-black">Rutas</h1>
       <p className="text-sm text-zinc-400">
-        Encuentros y estados guardados por el mod Hardcore Nuzlocke.
+        Encuentros y estados guardados por el mod Hardcore Nuzlocke. Los
+        estáticos especiales aparecen marcados al final de la tabla.
       </p>
       {fromDatabase && encounters === null && (
         <p className="text-sm text-amber-300">
@@ -87,11 +93,22 @@ export default function RutasPage() {
           <thead className="bg-zinc-900">
             <tr>
               <th className="sticky left-0 z-10 border-r border-zinc-800 bg-zinc-900 px-3 py-2 font-semibold">Jugador</th>
-              {ROUTES.map((route) => (
-                <th key={route} className="border-r border-zinc-800 px-2 py-2 font-semibold text-zinc-400">
-                  {route}
+              {ROUTES.map((route) => {
+                const isSpecialStatic = SPECIAL_STATIC_ROUTES.some(
+                  (specialRoute) => specialRoute === route
+                )
+                return (
+                <th
+                  key={route}
+                  className={`border-r border-zinc-800 px-2 py-2 text-center font-semibold ${
+                    isSpecialStatic ? 'bg-amber-950/40 text-amber-300' : 'text-zinc-400'
+                  }`}
+                >
+                  {isSpecialStatic && <div>Estático especial</div>}
+                  <div>{route.replace('Estático especial - ', '')}</div>
                 </th>
-              ))}
+                )
+              })}
             </tr>
           </thead>
           <tbody>
@@ -105,6 +122,9 @@ export default function RutasPage() {
                   {loggedId === player.id ? ' · tú' : ''}
                 </td>
                 {ROUTES.map((route) => {
+                  const isSpecialStatic = SPECIAL_STATIC_ROUTES.some(
+                    (specialRoute) => specialRoute === route
+                  )
                   const poke = pokemonOnRoute(player.id, route)
                   const encounter = encounters?.find(
                     (row) => row.jugador_id === player.id && row.ruta === route
@@ -119,7 +139,12 @@ export default function RutasPage() {
                   const spriteName = poke?.pokemon_name ?? encounter?.pokemon_name
                   const displayName = poke?.pokemon_nickname || spriteName
                   return (
-                    <td key={route} className="border-r border-zinc-800 px-2 py-1 text-center">
+                    <td
+                      key={route}
+                      className={`border-r border-zinc-800 px-2 py-1 text-center ${
+                        isSpecialStatic ? 'bg-amber-950/10' : ''
+                      }`}
+                    >
                       {spriteId ? (
                         <span className="group/sprite relative mx-auto block h-20 w-20">
                           <img

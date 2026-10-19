@@ -3,7 +3,6 @@ import type { CapturaRow } from './capturas'
 import type { Pokemon } from './types'
 
 const ZONAS_POR_TRAMO: Record<number, string[]> = {
-
   1: [
     'Pueblo Lienzo',
     'INICIAL',
@@ -13,6 +12,8 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Catacumbas Meridionales',
     'Ciudad Grisalla',
     'Cueva Grisalla',
+    'Estático especial - Cueva Grisalla',
+    'Pikachu',
   ],
 
   2: [
@@ -36,12 +37,14 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Don Prodigio Pueblo Profano',
     'Ciudad Novarte',
     'Taller Quemado',
+    'Cueva Refulgente',
     'Ruta 7 Norte',
     'Ruta 7 Sur',
     'Pantano Profano',
     'Colina de Tormenta',
     'Santuario Prosperidad',
     'Ruta 8 Este',
+    'Magikarp',
   ],
 
   4: [
@@ -50,71 +53,106 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Ruta 8 Oeste',
     'Bosque Errante',
     'Cueva Psique',
+    'Catacumbas Septentrionales',
     'Ruta 9',
-    'Ruta 10',
-    'Ruta 11',
-    'Ruta 12',
-    'Isla Certijo'
   ],
 
   5: [
     'Pueblo Petroglifo',
+    'Ruta 10',
+    'Isla Certijo',
     'Don Prodigio Fort Leviatán',
-    'Ruta 13',
-    'Ruta 14',
-    'Ruta 15',
-    'Ruta 15 Parte 2',
-    'Ruta 16 Norte',
-    'Ruta 16 Sur'
+    'Lapras',
   ],
 
   6: [
-    'Ruta 17',
-    'Ruta 18',
-    'Ruta 19',
+    'Ruta 11',
+    'Ruta 12',
     'Ciudad Relieve',
     'Pueblo Vánitas',
     'Bastión Vánitas',
-    'Ciudad Luminalia'
+    'Ruta 13',
+    'Ciudad Luminalia',
+    'Criptas de Luminalia',
+    'Don Prodigio Ciudad Luminalia - Norte',
+    'Estático especial - Catedral Señorial',
   ],
 
   7: [
+    'Ruta 14',
     'Ciudad Romantis',
+    'Ruta 15',
     'Ciudad Batik',
-    'Ruta 20',
-    'Ruta 21',
-    'Ruta 22'
+    'Ruta 16',
+    'Catacumbas Orientales',
+    'Gruta Helada',
+    'Gruta Tierraunida',
   ],
 
   8: [
+    'Ruta 17',
     'Pueblo Fresco',
+    'Ruta 18',
     'Pueblo Mosaico',
-    'Ruta 23',
-    'Ruta 24',
-    'Ruta 25'
+    'Ruta 19',
+    'Costa Sanguina',
+    'Bahía Azul',
+    'Fondo Marino',
+    'Cueva Desenlace',
   ],
 
   9: [
+    'Ruta 20',
     'Ciudad Fluxus',
     'Ciudad Fractal',
-    'Ruta 26'
+    'Ruta 21',
+    'Isla Montesanto',
+    'Fondo del Lago',
+    'Maraña Oscura',
   ],
 
   10: [
+    'Ruta 22',
     'Villa Pokémon',
     'Pueblo Sanguino',
-    'Ciudad Yantra'
+    'Ruta 23',
+    'Ciudad Yantra',
+    'Pirineos de Kalos',
+    'Huerto Vánitas',
+    'Manantial Profundo',
+  ],
+
+  11: [
+    'Ruta 24',
+    'Ruta 25',
+    'Petrocueva',
+    'Madriguera Profunda',
+    'Sima Ardiente',
+    'Catacumbas Occidentales',
+    'Cueva de los Reflejos',
   ],
 
   12: [
-    'Viejo Vánitas'
+    'Ruta 26',
+    'Cámara Druídica',
+    'Viejo Vánitas',
+    'Torre Oscura',
+    'Torre Oscura P0',
+    'Torre Oscura P1',
+    'Torre Oscura P2',
+    'Torre Oscura P3',
   ],
+}
 
-};
+const ROUTE_ALIASES: Record<string, string> = {
+  'Colina Tormenta': 'Colina de Tormenta',
+  'Gruta Tierrunida': 'Gruta Tierraunida',
+}
 
 export function tramoFromRoute(ruta: string) {
+  const canonicalRoute = ROUTE_ALIASES[ruta] ?? ruta
   for (const tramo of TRAMOS) {
-    if (ZONAS_POR_TRAMO[tramo.id]?.includes(ruta)) return tramo.id
+    if (ZONAS_POR_TRAMO[tramo.id]?.includes(canonicalRoute)) return tramo.id
   }
   return 0
 }
