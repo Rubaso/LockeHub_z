@@ -247,7 +247,11 @@ const DON_PRODIGIO_MAP_ROUTES: Record<number, string> = {
   166: 'Don Prodigio Ruta 25 Norte',
   214: 'Don Prodigio Almacén Rocket',
   126: 'Don Prodigio Fort Leviatán',
-  163: 'Don Prodigio Ciudad Luminalia - Norte'
+  163: 'Don Prodigio Ciudad Luminalia - Norte',
+  255: 'Don Prodigio Pirineos de Kalos',
+  256: 'Don Prodigio Pirineos de Kalos',
+  257: 'Don Prodigio Pirineos de Kalos',
+  258: 'Don Prodigio Pirineos de Kalos'
 }
 
 function normalizeTrainerName(value: any): string {

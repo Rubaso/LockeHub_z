@@ -100,6 +100,8 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Bahía Azul',
     'Fondo Marino',
     'Cueva Desenlace',
+    'Pirineos de Kalos',
+    'Don Prodigio Pirineos de Kalos',
   ],
 
   9: [
@@ -118,7 +120,6 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Pueblo Sanguino',
     'Ruta 23',
     'Ciudad Yantra',
-    'Pirineos de Kalos',
     'Huerto Vánitas',
     'Manantial Profundo',
   ],
