@@ -115,6 +115,8 @@ export const ROUTES = [
   'Viejo Vánitas',
   'Don Prodigio Ciudad Luminalia - Norte',
   'Este no vale',
+  'Pirineos de Kalos',
+  'Don Prodigio Pirineos de Kalos',
 
   // Resto de zonas
   'Bosque Errante',
@@ -145,8 +147,6 @@ export const ROUTES = [
   'Costa Sanguina',
   'Bahía Azul',
   'Fondo Marino',
-  'Pirineos de Kalos',
-  'Don Prodigio Pirineos de Kalos',
 
   // Tramo 9 — Anturia → Rúpico
   'Ruta 20',
