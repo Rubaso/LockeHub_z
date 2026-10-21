@@ -69,6 +69,7 @@ export const MAP_Z: Record<string, string> = {
   "203": "Estático especial - Catedral Señorial",
   "222": "Prisión del Olvido",
   "223": "Prisión del Olvido",
+  "225": "Este no vale",
   "229": "Sima Ardiente",
   "230": "Isla Montesanto",
   "231": "Isla Montesanto",

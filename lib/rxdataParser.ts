@@ -1,6 +1,6 @@
 import { loadAll } from '@hyrious/marshal'
 import { natureFromId, natureFromPersonalId } from './natures'
-import { ROUTES, SPECIAL_CAPTURE_ROUTE_OVERRIDES } from '@/lib/constants'
+import { ROUTES } from '@/lib/constants'
 import { MAP_Z } from '@/lib/mapZ'
 import { POKEMON_Z_SPECIES_BY_ID } from '@/lib/pokemonZSpecies'
 import pokemonZAbilitySlots from '@/lib/pokemon-z-abilities.json'
@@ -948,12 +948,7 @@ export async function parseRxDataSave(
     }
   }
 
-  const pokemonUnicos = Array.from(unique.values()).map((pokemon) => ({
-    ...pokemon,
-    ruta:
-      SPECIAL_CAPTURE_ROUTE_OVERRIDES[`${trainerId}:${pokemon.personalID}`] ??
-      pokemon.ruta,
-  }))
+  const pokemonUnicos = Array.from(unique.values())
 
   const unknownMapIdsSet = new Set<number>()
   const unknownMapPokemon: UnknownMapPokemon[] = []

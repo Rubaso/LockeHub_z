@@ -190,10 +190,6 @@ export const SPECIAL_STATIC_ROUTES = [
   'Estático especial - Cueva Grisalla',
 ] as const
 
-export const SPECIAL_CAPTURE_ROUTE_OVERRIDES: Record<string, string> = {
-  '3442665411:2626078845': 'Este no vale',
-}
-
 export const NAV_LINKS = [
   { href: '/inicio', label: 'Inicio' },
   { href: '/jugadores', label: 'Jugadores' },
