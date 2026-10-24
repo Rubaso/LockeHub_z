@@ -1,11 +1,13 @@
 export const MAP_Z: Record<string, string> = {
   "2": "INICIAL",
   "3": "Pueblo Lienzo",
+  "6": "Torre de Guardia Sur",
   "7": "Ruta 1",
   "9": "Pueblo Vinilo",
   "14": "Ruta 2",
   "16": "Cueva Grisalla",
   "17": "Ciudad Grisalla",
+  "22": "Misión Mosqueteros",
   "23": "Ruta 3",
   "24": "Pueblo Acrílico",
   "27": "Ruta 4",

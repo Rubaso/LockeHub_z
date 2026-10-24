@@ -58,6 +58,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
   ],
 
   5: [
+    'Torre de Guardia Sur',
     'Pueblo Petroglifo',
     'Ruta 10',
     'Isla Certijo',
@@ -72,6 +73,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Pueblo Vánitas',
     'Bastión Vánitas',
     'Ruta 13',
+    'Misión Mosqueteros',
     'Ciudad Luminalia',
     'Este no vale',
     'Criptas de Luminalia',

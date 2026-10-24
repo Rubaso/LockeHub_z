@@ -110,6 +110,7 @@ export const ROUTES = [
   'Pueblo Vánitas',
   'Bastión Vánitas',
   'Ruta 13',
+  'Misión Mosqueteros',
   'Ciudad Luminalia',
   'Gruta Tierraunida',
   'Viejo Vánitas',
@@ -182,6 +183,7 @@ export const ROUTES = [
   'Torre Oscura P3',
   'Estático especial - Catedral Señorial',
   'Estático especial - Cueva Grisalla',
+  'Torre de Guardia Sur',
 ]
 
 export const SPECIAL_STATIC_ROUTES = [
