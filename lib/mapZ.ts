@@ -79,6 +79,7 @@ export const MAP_Z: Record<string, string> = {
   "237": "Ruta 16",
   "238": "Gruta Helada",
   "242": "Ruta 17",
+  "244": "Casa de las Brujas",
   "243": "Gruta Helada",
   "245": "Gruta Helada",
   "247": "Ciudad Batik",

@@ -82,6 +82,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
   7: [
     'Ruta 14',
     'Ciudad Romantis',
+    'Casa de las Brujas',
     'Ruta 15',
     'Ciudad Batik',
     'Ruta 16',

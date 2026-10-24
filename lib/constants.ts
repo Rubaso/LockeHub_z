@@ -133,6 +133,7 @@ export const ROUTES = [
   // Tramo 7 — Belladona → Fortunia
   'Ruta 14',
   'Ciudad Romantis',
+  'Casa de las Brujas',
   'Ruta 15',
   'Ciudad Batik',
   'Ruta 16',
