@@ -117,12 +117,15 @@ export const ROUTES = [
   'Este no vale',
   'Pirineos de Kalos',
   'Don Prodigio Pirineos de Kalos',
+  'Ciudad Batik',
+  'Ruta 20',
+  'Ruta 14',
+  'Ciudad Romantis',
+  'Casa de las Brujas',
 
   // Resto de zonas
   'Bosque Errante',
   'Cueva Psique',
-  'Ruta 8 Este',
-  'Ruta 8 Oeste',
   'Cueva Talasia',
   'Cueva de la Cascada',
   'Cueva de los Reflejos',
@@ -131,11 +134,7 @@ export const ROUTES = [
   'Catacumbas Occidentales',
 
   // Tramo 7 — Belladona → Fortunia
-  'Ruta 14',
-  'Ciudad Romantis',
-  'Casa de las Brujas',
   'Ruta 15',
-  'Ciudad Batik',
   'Ruta 16',
   'Catacumbas Orientales',
 
@@ -150,7 +149,6 @@ export const ROUTES = [
   'Fondo Marino',
 
   // Tramo 9 — Anturia → Rúpico
-  'Ruta 20',
   'Ciudad Fluxus',
   'Ciudad Fractal',
   'Ruta 21',
