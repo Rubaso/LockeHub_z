@@ -15,18 +15,6 @@ type Round = { matches?: Match[]; placementBracket?: boolean }
 type DirectoRow = { jugador_id: number; pokepaste_text: string | null }
 
 function findRival(rounds: Round[], playerName: string) {
-  const firstRound = rounds.find((round) => !round.placementBracket)
-  const firstMatch = firstRound?.matches?.find((match) =>
-    match.player1 === playerName || match.player2 === playerName
-  )
-  if (
-    firstMatch?.winner &&
-    firstMatch.winner !== playerName &&
-    (firstMatch.player1 === playerName || firstMatch.player2 === playerName)
-  ) {
-    return null
-  }
-
   for (const round of rounds) {
     for (const match of round.matches ?? []) {
       if (match.winner || match.autoWinner) continue

@@ -1,351 +1,34 @@
 'use client'
 
-import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
 import { ORGANIZER_PLAYER_ID, PLAYERS, SALA_ID } from '@/lib/constants'
 import { readAllSettings, readSession } from '@/lib/session'
 import { supabase } from '@/lib/supabase'
+import {
+  makeBracket as makeDoubleEliminationBracket,
+  participants as getParticipants,
+  playersWithCompletedMatches as getCompletedPlayers,
+  positionsByPlayer as getPositionsByPlayer,
+  propagateBracket as propagateDoubleElimination,
+  type Round as BracketRound,
+} from '@/lib/tournamentBracket'
 
-type Match = {
-  id: string
-  player1: string | null
-  player2: string | null
-  winner: string | null
-  autoWinner?: boolean
-  winnerTo?: MatchTarget
-  loserTo?: MatchTarget
-  loserRank?: number
-}
-
-type MatchTarget = {
-  matchId: string
-  slot: 1 | 2
-}
-
-type Round = {
-  name: string
-  matches: Match[]
-  placementBracket?: boolean
-}
+type Round = BracketRound
 
 type TeamModal = {
   playerName: string
   text: string
 }
 
-function placeLabel(rank: number) {
-  return `${rank}.º`
-}
-
-function makeBracket(names: string[], randomize: boolean): Round[] {
-  const rounds: Round[] = []
-  let groupNumber = 0
-
-  const buildGroup = (
-    entries: (string | null)[],
-    firstPlace: number,
-    isMainBracket: boolean
-  ): MatchTarget[] => {
-    if (entries.length < 2) return []
-
-    const groupId = groupNumber++
-    const size = 2 ** Math.ceil(Math.log2(entries.length))
-    const byeCount = size - entries.length
-    const firstRoundPairs: (number | 'BYE')[][] = []
-    let entryIndex = 0
-
-    const playedMatchCount = size / 2 - byeCount
-    for (let index = 0; index < playedMatchCount; index++) {
-      firstRoundPairs.push([entryIndex++, entryIndex++])
-    }
-    for (let index = 0; index < byeCount; index++) {
-      firstRoundPairs.push([entryIndex++, 'BYE'])
-    }
-
-    const inputTargets: MatchTarget[] = []
-    const groupRounds: Round[] = []
-    const loserGroups: { matches: Match[]; firstPlace: number }[] = []
-    let current: (number | 'BYE' | object)[] = firstRoundPairs.flat()
-    let roundNumber = 1
-
-    while (current.length >= 2) {
-      const finalRound = current.length === 2
-      const matches: Match[] = Array.from({ length: current.length / 2 }, (_, index) => {
-        const first = current[index * 2]
-        const second = current[index * 2 + 1]
-        const player1 = roundNumber === 1 && first !== 'BYE'
-          ? isMainBracket ? entries[first as number] : null
-          : first === 'BYE' ? 'BYE' : null
-        const player2 = roundNumber === 1 && second !== 'BYE'
-          ? isMainBracket ? entries[second as number] : null
-          : second === 'BYE' ? 'BYE' : null
-        if (roundNumber === 1) {
-          if (first !== 'BYE') inputTargets[first as number] = { matchId: `g${groupId}-r1-m${index + 1}`, slot: 1 }
-          if (second !== 'BYE') inputTargets[second as number] = { matchId: `g${groupId}-r1-m${index + 1}`, slot: 2 }
-        }
-        return {
-          id: `g${groupId}-r${roundNumber}-m${index + 1}`,
-          player1,
-          player2,
-          winner: null,
-          autoWinner: player1 === 'BYE' || player2 === 'BYE',
-        }
-      })
-
-      const roundName = finalRound
-        ? isMainBracket
-          ? 'Final'
-          : `Puestos ${placeLabel(firstPlace)}-${placeLabel(firstPlace + 1)}`
-        : isMainBracket
-          ? `Ronda ${roundNumber}`
-          : `Clasificación ${placeLabel(firstPlace)}-${placeLabel(firstPlace + entries.length - 1)} · Ronda ${roundNumber}`
-      groupRounds.push({
-        name: roundName,
-        matches,
-        placementBracket: !isMainBracket,
-      })
-
-      if (!finalRound) {
-        let actualMatchCount = 0
-        for (let index = 0; index < current.length; index += 2) {
-          if (current[index] !== 'BYE' && current[index + 1] !== 'BYE') {
-            actualMatchCount++
-          }
-        }
-        const placementStart = firstPlace + matches.length
-        if (actualMatchCount > 0 && placementStart <= 8) {
-          loserGroups.push({
-            matches: matches.filter((match) => !match.autoWinner),
-            firstPlace: placementStart,
-          })
-        }
-      }
-
-      const next: (number | 'BYE' | object)[] = []
-      for (let index = 0; index < current.length; index += 2) {
-        if (current[index] === 'BYE') next.push(current[index + 1])
-        else if (current[index + 1] === 'BYE') next.push(current[index])
-        else next.push({})
-      }
-
-      if (!finalRound) {
-        for (const [index, match] of matches.entries()) {
-          match.winnerTo = {
-            matchId: `g${groupId}-r${roundNumber + 1}-m${Math.floor(index / 2) + 1}`,
-            slot: index % 2 === 0 ? 1 : 2,
-          }
-        }
-      }
-
-      current = next
-      roundNumber++
-    }
-
-    rounds.push(...groupRounds)
-
-    for (const loserGroup of loserGroups) {
-      if (loserGroup.matches.length === 1) {
-        loserGroup.matches[0].loserRank = loserGroup.firstPlace
-        continue
-      }
-      const childEntries = Array.from({ length: loserGroup.matches.length }, () => null)
-      const childTargets = buildGroup(childEntries, loserGroup.firstPlace, false)
-      loserGroup.matches.forEach((match, index) => {
-        match.loserTo = childTargets[index]
-      })
-    }
-
-    return inputTargets
-  }
-
-  const participants = [...names]
-  if (randomize) {
-    for (let index = participants.length - 1; index > 0; index--) {
-      const other = Math.floor(Math.random() * (index + 1))
-      ;[participants[index], participants[other]] = [participants[other], participants[index]]
-    }
-  }
-  buildGroup(participants, 1, true)
-  propagateBracket(rounds)
-  return rounds
-}
-
-function propagateBracket(rounds: Round[]) {
-  const matches = new Map(rounds.flatMap((round) => round.matches.map((match) => [match.id, match] as const)))
-  const pending = rounds.flatMap((round) => round.matches)
-  const processed = new Set<string>()
-
-  while (pending.length > 0) {
-    const match = pending.shift()
-    if (!match || processed.has(match.id)) continue
-    processed.add(match.id)
-
-    if (match.autoWinner) {
-      match.winner = match.player1 === 'BYE'
-        ? match.player2 && match.player2 !== 'BYE' ? match.player2 : null
-        : match.player2 === 'BYE'
-          ? match.player1 && match.player1 !== 'BYE' ? match.player1 : null
-          : null
-    } else if (match.winner !== match.player1 && match.winner !== match.player2) {
-      match.winner = null
-    }
-
-    const loser = match.winner && !match.autoWinner
-      ? match.player1 === match.winner ? match.player2 : match.player1
-      : null
-    for (const [target, playerName] of [[match.winnerTo, match.winner], [match.loserTo, loser]] as const) {
-      if (!target?.matchId) continue
-      const destination = matches.get(target.matchId)
-      if (!destination) continue
-      const key = target.slot === 1 ? 'player1' : 'player2'
-      if (destination[key] !== playerName) {
-        destination[key] = playerName
-        destination.winner = null
-        processed.delete(destination.id)
-        pending.push(destination)
-      }
-    }
-  }
-}
-
-type PositionOutcomes = {
-  ranks: number[]
-  outsideTopEight: boolean
-}
-
-function possiblePositions(
-  matchId: string,
-  playerName: string,
-  matchMap: Map<string, { match: Match; round: Round }>,
-  visited = new Set<string>()
-): PositionOutcomes {
-  if (visited.has(matchId)) return { ranks: [], outsideTopEight: false }
-  const entry = matchMap.get(matchId)
-  if (!entry) return { ranks: [], outsideTopEight: true }
-
-  const { match, round } = entry
-  const nextVisited = new Set(visited).add(matchId)
-  const placementFinal = round.placementBracket && round.name.startsWith('Puestos ')
-  const tournamentFinal = !round.placementBracket && round.name === 'Final'
-  if (placementFinal || tournamentFinal) {
-    const firstPlace = tournamentFinal
-      ? 1
-      : Number(round.name.match(/Puestos\s+(\d+)/)?.[1])
-    if (!Number.isInteger(firstPlace) || firstPlace < 1) {
-      return { ranks: [], outsideTopEight: true }
-    }
-    if (match.winner === playerName) return { ranks: [firstPlace], outsideTopEight: false }
-    if (match.winner && (match.player1 === playerName || match.player2 === playerName)) {
-      return { ranks: [firstPlace + 1], outsideTopEight: false }
-    }
-    if (match.winner) return { ranks: [], outsideTopEight: false }
-    return {
-      ranks: [firstPlace, firstPlace + 1].filter((rank) => rank <= 8),
-      outsideTopEight: firstPlace + 1 > 8,
-    }
-  }
-
-  const targets = match.winner
-    ? [match.winner === playerName ? match.winnerTo : match.loserTo]
-    : [match.winnerTo, match.loserTo]
-  if (match.winner && match.winner !== playerName &&
-      match.player1 !== playerName && match.player2 !== playerName) {
-    return { ranks: [], outsideTopEight: false }
-  }
-  if (match.winner && match.winner !== playerName && match.loserRank &&
-      (match.player1 === playerName || match.player2 === playerName)) {
-    return {
-      ranks: match.loserRank <= 8 ? [match.loserRank] : [],
-      outsideTopEight: match.loserRank > 8,
-    }
-  }
-
-  const outcomes = targets
-    .filter((target): target is MatchTarget => Boolean(target))
-    .map((target) => possiblePositions(target.matchId, playerName, matchMap, nextVisited))
-  if (!match.winner && match.loserRank) {
-    outcomes.push({
-      ranks: match.loserRank <= 8 ? [match.loserRank] : [],
-      outsideTopEight: match.loserRank > 8,
-    })
-  }
-  return {
-    ranks: outcomes.flatMap((outcome) => outcome.ranks),
-    outsideTopEight: outcomes.some((outcome) => outcome.outsideTopEight) ||
-      (!match.winner && !match.loserTo && !match.loserRank),
-  }
-}
-
-function positionsByPlayer(rounds: Round[]) {
-  const matchMap = new Map(
-    rounds.flatMap((round) =>
-      round.matches.map((match) => [match.id, { match, round }] as const)
-    )
-  )
-  const positions = new Map<string, string>()
-  const openingRound = rounds.find((round) => !round.placementBracket)
-
-  for (const playerName of participants(rounds)) {
-    const openingMatch = openingRound?.matches.find((match) =>
-      match.player1 === playerName || match.player2 === playerName
-    )
-    if (!openingMatch) continue
-
-    const outcomes = possiblePositions(openingMatch.id, playerName, matchMap)
-    const ranks = [...new Set(outcomes.ranks)].sort((a, b) => a - b)
-    if (ranks.length === 0) continue
-    if (outcomes.outsideTopEight) {
-      positions.set(playerName, 'Top 8 posible')
-    } else if (ranks.length === 1) {
-      positions.set(playerName, `${ranks[0]}.º`)
-    } else {
-      positions.set(playerName, `${ranks[0]}.º–${ranks[ranks.length - 1]}.º`)
-    }
-  }
-
-  return positions
-}
-
-function playersWithCompletedMatches(rounds: Round[]) {
-  return new Set(
-    participants(rounds).filter((playerName) => {
-      const matches = rounds.flatMap((round) =>
-        round.matches.filter((match) =>
-          match.player1 === playerName || match.player2 === playerName
-        )
-      )
-      return matches.length > 0 && matches.every((match) =>
-        match.autoWinner || Boolean(match.winner)
-      )
-    })
-  )
-}
-
-function participants(rounds: Round[]) {
-  return Array.from(
-    new Set(
-      (rounds[0]?.matches ?? []).flatMap((match) =>
-        [match.player1, match.player2].filter(
-          (name): name is string => Boolean(name && name !== 'BYE')
-        )
-      )
-    )
-  )
-}
-
 function rivalFor(rounds: Round[], playerName: string) {
-  let rival: string | null = null
   for (const round of rounds) {
     for (const match of round.matches) {
-      if (match.player1 === playerName && match.player2 && match.player2 !== 'BYE') {
-        rival = match.player2
-      }
-      if (match.player2 === playerName && match.player1 && match.player1 !== 'BYE') {
-        rival = match.player1
-      }
+      if (match.winner || match.autoWinner) continue
+      if (match.player1 === playerName && match.player2 && match.player2 !== 'BYE') return match.player2
+      if (match.player2 === playerName && match.player1 && match.player1 !== 'BYE') return match.player1
     }
   }
-  return rival
+  return null
 }
 
 export default function TorneoPage() {
@@ -442,7 +125,7 @@ export default function TorneoPage() {
         bracket_data: nextRounds,
         is_locked: nextLocked,
         tournament_name: tournamentName.trim() || 'Torneo',
-        max_participants: participants(nextRounds).length,
+        max_participants: getParticipants(nextRounds).length,
         updated_at: new Date().toISOString(),
       },
       { onConflict: 'id' }
@@ -454,15 +137,15 @@ export default function TorneoPage() {
     }
 
     if (archive) {
-      const positions = positionsByPlayer(nextRounds)
-      const positionRows = participants(nextRounds)
+      const positions = getPositionsByPlayer(nextRounds)
+      const positionRows = getParticipants(nextRounds)
         .map((playerName) => ({
           player_name: playerName,
-          position: positions.get(playerName) ?? 'Fuera del top 8',
+          position: positions.get(playerName) ?? 'Por determinar',
         }))
         .sort((a, b) => {
-          const rankA = Number(a.position.match(/^(\d+)\.º$/)?.[1])
-          const rankB = Number(b.position.match(/^(\d+)\.º$/)?.[1])
+          const rankA = Number(a.position.match(/^(\d+)\.º/)?.[1])
+          const rankB = Number(b.position.match(/^(\d+)\.º/)?.[1])
           if (Number.isInteger(rankA) && Number.isInteger(rankB)) return rankA - rankB
           if (Number.isInteger(rankA)) return -1
           if (Number.isInteger(rankB)) return 1
@@ -477,7 +160,7 @@ export default function TorneoPage() {
             sala_id: SALA_ID,
             tournament_name: tournamentName.trim() || 'Torneo',
             champion: champion ?? 'Por determinar',
-            max_participants: participants(nextRounds).length,
+            max_participants: getParticipants(nextRounds).length,
             bracket_data: nextRounds,
             positions: positionRows,
           },
@@ -503,7 +186,7 @@ export default function TorneoPage() {
 
   const shuffle = () => {
     if (sessionId !== ORGANIZER_PLAYER_ID) return
-    const next = makeBracket(PLAYERS.map((player) => player.name), true)
+    const next = makeDoubleEliminationBracket(PLAYERS.map((player) => player.name), true)
     void saveTournament(next, false, crypto.randomUUID())
   }
 
@@ -520,6 +203,7 @@ export default function TorneoPage() {
     const sourceKey = dragged.slot === 1 ? 'player1' : 'player2'
     const targetKey = slot === 1 ? 'player1' : 'player2'
     ;[source[sourceKey], target[targetKey]] = [target[targetKey], source[sourceKey]]
+    propagateDoubleElimination(next)
     setDragged(null)
     void saveTournament(next)
   }
@@ -530,14 +214,14 @@ export default function TorneoPage() {
     const match = next[roundIndex].matches[matchIndex]
     match.winner = match.winner === playerName ? null : playerName
 
-    const hasPlacementLinks = next.some((round) =>
-      round.placementBracket || round.matches.some((item) =>
-        item.autoWinner || item.winnerTo || item.loserTo
+    const hasBracketLinks = next.some((round) =>
+      round.matches.some((item) =>
+        item.autoWinner || item.winnerTo || item.loserTo || item.resetToMatchId
       )
     )
 
-    if (hasPlacementLinks) {
-      propagateBracket(next)
+    if (hasBracketLinks) {
+      propagateDoubleElimination(next)
     } else {
       let sourceMatchIndex = matchIndex
       let advancedPlayer = match.winner
@@ -620,33 +304,29 @@ export default function TorneoPage() {
     }
   }
 
-  const participantIds = participants(rounds)
+  const participantIds = getParticipants(rounds)
     .map((name) => PLAYERS.find((player) => player.name === name)?.id)
     .filter((id): id is number => id !== undefined)
   const allDelivered =
     participantIds.length > 0 && participantIds.every((id) => delivered.has(id))
-  const playerPositions = positionsByPlayer(rounds)
-  const finishedPlayers = playersWithCompletedMatches(rounds)
-  const mainRounds = rounds
+  const playerPositions = getPositionsByPlayer(rounds)
+  const finishedPlayers = getCompletedPlayers(rounds)
+  const winnersRounds = rounds
     .map((round, index) => ({ round, index }))
-    .filter(({ round }) => !round.placementBracket)
-  const placementRounds = rounds
+    .filter(({ round }) => round.bracketType === 'winners')
+  const losersRounds = rounds
     .map((round, index) => ({ round, index }))
-    .filter(({ round }) => round.placementBracket)
-  const placementGroups = Array.from(
-    placementRounds.reduce((groups, entry) => {
-      const start = Number(entry.round.name.match(/(?:Clasificación|Puestos)\s+(\d+)/)?.[1])
-      if (!Number.isInteger(start)) return groups
-      const group = groups.get(start) ?? []
-      group.push(entry)
-      groups.set(start, group)
-      return groups
-    }, new Map<number, typeof placementRounds>())
-  ).sort(([a], [b]) => a - b)
+    .filter(({ round }) => round.bracketType === 'losers')
+  const finalRounds = rounds
+    .map((round, index) => ({ round, index }))
+    .filter(({ round }) => round.bracketType === 'final')
+  const resetFinalIsActive = finalRounds.some(({ round }) =>
+    round.resetFinal && round.matches.some((match) => Boolean(match.player1 && match.player2))
+  )
 
   const rankForPlayer = (name: string) => {
     if (!finishedPlayers.has(name)) return null
-    const rank = Number(playerPositions.get(name)?.match(/^(\d+)\.º$/)?.[1])
+    const rank = Number(playerPositions.get(name)?.match(/^(\d+)\.º/)?.[1])
     return Number.isInteger(rank) && rank >= 1 && rank <= 8 ? rank : null
   }
 
@@ -715,7 +395,7 @@ export default function TorneoPage() {
                     </button>
                     {name && finishedPlayers.has(name) && (() => {
                       const position = playerPositions.get(name)
-                      const rank = Number(position?.match(/^(\d+)\.º$/)?.[1])
+                      const rank = Number(position?.match(/^(\d+)\.º/)?.[1])
                       if (!Number.isInteger(rank) || rank < 1 || rank > 8) return null
 
                       const medalColor = rank === 1
@@ -727,7 +407,7 @@ export default function TorneoPage() {
                             : 'bg-zinc-700/40 text-zinc-300'
                       return (
                         <span
-                          title={`Puesto ${rank}.º`}
+                          title={`Puesto ${position}`}
                           className={`shrink-0 rounded px-1 py-0.5 text-[9px] font-bold ${medalColor}`}
                         >
                           {position}
@@ -796,7 +476,7 @@ export default function TorneoPage() {
               : 'El botón VER EQUIPO se activará cuando todos hayan entregado su PokéPaste.'}
           </p>
           <p className="mt-1 text-xs text-zinc-500">
-            Se jugarán partidos de clasificación hasta decidir el 8.º puesto.
+            Doble eliminación: quien pierde en winners pasa a losers. En la Gran Final, el finalista de winners debe perder dos veces.
           </p>
         </div>
         <div className="flex flex-wrap items-end gap-2">
@@ -867,44 +547,40 @@ export default function TorneoPage() {
           style={{ backgroundImage: "url('/sprites/lideres/1poster.png')" }}
         />
         <div className="absolute inset-0 bg-zinc-950/75" />
-        <div className="relative overflow-x-auto p-4">
+        <div className="relative space-y-6 overflow-x-auto p-4">
           {rounds.length === 0 ? (
             <p className="py-12 text-center text-sm text-zinc-300">
               El cuadro está vacío.
             </p>
           ) : (
-            <div className="flex min-w-max items-start gap-2">
-            {mainRounds.map(({ round, index: roundIndex }) => (
-              round.name === 'Final' ? (
-                <div key={`${round.name}-${roundIndex}`} className="flex w-60 flex-col gap-2">
-                  {renderRound(round, roundIndex)}
-                  {placementGroups.length > 0 && (
-                    <div className="mt-12 space-y-2">
-                      {placementGroups.map(([start, groupRounds]) => (
-                        <section
-                          key={`placement-${start}`}
-                          className="grid w-max grid-cols-2 items-start gap-2 rounded-xl border border-zinc-800/80 bg-zinc-950/55 p-2"
-                        >
-                          {groupRounds.map(({ round: placementRound, index }, roundInGroup) =>
-                              renderRound(
-                                placementRound,
-                                index,
-                                placementRound.name.startsWith('Puestos ')
-                                  ? placementRound.name
-                                    .replace(/^Puestos\s+/, '')
-                                    .replace('-', '–')
-                                  : roundInGroup === 0
-                                    ? `Top ${placementRound.name.match(/(\d+\.º-\d+\.º)/)?.[1]?.replace('-', '–') ?? '8'}`
-                                    : `Ronda ${roundInGroup + 1}`
-                              )
-                          )}
-                        </section>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ) : renderRound(round, roundIndex)
-            ))}
+            <div className="grid w-max min-w-full grid-cols-[max-content_max-content] grid-rows-[auto_auto] items-start gap-x-4 gap-y-6">
+              {winnersRounds.length > 0 && (
+                <section className="col-start-1 row-start-1 space-y-2">
+                  <h2 className="text-sm font-black uppercase tracking-widest text-teal-300">
+                    Cuadro de winners
+                  </h2>
+                  <div className="flex min-w-max items-start gap-2">
+                    {winnersRounds.map(({ round, index }) => renderRound(round, index))}
+                    {finalRounds.length > 0 && (
+                      <div className="flex flex-col gap-2">
+                        {finalRounds
+                          .filter(({ round }) => !round.resetFinal || resetFinalIsActive)
+                          .map(({ round, index }) => renderRound(round, index))}
+                      </div>
+                    )}
+                  </div>
+                </section>
+              )}
+              {losersRounds.length > 0 && (
+                <section className="col-start-1 row-start-2 space-y-2">
+                  <h2 className="text-sm font-black uppercase tracking-widest text-rose-300">
+                    Cuadro de losers
+                  </h2>
+                  <div className="flex min-w-max items-start gap-2">
+                    {losersRounds.map(({ round, index }) => renderRound(round, index))}
+                  </div>
+                </section>
+              )}
             </div>
           )}
         </div>

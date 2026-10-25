@@ -17,7 +17,7 @@ type TournamentHistory = {
 }
 
 function rankOf(position: string) {
-  const rank = Number(position.match(/^(\d+)\.º$/)?.[1])
+  const rank = Number(position.match(/^(\d+)\.º/)?.[1])
   return Number.isInteger(rank) ? rank : null
 }
 
