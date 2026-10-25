@@ -135,11 +135,36 @@ export default function InicioPage() {
       }
     }
     void loadTournament()
+    const refreshTournamentWhenVisible = () => {
+      if (document.visibilityState === 'visible') void loadTournament()
+    }
+    const tournamentRefreshInterval = window.setInterval(() => {
+      if (document.visibilityState === 'visible') void loadTournament()
+    }, 10000)
+    window.addEventListener('focus', refreshTournamentWhenVisible)
+    document.addEventListener('visibilitychange', refreshTournamentWhenVisible)
+    const tournamentChannel = supabase
+      ?.channel('realtime_torneo_inicio')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'torneo',
+          filter: `sala_id=eq.${SALA_ID}`,
+        },
+        () => void loadTournament()
+      )
+      .subscribe()
 
     return () => {
       cancelled = true
       window.removeEventListener(CAPTURAS_UPDATED_EVENT, loadActivity)
+      window.removeEventListener('focus', refreshTournamentWhenVisible)
+      document.removeEventListener('visibilitychange', refreshTournamentWhenVisible)
+      window.clearInterval(tournamentRefreshInterval)
       if (activityChannel) void supabase?.removeChannel(activityChannel)
+      if (tournamentChannel) void supabase?.removeChannel(tournamentChannel)
     }
   }, [loadActivity])
 
@@ -183,15 +208,23 @@ export default function InicioPage() {
       </section>
 
       {tournament?.locked && (
-        <section className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-amber-400/30 bg-amber-500/5 px-4 py-3">
-          <div>
+        <Link
+          href="/torneo"
+          className="group relative isolate block overflow-hidden rounded-2xl border border-amber-400/50 bg-amber-500/10 shadow-[0_0_30px_rgba(245,158,11,0.12)] transition hover:border-amber-300 hover:shadow-[0_0_40px_rgba(245,158,11,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-300"
+        >
+          <div
+            className="absolute inset-0 scale-100 bg-cover bg-center opacity-35 transition-transform duration-500 ease-out group-hover:scale-110"
+            style={{ backgroundImage: "url('/sprites/lideres/1poster.png')" }}
+          />
+          <div className="absolute inset-0 bg-zinc-950/65" />
+          <div className="relative p-5">
             <p className="text-xs font-bold uppercase tracking-widest text-amber-300">Torneo iniciado</p>
-            <h2 className="font-bold text-amber-100">{tournament.name}</h2>
+            <h2 className="mt-1 text-2xl font-black text-amber-100">{tournament.name}</h2>
+            <p className="mt-1 text-sm text-amber-200/70">
+              El cuadro está bloqueado y la competición ha comenzado. Ver torneo →
+            </p>
           </div>
-          <Link href="/torneo" className="rounded-lg border border-amber-400/30 px-3 py-2 text-sm font-bold text-amber-200 hover:bg-amber-500/10">
-            Ver torneo
-          </Link>
-        </section>
+        </Link>
       )}
 
       {tournament?.locked && teamSubmitted === false && sessionId !== null && (
