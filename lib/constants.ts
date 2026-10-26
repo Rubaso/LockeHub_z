@@ -62,7 +62,6 @@ export const ROUTES = [
   'Ruta 2',
   'Catacumbas Meridionales',
   'Ciudad Grisalla',
-  'Centro Pokémon',
   'Cueva Grisalla',
 
   // Tramo 2 — Canola → Hisopo

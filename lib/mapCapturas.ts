@@ -11,7 +11,6 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Ruta 2',
     'Catacumbas Meridionales',
     'Ciudad Grisalla',
-    'Centro Pokémon',
     'Cueva Grisalla',
     'Estático especial - Cueva Grisalla',
     'Pikachu',

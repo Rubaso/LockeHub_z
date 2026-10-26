@@ -20,7 +20,9 @@ export default function TramosPage() {
 
   const pokemon =
     fromDatabase && rows
-      ? rows.filter((row) => row.jugador_id === playerId).map(capturaToPokemon)
+      ? rows
+        .filter((row) => row.jugador_id === playerId && row.estado !== 'INTERCAMBIADO')
+        .map(capturaToPokemon)
       : []
   const sinTramo = pokemon.filter((poke) => poke.tramo === 0)
   const orderByRoute = (a: (typeof pokemon)[number], b: (typeof pokemon)[number]) =>

@@ -7,7 +7,7 @@ export const MAP_Z: Record<string, string> = {
   "14": "Ruta 2",
   "16": "Cueva Grisalla",
   "17": "Ciudad Grisalla",
-  "18": "Centro Pokémon",
+  "18": "Ciudad Grisalla",
   "22": "Misión Mosqueteros",
   "23": "Ruta 3",
   "24": "Pueblo Acrílico",
