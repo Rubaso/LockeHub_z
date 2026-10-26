@@ -31,6 +31,22 @@ function rankRange(count: number, end: number): [number, number] {
   return [end - count + 1, end]
 }
 
+function assignLoserRankRanges(losersRounds: Round[], participantCount: number) {
+  const losersStageCounts = losersRounds.map((round) =>
+    round.matches.filter((match) => !match.autoWinner).length
+  )
+  let rankEnd = participantCount
+  for (let index = 0; index < losersRounds.length; index++) {
+    const eliminated = losersStageCounts[index]
+    if (eliminated === 0) continue
+    const range = rankRange(eliminated, rankEnd)
+    for (const match of losersRounds[index].matches) {
+      if (!match.autoWinner) match.loserRankRange = range
+    }
+    rankEnd -= eliminated
+  }
+}
+
 export function makeBracket(names: string[], randomize: boolean): Round[] {
   if (names.length < 2) return []
 
@@ -189,20 +205,6 @@ export function makeBracket(names: string[], randomize: boolean): Round[] {
   const losersMatchById = new Map(
     losersRounds.flatMap((round) => round.matches.map((match) => [match.id, match] as const))
   )
-  const losersStageCounts = losersRounds.map((round) =>
-    round.matches.filter((match) => !match.autoWinner).length
-  )
-  let rankEnd = participants.length
-  for (let index = 0; index < losersRounds.length; index++) {
-    const eliminated = losersStageCounts[index]
-    if (eliminated === 0) continue
-    const range = rankRange(eliminated, rankEnd)
-    for (const match of losersRounds[index].matches) {
-      if (!match.autoWinner) match.loserRankRange = range
-    }
-    rankEnd -= eliminated
-  }
-
   const grandFinal = {
     id: 'gf-m1',
     player1: null,
@@ -241,6 +243,7 @@ export function makeBracket(names: string[], randomize: boolean): Round[] {
     },
   ]
   const rounds = [...winnersRounds, ...losersRounds, ...finalRounds]
+  assignLoserRankRanges(losersRounds, participants.length)
   propagateBracket(rounds)
   return rounds
 }
@@ -368,17 +371,25 @@ function possiblePositions(
 }
 
 export function positionsByPlayer(rounds: Round[]) {
+  const normalizedRounds = rounds.map((round) => ({
+    ...round,
+    matches: round.matches.map((match) => ({ ...match })),
+  }))
+  assignLoserRankRanges(
+    normalizedRounds.filter((round) => round.bracketType === 'losers'),
+    participants(normalizedRounds).length
+  )
   const matchMap = new Map(
-    rounds.flatMap((round) =>
+    normalizedRounds.flatMap((round) =>
       round.matches.map((match) => [match.id, { match, round }] as const)
     )
   )
   const positions = new Map<string, string>()
-  const firstRound = rounds.find(
+  const firstRound = normalizedRounds.find(
     (round) => round.bracketType === 'winners' && round.name.endsWith('Ronda 1')
   )
 
-  for (const playerName of participants(rounds)) {
+  for (const playerName of participants(normalizedRounds)) {
     const openingMatch = firstRound?.matches.find((match) =>
       match.player1 === playerName || match.player2 === playerName
     )
