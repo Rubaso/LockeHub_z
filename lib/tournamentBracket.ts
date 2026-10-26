@@ -193,7 +193,7 @@ export function makeBracket(names: string[], randomize: boolean): Round[] {
     round.matches.filter((match) => !match.autoWinner).length
   )
   let rankEnd = participants.length
-  for (let index = losersRounds.length - 1; index >= 0; index--) {
+  for (let index = 0; index < losersRounds.length; index++) {
     const eliminated = losersStageCounts[index]
     if (eliminated === 0) continue
     const range = rankRange(eliminated, rankEnd)
