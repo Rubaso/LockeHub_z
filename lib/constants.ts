@@ -106,7 +106,6 @@ export const ROUTES = [
 
   // Tramo 6 — Clavelina → Belladona
   'Ruta 11',
-  'Restaurante Le Chonk',
   'Ruta 12',
   'Ciudad Relieve',
   'Pueblo Vánitas',

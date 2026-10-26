@@ -83,7 +83,7 @@ export default function TeamBuilder({ pokemon }: { pokemon: Pokemon[] }) {
       const session = readSession()
       if (supabase && session) {
         const { error: saveError } = await supabase.from('directos').upsert(
-          { jugador_id: session.id, pokepaste_text: text.trim() },
+          { jugador_id: session.id, pokepaste_text: text.trim(), pokepaste_url: data.url },
           { onConflict: 'jugador_id' }
         )
         if (saveError) {

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { ORGANIZER_PLAYER_ID, PLAYERS, SALA_ID } from '@/lib/constants'
 import { readAllSettings, readSession } from '@/lib/session'
+import { openPokepasteForPlayer } from '@/lib/pokepasteUrl'
 import { supabase } from '@/lib/supabase'
 import {
   makeBracket as makeDoubleEliminationBracket,
@@ -14,11 +15,6 @@ import {
 } from '@/lib/tournamentBracket'
 
 type Round = BracketRound
-
-type TeamModal = {
-  playerName: string
-  text: string
-}
 
 function rivalFor(rounds: Round[], playerName: string) {
   for (const round of rounds) {
@@ -34,6 +30,7 @@ function rivalFor(rounds: Round[], playerName: string) {
 export default function TorneoPage() {
   const [rounds, setRounds] = useState<Round[]>([])
   const [locked, setLocked] = useState(false)
+  const [pokepastesPublic, setPokepastesPublic] = useState(false)
   const [tournamentName, setTournamentName] = useState('')
   const [tournamentKey, setTournamentKey] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -42,19 +39,23 @@ export default function TorneoPage() {
   const [dragged, setDragged] = useState<{ round: number; match: number; slot: 1 | 2 } | null>(null)
   const [delivered, setDelivered] = useState<Set<number>>(new Set())
   const [sessionId, setSessionId] = useState<number | null>(null)
-  const [teamModal, setTeamModal] = useState<TeamModal | null>(null)
   const [teamLoading, setTeamLoading] = useState<string | null>(null)
   const [teamError, setTeamError] = useState('')
   const [colors, setColors] = useState<Record<number, string>>({})
-  const [teamCopied, setTeamCopied] = useState(false)
-  const [clipboardError, setClipboardError] = useState('')
   const loadTournament = useCallback(async () => {
     if (!supabase) return
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('torneo')
-      .select('bracket_data, is_locked, tournament_name, tournament_key')
+      .select('bracket_data, is_locked, tournament_name, tournament_key, pokepastes_public')
       .eq('sala_id', SALA_ID)
       .maybeSingle()
+
+    if (error) {
+      console.error('No se pudo cargar la configuración del torneo:', error)
+      setMessage('No se pudo cargar la configuración de visibilidad de los PokéPastes.')
+      setLoading(false)
+      return
+    }
 
     if (data?.bracket_data) {
       const loadedRounds = data.bracket_data as Round[]
@@ -65,6 +66,7 @@ export default function TorneoPage() {
       setTournamentKey(null)
     }
     setLocked(Boolean(data?.is_locked))
+    setPokepastesPublic(Boolean(data?.pokepastes_public))
     setTournamentName(data?.tournament_name ?? '')
     setLoading(false)
   }, [])
@@ -247,60 +249,24 @@ export default function TorneoPage() {
   const canSeeTeam = (name: string) => {
     const current = PLAYERS.find((player) => player.id === sessionId)?.name
     if (!current) return false
-    if (current === name) return true
+    if (current === name || pokepastesPublic) return true
     return rivalFor(rounds, current) === name && allDelivered
   }
 
   const openTeam = async (name: string) => {
     if (!supabase || !canSeeTeam(name)) return
-    setTeamCopied(false)
-    setClipboardError('')
     setTeamError('')
     const player = PLAYERS.find((item) => item.name === name)
     if (!player || sessionId === null) return
 
-    if (player.id === sessionId) {
-      const { data } = await supabase
-        .from('directos')
-        .select('pokepaste_text')
-        .eq('jugador_id', player.id)
-        .maybeSingle()
-      if (data?.pokepaste_text) setTeamModal({ playerName: name, text: data.pokepaste_text })
-      return
-    }
-
     setTeamLoading(name)
     try {
-      const { data, error } = await supabase
-        .from('directos')
-        .select('pokepaste_text')
-        .eq('jugador_id', player.id)
-        .maybeSingle()
-
-      if (error) throw error
-      const text = data?.pokepaste_text?.trim()
-      if (!text) {
-        setTeamError(`El PokéPaste público de ${name} no está disponible.`)
-        return
-      }
-      setTeamModal({ playerName: name, text })
+      await openPokepasteForPlayer(player.id)
     } catch (error) {
-      console.error('No se pudo cargar el PokéPaste del rival:', error)
-      setTeamError(`No se pudo cargar el equipo de ${name}.`)
+      console.error(`No se pudo abrir el PokéPaste de ${name}:`, error)
+      setTeamError(error instanceof Error ? error.message : `No se pudo abrir el PokéPaste de ${name}.`)
     } finally {
       setTeamLoading(null)
-    }
-  }
-
-  const copyTeam = async () => {
-    if (!teamModal) return
-    try {
-      await navigator.clipboard.writeText(teamModal.text)
-      setClipboardError('')
-      setTeamCopied(true)
-      window.setTimeout(() => setTeamCopied(false), 2500)
-    } catch {
-      setClipboardError('No se pudo copiar el equipo. Comprueba los permisos del navegador.')
     }
   }
 
@@ -422,7 +388,7 @@ export default function TorneoPage() {
                       onClick={() => void openTeam(name)}
                       className="text-[10px] font-black text-teal-300 hover:text-teal-200 disabled:cursor-wait disabled:opacity-50"
                     >
-                      {teamLoading === name ? 'CARGANDO…' : 'VER EQUIPO'}
+                      {teamLoading === name ? 'ABRIENDO…' : 'ABRIR POKÉPASTE'}
                     </button>
                   )}
                 </div>
@@ -438,40 +404,14 @@ export default function TorneoPage() {
 
   return (
     <div className="space-y-6">
-      {teamModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-          <div className="max-h-[85vh] w-full max-w-2xl overflow-auto rounded-2xl border border-zinc-700 bg-zinc-950 p-5">
-            <div className="flex items-center justify-between gap-3">
-              <h2 className="text-xl font-black">Equipo de {teamModal.playerName}</h2>
-              <button type="button" onClick={() => { setTeamModal(null); setTeamCopied(false); setClipboardError('') }} className="text-zinc-400">
-                Cerrar
-              </button>
-            </div>
-            <pre className="mt-4 whitespace-pre-wrap rounded-xl border border-zinc-800 bg-zinc-900 p-4 font-mono text-sm text-zinc-200">
-              {teamModal.text}
-            </pre>
-            <button
-              type="button"
-              onClick={() => void copyTeam()}
-              className={`mt-4 rounded-lg px-4 py-2 text-sm font-bold transition ${
-                teamCopied
-                  ? 'border border-emerald-400/50 bg-emerald-500/15 text-emerald-300'
-                  : 'bg-teal-500 text-zinc-950 hover:bg-teal-400'
-              }`}
-            >
-              {teamCopied ? '✓ Equipo copiado' : 'Copiar equipo'}
-            </button>
-            {clipboardError && <p role="alert" className="mt-2 text-sm text-rose-300">{clipboardError}</p>}
-          </div>
-        </div>
-      )}
-
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-xs font-bold uppercase tracking-widest text-teal-400">Competición</p>
           <h1 className="text-3xl font-black">Torneo</h1>
           <p className="mt-1 text-sm text-zinc-400">
-            {allDelivered
+            {pokepastesPublic
+              ? 'Los PokéPastes de los participantes son públicos.'
+              : allDelivered
               ? 'Todos los participantes han entregado su equipo.'
               : 'El botón VER EQUIPO se activará cuando todos hayan entregado su PokéPaste.'}
           </p>
