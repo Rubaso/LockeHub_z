@@ -1,7 +1,7 @@
 import { SALA_ID } from './constants'
 import { isDonProdigioRoute } from './activity'
 import { parseRxDataSave } from './rxdataParser'
-import type { PokemonBattleData } from './rxdataParser'
+import type { PokemonBattleData, PokemonSaveData } from './rxdataParser'
 import { supabase } from './supabase'
 import type { SessionPlayer } from './types'
 
@@ -58,6 +58,22 @@ type EncounterRouteSaveRow = {
   pokemon_id: number | null
 }
 
+function routeForSavePokemon(
+  pokemon: PokemonSaveData,
+  trainerId: string,
+  playerId: number
+) {
+  const isCiaranSpecificGlimmet =
+    playerId === 2 &&
+    trainerId === '493279246' &&
+    pokemon.personalID === '2752277711' &&
+    pokemon.obtainMap === 18 &&
+    pokemon.species === 'glimmet'
+
+  if (isCiaranSpecificGlimmet) return `Zona desconocida (ID ${pokemon.obtainMap})`
+  return pokemon.ruta ?? `Zona desconocida (ID ${pokemon.obtainMap})`
+}
+
 export async function importSaveFile(file: File, player: SessionPlayer) {
   if (!supabase) {
     throw new Error(
@@ -70,7 +86,7 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
   const pokemonDelSave: CapturaSaveRow[] = save.pokemon.map((pokemon) => ({
     sala_id: SALA_ID,
     jugador_id: player.id,
-    ruta: pokemon.ruta ?? `Zona desconocida (ID ${pokemon.obtainMap})`,
+    ruta: routeForSavePokemon(pokemon, save.trainerId, player.id),
     pokemon_name: pokemon.pokemonName,
     pokemon_nickname: pokemon.nickname,
     pokemon_id: pokemon.pokemonId ?? null,
@@ -260,7 +276,7 @@ export async function importSaveFile(file: File, player: SessionPlayer) {
 
   for (const pokemon of save.pokemon) {
     const savePokemonId = `${save.trainerId}:${pokemon.personalID}`
-    const ruta = pokemon.ruta ?? `Zona desconocida (ID ${pokemon.obtainMap})`
+    const ruta = routeForSavePokemon(pokemon, save.trainerId, player.id)
 
     const isDonProdigio = isDonProdigioRoute(pokemon.ruta)
 

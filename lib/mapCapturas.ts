@@ -11,6 +11,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Ruta 2',
     'Catacumbas Meridionales',
     'Ciudad Grisalla',
+    'Centro Pokémon',
     'Cueva Grisalla',
     'Estático especial - Cueva Grisalla',
     'Pikachu',
@@ -68,6 +69,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
 
   6: [
     'Ruta 11',
+    'Restaurante Le Chonk',
     'Ruta 12',
     'Ciudad Relieve',
     'Pueblo Vánitas',
@@ -85,6 +87,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Ruta 14',
     'Ciudad Romantis',
     'Casa de las Brujas',
+    'Fábrica de Pokéball',
     'Ruta 15',
     'Ciudad Batik',
     'Ruta 16',

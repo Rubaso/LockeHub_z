@@ -62,6 +62,7 @@ export const ROUTES = [
   'Ruta 2',
   'Catacumbas Meridionales',
   'Ciudad Grisalla',
+  'Centro Pokémon',
   'Cueva Grisalla',
 
   // Tramo 2 — Canola → Hisopo
@@ -106,6 +107,7 @@ export const ROUTES = [
 
   // Tramo 6 — Clavelina → Belladona
   'Ruta 11',
+  'Restaurante Le Chonk',
   'Ruta 12',
   'Ciudad Relieve',
   'Pueblo Vánitas',
@@ -124,6 +126,7 @@ export const ROUTES = [
   'Ruta 14',
   'Ciudad Romantis',
   'Casa de las Brujas',
+  'Fábrica de Pokéball',
 
   // Resto de zonas
   'Bosque Errante',
