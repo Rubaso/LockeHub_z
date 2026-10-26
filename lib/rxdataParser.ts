@@ -316,6 +316,11 @@ function resolveSpecialRoute(
     return 'Lapras'
   }
 
+  // La misión del Pañuelo Isidora entrega el Pokémon de Map100 a nivel 35.
+  if (obtainMap === 100 && obtainMethod === 0 && obtainLevel === 35) {
+    return 'Misión Pañuelo'
+  }
+
   /*
    * Pikachu:
    * La recompensa de la misión queda registrada en Ciudad Plateada

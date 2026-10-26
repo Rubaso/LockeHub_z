@@ -43,12 +43,12 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
     'Pantano Profano',
     'Colina de Tormenta',
     'Santuario Prosperidad',
-    'Ruta 8 Este',
     'Magikarp',
   ],
 
   4: [
     'Ruta 8',
+    'Misión Pañuelo',
     'Don Prodigio Ruta 8',
     'Ruta 8 Oeste',
     'Bosque Errante',
