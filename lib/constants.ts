@@ -90,7 +90,6 @@ export const ROUTES = [
   'Ruta 7 Norte',
   'Ruta 7 Sur',
   'Ruta 8',
-  'Misión Pañuelo',
   'Don Prodigio Ruta 8',
   'Pantano Profano',
   'Colina de Tormenta',
@@ -105,6 +104,7 @@ export const ROUTES = [
   'Don Prodigio Fort Leviatán',
 
   // Tramo 6 — Clavelina → Belladona
+  'Ruta 8 Este',
   'Ruta 11',
   'Ruta 12',
   'Ciudad Relieve',

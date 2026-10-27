@@ -48,7 +48,6 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
 
   4: [
     'Ruta 8',
-    'Misión Pañuelo',
     'Don Prodigio Ruta 8',
     'Ruta 8 Oeste',
     'Bosque Errante',
@@ -67,6 +66,7 @@ const ZONAS_POR_TRAMO: Record<number, string[]> = {
   ],
 
   6: [
+    'Ruta 8 Este',
     'Ruta 11',
     'Restaurante Le Chonk',
     'Ruta 12',
